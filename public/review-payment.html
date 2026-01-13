@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>XREX Pay - Review payment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="icon" href="assets/favicons/xrex-favicon-16x16.png" sizes="16x16" type="image/png" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header__content">
+        <a class="brand" href="index.html" aria-label="XREX Pay">
+          <img class="brand__img" src="assets/logo_xrexpay.svg" alt="XREX Pay" />
+        </a>
+        <div class="header__spacer"></div>
+        <div class="header__actions">
+          <a class="circle-icon" href="https://intercom.help/xrex-sg/en/" target="_blank" rel="noopener noreferrer" title="Support">
+            <img src="assets/icon_support.svg" alt="support" width="20" height="20" />
+          </a>
+          <a class="account-chip" id="accountChipLink" href="settings.html">
+            <span class="chip-avatar"><img src="assets/logo_agp.svg" alt="AGP" /></span>
+            <span class="chip-name">AGP Technology</span>
+            <img class="chevron" src="assets/icon_chevron_right.svg" alt="more" width="20" height="20" />
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page page--review">
+      <div class="container">
+        <section class="page__header page__header--crumb">
+          <a class="crumb" href="send-payment.html" aria-label="Back to Send payment">
+            <picture>
+              <source media="(min-width: 1280px)" srcset="assets/icon_header_back.svg" />
+              <img src="assets/icon_header_back_mobile.svg" width="32" height="32" alt="">
+            </picture>
+          </a>
+          <h1 id="rv-back-title" class="page__title">Review payment</h1>
+        </section>
+      </div>
+      <section class="container container--review">
+
+        <div class="review-block">
+          <h3 class="card__title">Receiver</h3>
+          <div class="card card--section receipt__card">
+            <div class="summary-recipient">
+              <span class="recipient-select__avatar">
+                <img src="assets/icon_bank_cp.svg" alt="" />
+              </span>
+              <span class="recipient-select__content">
+                <span class="recipient-select__title" id="rcvName">-</span>
+                <span class="recipient-select__subtitle" id="rcvBank">-</span>
+              </span>
+              <span class="summary-recipient__currency">
+                <span class="summary-recipient__currency-text">USD account</span>
+                <img src="assets/icon_USD.svg" alt="" />
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-block">
+        <h3 class="card__title">Payment information</h3>
+        <div class="card card--section receipt__card">
+          <div class="receipt__row">
+            <span class="muted">Nature of payment</span>
+            <strong id="natureVal">-</strong>
+          </div>
+          <div class="receipt__row">
+            <span class="muted">Purpose of payment</span>
+            <strong id="purposeVal">-</strong>
+          </div>
+          <div class="receipt__row" id="attachedDocsRow">
+            <span class="muted">Attached document(s)</span>
+            <strong id="attachedDocs">-</strong>
+          </div>
+          <div class="receipt__row" id="docNumRow">
+            <span class="muted" id="docNumLabelTxt">{SuppDocsOptional1}</span>
+            <strong id="docNumVal">-</strong>
+          </div>
+          <div class="receipt__row" id="docNotesRow">
+            <span class="muted">Message to beneficiary</span>
+            <strong id="docNotesVal">-</strong>
+          </div>
+        </div>
+        </div>
+
+        <div class="review-block">
+        <h3 class="card__title">Amount and fees</h3>
+        <div class="card card--section receipt__card">
+                    <div class="receipt__row">
+                      <span class="muted">Payment amount</span>
+            <strong id="amtPayable">-</strong>
+          </div>
+          <div class="receipt__row">
+            <span class="muted">Deduct from</span>
+            <strong id="deductedFrom">-</strong>
+          </div>
+          <div class="receipt__row" id="totalConvertRow">
+            <span class="muted">Convert from</span>
+            <strong id="totalConvert">-</strong>
+          </div>
+          <div class="receipt__row" id="convertToRow" hidden>
+            <span class="muted">Convert to</span>
+            <strong id="convertTo">-</strong>
+          </div>
+          <div class="receipt__row" id="convRow" hidden>
+            <span class="muted">Conversion rate</span>
+            <div class="convertrate-wrapper">
+              <strong id="convVal">1 USDT = 1 USD</strong>
+              <!-- <button id="fees-details-open" type="button" class="summary-title-link">See convert details</button> -->
+            </div>
+          </div>
+          <div class="receipt__row">
+            <span class="muted">
+              Service fee
+              <span class="service-fee__min-label" id="rvServiceMinLabel">min. 60 USD</span>
+            </span>
+            <strong>
+              <span class="service-fee__percentage" id="feePct">1.00%</span>
+              <span class="service-fee__minimum" id="rvServiceMinValue">60.00 USD</span>
+            </strong>
+          </div>
+          <div class="receipt__subrow">
+            <span class="muted" id="payerShareLabel">-</span>
+            <strong id="payerShareAmt">-</strong>
+          </div>
+          <div class="receipt__subrow">
+            <span class="muted" id="receiverShareLabel">-</span>
+            <strong id="receiverShareAmt">-</strong>
+          </div>
+          <div class="receipt__divider"></div>
+          <div class="receipt__row">
+            <span class="muted">You pay</span>
+            <strong id="toBeDeducted">-</strong>
+          </div>
+          <div class="receipt__row receipt__row--em">
+            <span class="muted">Send to receiver</span>
+            <strong id="receiverGets">-</strong>
+          </div>
+          <div class="receipt__note">Received amount may vary due to bank fees. <br />Processing typically takes 1–5 business days.<br />
+            Receiver will be billed in USD.</div>
+          <div id="reviewErrorPanel" class="review-declare review-declare--error" role="alert" aria-live="polite" hidden>
+            <div class="review-declare__box">
+              <div class="review-declare__head">
+               
+                <div class="review-declare__copy">
+                  <img class="review-declare__icon" src="assets/icon_danger.svg" width="16" height="16" alt="">
+                  <p class="review-declare__title" id="reviewErrorTitle">Payment failed: No charge applied</p>
+                </div>
+                <p class="review-declare__message" id="reviewErrorMessage">
+                  No charge applied. Go back and try again, or
+                  <a href="#" target="_blank" rel="noopener noreferrer">Contact Support</a>
+                  for further assistance.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+
+        <div class="receipt__actions">
+          <a class="btn btn--secondary btn--md" href="send-payment.html">Back</a>
+          <button class="btn btn--primary btn--md" id="review-confirm">Confirm payment</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal: Convert details -->
+    <div id="convertDetailsModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="convertDetailsTitle">
+      <div class="modal-wrapper">
+        <div class="modal-content convert-modal">
+          <div class="convert-modal__icon">
+            <img src="assets/icon_qm_convert.svg" alt="" width="28" height="28" />
+          </div>
+          <div class="modal-body">
+            <h2 id="convertDetailsTitle" class="convert-modal__title">Convert details for this payment</h2>
+            <div class="summary-box convert-box">
+              <div class="summary-pair summary-pair--convertfrom">
+                <span class="muted">Convert from</span>
+                <strong id="cv-from">-</strong>
+              </div>
+              <div class="summary-pair" style="display:none;">
+                <span class="muted">Conversion fee (<span id="cv-fee-pct">0.00%</span>)</span>
+                <strong id="cv-fee-amt">--</strong>
+              </div>
+              <div class="summary-pair summary-pair--netamount">
+                <span class="muted">Net amount to convert</span>
+                <strong id="cv-net">-</strong>
+              </div>
+              <div class="summary-pair">
+                <button type="button" class="convert-rate-link">Rate</button>
+                <strong id="cv-rate">1 USDT = 1 USD</strong>
+              </div>
+              <div class="summary-separator"></div>
+              <div class="summary-pair summary-pair--convertto">
+                <span class="muted">Convert to</span>
+                <strong id="cv-to">-</strong>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn--secondary btn--md" data-modal-close>Dismiss</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Confirm send (2FA) -->
+    <div id="confirmPaymentModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="unlinkTitle">
+      <div class="modal-wrapper">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="unlinkTitle">Two-Factor Authentication</h2>
+            <button class="modal-close" data-modal-close aria-label="Close modal">
+              <img src="assets/icon_close.svg" width="24" height="24" alt="close">
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="m-step">
+              <div class="m-step-title">Please enter the 6-digit code from your authenticator app</div>
+              <div class="m-link">How to enter your authenticator code?</div>
+              <div class="m-field">
+                <div class="m-field-group">
+                  <label class="m-label" for="unlinkCodeInput">Authentication code</label>
+                  <div class="m-input-row">
+                    <input id="unlinkCodeInput" class="m-input" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="Enter 6-digit code" maxlength="6">
+                    <button id="unlinkClearBtn" class="m-clear is-hidden" type="button" aria-label="Clear input">
+                      <img src="assets/icon_clear.svg" width="16" height="16" alt="">
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn--secondary btn--md" data-modal-close id="unlinkCancel">Back</button>
+            <button class="btn btn--primary btn--md" id="unlinkConfirm" disabled>Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="modal modal-loading" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="modal-wrapper">
+        <div class="modal-content">
+          <div class="loading-spinner" aria-live="polite" aria-label="Loading">
+            <img src="assets/loader.svg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer__inner">
+        <div class="footer__copy">© XREX Pay Limited 2025</div>
+        <div class="footer__links">
+          <a href="https://intercom.help/xrex-sg/en/" target="_blank" rel="noopener noreferrer">Support</a>
+          <a href="https://info.xrex.sg/doc" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+          <a href="https://info.xrex.sg/doc" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+        </div>
+      </div>
+    </footer>
+    <script defer src="js/main.js?v=20251108"></script>
+    <script>
+      var getDefaultReviewData = function () {
+        return {
+          receiverName: 'NovaQuill Ltd',
+          receiverBank: 'CIMB · 012-345678-9',
+          deductedFrom: 'USD account',
+          amountPayableFmt: '50,000.00 USD',
+          attachedDocs: 'Proforma invoice (PI)',
+          docNumLabel: 'Proforma invoice number',
+          docNumber: 'PI-001234',
+          docNotes: '- -',
+          nature: 'Pre-shipment advance',
+          purpose: 'Goods purchase',
+          feePct: '1.00%',
+          payerShareLabel: '1.00% paid by you',
+          payerShareAmt: '500.00 USD',
+          receiverShareLabel: '0.00% paid by receiver',
+          receiverShareAmt: '0.00 USD',
+          toBeDeducted: '50,500.00 USD',
+          receiverGets: '50,000.00 USD',
+          serviceMinApplied: false,
+          serviceMinAmount: 60,
+          conversion: ''
+        };
+      };
+
+      var reviewDataHasContent = function (data) {
+        if (!data || typeof data !== 'object') return false;
+        return Object.keys(data).some(function (key) {
+          var value = data[key];
+          return typeof value === 'string' && value.trim().length > 0;
+        });
+      };
+
+      (function populateReview() {
+        try {
+          let raw = null;
+          try {
+            raw = sessionStorage.getItem('receiptData');
+          } catch (_) {}
+
+          let d = null;
+          if (raw) {
+            try {
+              d = JSON.parse(raw);
+            } catch (_) {
+              d = null;
+            }
+          }
+
+          if (!d || typeof d !== 'object') d = {};
+          if (!reviewDataHasContent(d)) {
+            d = getDefaultReviewData();
+            try { sessionStorage.setItem('receiptData', JSON.stringify(d)); } catch (_) {}
+          }
+          const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+          set('rcvName', (d.receiverName || '').replace(/^To\\s+/i,''));
+          set('rcvBank', d.receiverBank || '');
+          set('rcvCurrencyText', d.deductedFrom || 'USD account');
+          set('natureVal', d.nature || '');
+          set('purposeVal', d.purpose || '');
+          // Attached documents
+          (function () {
+            var row = document.getElementById('attachedDocsRow');
+            var val = (d.attachedDocs || '').trim();
+            if (row) row.style.display = val ? '' : 'none';
+            var el = document.getElementById('attachedDocs');
+            if (el) el.textContent = val || '';
+          })();
+          // Doc number label/value (optional, always visible for relevant nature)
+          (function () {
+            var row = document.getElementById('docNumRow');
+            var label = (d.docNumLabel || '').trim();
+            var val = (d.docNumber || '').trim();
+            if (row) row.style.display = label ? '' : 'none';
+            var lblEl = document.getElementById('docNumLabelTxt');
+            if (lblEl) lblEl.textContent = label || '';
+            var valEl = document.getElementById('docNumVal');
+            if (valEl) {
+              var displayVal = val || '- -';
+              valEl.textContent = displayVal;
+              if (!val) {
+                valEl.classList.add('is-placeholder');
+              } else {
+                valEl.classList.remove('is-placeholder');
+              }
+            }
+          })();
+          // Notes (optional, always visible with placeholder when empty)
+          (function () {
+            var row = document.getElementById('docNotesRow');
+            var val = (d.docNotes || '').trim();
+            if (row) row.style.display = '';
+            var el = document.getElementById('docNotesVal');
+            if (el) {
+              var displayVal = val || '- -';
+              el.textContent = displayVal;
+              if (!val) {
+                el.classList.add('is-placeholder');
+              } else {
+                el.classList.remove('is-placeholder');
+              }
+            }
+          })();
+          set('amtPayable', d.amountPayableFmt || '');
+          set('deductedFrom', d.deductedFrom || '');
+          // Service fee display (supports 60 USD minimum state)
+          set('feePct', d.feePct || '1.00%');
+          (function () {
+            var pctEl = document.getElementById('feePct');
+            var minValEl = document.getElementById('rvServiceMinValue');
+            if (!pctEl || !minValEl) return;
+
+            var row = pctEl.closest('.receipt__row');
+            if (!row) return;
+
+            var minApplied = !!d.serviceMinApplied;
+            var minAmount = Number(d.serviceMinAmount || 60);
+
+            if (minApplied) {
+              row.classList.add('service-fee--min');
+              pctEl.textContent = d.feePct || '1.00%';
+              minValEl.textContent = (minAmount || 60).toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }) + ' USD';
+            } else {
+              row.classList.remove('service-fee--min');
+            }
+          })();
+          set('payerShareLabel', d.payerShareLabel || '');
+          set('payerShareAmt', d.payerShareAmt || '');
+          set('receiverShareLabel', d.receiverShareLabel || '');
+          set('receiverShareAmt', d.receiverShareAmt || '');
+          set('toBeDeducted', d.toBeDeducted || '');
+          set('receiverGets', d.receiverGets || '');
+          // Total to convert: only when deducting from USDT
+          (function () {
+            var row = document.getElementById('totalConvertRow');
+            var valEl = document.getElementById('totalConvert');
+            if (!row || !valEl) return;
+            var payerCur = (d.deductedFrom || '').toUpperCase();
+            var isUSDT = /USDT/.test(payerCur);
+            if (!isUSDT) {
+              row.style.display = 'none';
+              var toRowHide = document.getElementById('convertToRow');
+              if (toRowHide) toRowHide.style.display = 'none';
+              return;
+            }
+            // Extract numeric from Payment amount and render as USDT
+            var num = (d.amountPayableFmt || '0').replace(/[^\d.]/g, '');
+            var n = Number(num || 0);
+            var txt = n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' USDT';
+            valEl.textContent = txt;
+            row.style.display = '';
+            // Convert to (USD) mirrors amount and appears below conversion rate
+            var toRow = document.getElementById('convertToRow');
+            var toEl = document.getElementById('convertTo');
+            if (toRow && toEl) {
+              var toTxt = n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' USD';
+              toEl.textContent = toTxt;
+              toRow.style.display = '';
+            }
+          })();
+          var convRow = document.getElementById('convRow');
+          if (convRow) {
+            if (d.conversion) {
+              set('convVal', d.conversion);
+              convRow.hidden = false;
+              convRow.style.display = '';
+            } else {
+              convRow.hidden = true;
+              convRow.style.display = 'none';
+            }
+          }
+        } catch (_) {}
+      })();
+      (function wireReviewConfirm() {
+        const btn = document.getElementById('review-confirm');
+        if (!btn) return;
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const modal = document.getElementById('confirmPaymentModal');
+          if (!modal) return;
+          modal.setAttribute('aria-hidden', 'false');
+          document.documentElement.classList.add('modal-open');
+          document.body.classList.add('modal-open');
+
+          // Reset and autofocus 2FA input on open
+          const input = document.getElementById('unlinkCodeInput');
+          const clearBtn = document.getElementById('unlinkClearBtn');
+          if (input) {
+            input.value = '';
+            // Trigger the same validation logic as typing
+            const ev = new Event('input', { bubbles: true });
+            input.dispatchEvent(ev);
+            // Hide clear button until user types again
+            if (clearBtn) clearBtn.classList.add('is-hidden');
+            // Focus the field for immediate entry
+            input.focus();
+          }
+        });
+      })();
+      (function wireConvertDetails() {
+        const link = document.getElementById('fees-details-open');
+        if (!link) return;
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          // Populate values
+          try {
+            const raw = sessionStorage.getItem('receiptData');
+            const d = raw ? JSON.parse(raw) : null;
+            if (d) {
+              const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+              const payerCur = (d.deductedFrom || '').replace(/account/i, '').trim() || 'USD';
+              const amountNum = (d.amountPayableFmt || '0').replace(/[^\d.]/g, '');
+              const fmt = (v, cur) => `${Number(v||0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${cur}`;
+              set('cv-from', fmt(amountNum, payerCur));
+              set('cv-fee-pct', '0.00%');
+              set('cv-fee-amt', '--');
+              set('cv-net', fmt(amountNum, payerCur));
+              const rate = d.conversion || `1 ${payerCur} = 1 USD`;
+              set('cv-rate', rate);
+              set('cv-to', d.amountPayableFmt || fmt(amountNum, 'USD'));
+            }
+          } catch (_) {}
+          const modal = document.getElementById('convertDetailsModal');
+          if (!modal) return;
+          modal.setAttribute('aria-hidden', 'false');
+          document.documentElement.classList.add('modal-open');
+          document.body.classList.add('modal-open');
+        });
+      })();
+    </script>
+
+    <div class="build-badge build-badge--review" role="note">
+      <div id="reviewErrorControls" class="build-badge__state build-badge__errors">
+        <span class="build-badge__state-label">Error simulation</span>
+        <button type="button" class="build-badge__state-btn" data-error-action="down" aria-label="Previous error">−</button>
+        <span class="build-badge__state-value" data-error-value>1</span>
+        <button type="button" class="build-badge__state-btn" data-error-action="up" aria-label="Next error">+</button>
+        <span class="build-badge__state-name" data-error-name></span>
+      </div>
+      <a id="reviewSimulateTrigger" class="build-badge__link" href="#" style="color:#fff; text-decoration:underline; margin-left:8px;">Simulate</a>
+      <span style="opacity:.7">&nbsp;/&nbsp;</span>
+      <a id="reviewResetErrors" class="build-badge__link" href="#" style="color:#fff; text-decoration:underline;">Reset errors</a>
+    </div>
+  </body>
+  </html>
+
+

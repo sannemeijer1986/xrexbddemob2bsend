@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>XREX Pay - Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/main.css?v=20251108" />
+    <link rel="icon" href="assets/favicons/xrex-favicon-16x16.png" sizes="16x16" type="image/png" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header__content">
+        <a class="brand" href="index.html">
+          <img class="brand__img" src="assets/logo_xrexpay.svg" alt="XREX Pay" />
+        </a>
+        <div class="header__spacer"></div>
+        <div class="header__actions">
+          <a class="circle-icon" href="https://intercom.help/xrex-sg/en/" target="_blank" rel="noopener noreferrer" title="Support">
+            <img src="assets/icon_support.svg" alt="support" width="20" height="20" />
+          </a>
+          <a class="account-chip" id="accountChipLink" href="settings.html">
+            <span class="chip-avatar"><img src="assets/logo_agp.svg" alt="AGP" /></span>
+            <span class="chip-name">AGP Technology</span>
+            <img class="chevron" src="assets/icon_chevron_right.svg" alt="more" width="20" height="20" />
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page page--home">
+      <div class="container">
+        <div id="homeView">
+          <section class="page__header">
+            <h1 class="page__title">Hello, AGP Technology</h1>
+          </section>
+          <section class="grid grid--home">
+            <div class="grid__col grid__col--primary">
+              <div class="card__title card__title--assets">Assets</div>
+              <div class="card assets">
+                <div class="assets__header">
+                  <div class="assets__total">
+                    <div class="assets__total-label">
+                      Total assets ≈
+                      <img class="metric-eye" src="assets/icon_eye.svg" alt="visibility" width="20" height="20" />
+                    </div>
+                    <div class="assets__total-value">400,000.00 USD</div>
+                    <div class="assets__locked muted">Locked: ≈0.00 USD</div>
+                  </div>
+                </div>
+                <div class="assets__list">
+                  <div class="asset">
+                    <div class="asset__icon">
+                      <img src="assets/icon_USD.svg" alt="" />
+                    </div>
+                    <div class="asset__content">
+                      <div class="asset__wrapper asset__wrapper--first">
+                        <div class="asset__amount">200,000.00</div>
+                        <div class="asset__amount__sub">≈200,000.00 USD</div>
+                      </div>
+                      <div class="asset__wrapper asset__wrapper--second">
+                        <div class="asset__currency">USD</div>
+                        <div class="asset__currency__sub">US Dollar</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="asset">
+                    <div class="asset__icon">
+                      <img src="assets/icon_USDT.svg" alt="" />
+                    </div>
+                    <div class="asset__content">
+                      <div class="asset__wrapper asset__wrapper--first">
+                        <div class="asset__amount">200,000.00</div>
+                        <div class="asset__amount__sub">≈200,000.00 USD</div>
+                      </div>
+                      <div class="asset__wrapper asset__wrapper--second">
+                        <div class="asset__currency">USDT</div>
+                        <div class="asset__currency__sub">USD Tether</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="assets__ctas">
+                  <button class="btn btn--primary btn--sm">Deposit</button>
+                  <button class="btn btn--secondary btn--sm">Transfer</button>
+                </div>
+              </div>
+            </div>
+            <aside class="grid__col grid__col--sidebar">
+              <div data-qa-header-target></div>
+              <div class="card quick-actions" data-qa-target></div>
+            </aside>
+          </section>
+
+          <section class="home-convert">
+            <div class="card__title card__title--convert">Convert</div>
+            <div class="card convert-card">
+              <div class="convert-card__header">
+                <div class="convert-card__text">
+                  <h2 class="convert-card__title">Convert &amp; OTC Service</h2>
+                  <p class="convert-card__desc">
+                    Experience a simple and secure process tailored to your unique transaction sizes.
+                  </p>
+                </div>
+                <div class="convert-card__illustration" aria-hidden="true">
+                  <img src="assets/illu_convert.png" alt="" width="192" height="110" />
+                </div>
+              </div>
+
+              <div class="convert-card__table">
+                <div class="convert-card__head-row">
+                  <div class="convert-card__head-cell convert-card__head-cell--currency">Currency</div>
+                  <div class="convert-card__head-cell convert-card__head-cell--usd">≈USD</div>
+                  <div class="convert-card__head-cell convert-card__head-cell--usdt">≈USDT</div>
+                  <div class="convert-card__head-cell convert-card__head-cell--actions"></div>
+                </div>
+
+                <div class="convert-card__row">
+                  <div class="convert-card__cell convert-card__cell--currency">
+                    <span class="convert-card__asset-icon">
+                      <img src="assets/icon_USD.svg" alt="" width="24" height="24" />
+                    </span>
+                    <div class="convert-card__asset-text">
+                      <div class="convert-card__asset-name">
+                        <span>USD</span>
+                        <span class="convert-card__asset-name-sub">(US dollar)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="convert-card__cell convert-card__cell--usd">
+                    <span class="convert-card__cell-label">≈USD</span>
+                    <span class="convert-card__cell-value convert-card__cell-value--muted">- -</span>
+                  </div>
+                  <div class="convert-card__cell convert-card__cell--usdt">
+                    <span class="convert-card__cell-label">≈USDT</span>
+                    <span class="convert-card__cell-value">
+                      <span class="convert-card__rate">0.9995</span>
+                      <span class="convert-card__rate-unit">USDT</span>
+                    </span>
+                  </div>
+                  <div class="convert-card__cell convert-card__cell--actions">
+                    <button type="button" class="convert-card__link">Convert</button>
+                    <button type="button" class="convert-card__link convert-card__link--secondary">Request OTC quote</button>
+                  </div>
+                  <div class="convert-card__cell convert-card__cell--chevron">
+                    <img src="assets/icon_chevron_right.svg" alt="" width="24" height="24" />
+                  </div>
+                </div>
+
+                <div class="convert-card__divider"></div>
+
+                <div class="convert-card__row">
+                  <div class="convert-card__cell convert-card__cell--currency">
+                    <span class="convert-card__asset-icon">
+                      <img src="assets/icon_USDT.svg" alt="" width="24" height="24" />
+                    </span>
+                    <div class="convert-card__asset-text">
+                      <div class="convert-card__asset-name">
+                        <span>USDT</span>
+                        <span class="convert-card__asset-name-sub">(USD Tether)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="convert-card__cell convert-card__cell--usd">
+                    <span class="convert-card__cell-label">≈USD</span>
+                    <span class="convert-card__cell-value">
+                      <span class="convert-card__rate">1.0005</span>
+                      <span class="convert-card__rate-unit">USD</span>
+                    </span>
+                  </div>
+                  <div class="convert-card__cell convert-card__cell--usdt">
+                    <span class="convert-card__cell-label">≈USDT</span>
+                    <span class="convert-card__cell-value convert-card__cell-value--muted">- -</span>
+                  </div>
+                  <div class="convert-card__cell convert-card__cell--actions">
+                    <button type="button" class="convert-card__link">Convert</button>
+                    <button type="button" class="convert-card__link convert-card__link--secondary">Request OTC quote</button>
+                  </div>
+                  <div class="convert-card__cell convert-card__cell--chevron">
+                    <img src="assets/icon_chevron_right.svg" alt="" width="24" height="24" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="home-transactions">
+            <div class="card__title card__title--transactions">Transactions</div>
+            <div data-transactions-target></div>
+          </section>
+        </div>
+        <section id="quickView" class="quick-view" hidden>
+          <div data-qa-header-target></div>
+          <div class="card quick-actions" data-qa-target></div>
+        </section>
+        <section id="transactionsView" class="transactions-view" hidden></section>
+      </div>
+    </main>
+
+    <!-- Mobile quick menu overlay removed -->
+
+    <!-- Mobile tab bar -->
+    <nav class="tabbar" aria-label="Bottom">
+      <div class="tabbar__inner">
+      <button id="tab-home" class="tabbar__btn is-active" aria-label="Home">
+        <img class="tabbar__icon" src="assets/icon_tabbar_assets_active.svg" data-icon-active="assets/icon_tabbar_assets_active.svg" data-icon-inactive="assets/icon_tabbar_assets_inactive.svg" alt="" width="22" height="22" />
+        <span>Assets</span>
+      </button>
+      <button id="tab-convert" class="tabbar__btn" aria-label="Convert">
+        <img class="tabbar__icon" src="assets/icon_tabbar_convert_inactive.svg" data-icon-active="assets/icon_tabbar_convert_active.svg" data-icon-inactive="assets/icon_tabbar_convert_inactive.svg" alt="" width="22" height="22" />
+        <span>Convert</span>
+      </button>
+      <button id="tab-otc" class="tabbar__btn" aria-label="OTC">
+        <img class="tabbar__icon" src="assets/icon_tabbar_otc_inactive.svg" data-icon-active="assets/icon_tabbar_otc_active.svg" data-icon-inactive="assets/icon_tabbar_otc_inactive.svg" alt="" width="22" height="22" />
+        <span>OTC</span>
+      </button>
+      <button id="tab-transactions" class="tabbar__btn" aria-label="Transactions">
+        <img class="tabbar__icon" src="assets/icon_tabbar_transaction_inactive.svg" data-icon-active="assets/icon_tabbar_transaction_active.svg" data-icon-inactive="assets/icon_tabbar_transaction_inactive.svg" alt="" width="22" height="22" />
+        <span>Transactions</span>
+      </button>
+      <button id="tab-menu" class="tabbar__btn" aria-label="Quick menu">
+        <img class="tabbar__icon" src="assets/icon_tabbar_quickmenu_inactive.svg" data-icon-active="assets/icon_tabbar_quickmenu_active.svg" data-icon-inactive="assets/icon_tabbar_quickmenu_inactive.svg" alt="" width="22" height="22" />
+      </button>
+      </div>
+    </nav>
+    <!-- Shared quick actions template -->
+    <template id="quickActionsHeaderTemplate">
+      <h3 class="card__title card__title--quick-actions">Quick actions</h3>
+    </template>
+    <template id="quickActionsTemplate">
+      <ul class="qa">
+        <li>
+          <a href="#" class="qa__item">
+            <div class="qa__icon"><img src="assets/icon_qm_deposit.svg" alt="" /></div>
+            <span class="qa__content">Deposit asset</span>
+            <img class="qa__chev" src="assets/icon_chevron_right.svg" alt="" width="20" height="20" />
+          </a>
+        </li>
+        <li>
+          <a href="#" class="qa__item">
+            <div class="qa__icon"><img src="assets/icon_qm_withdraw.svg" alt="" /></div>
+            <span class="qa__content">Withdraw asset</span>
+            <img class="qa__chev" src="assets/icon_chevron_right.svg" alt="" width="20" height="20" />
+          </a>
+        </li>
+        <li>
+          <a href="select-counterparty.html" class="qa__item" data-send-payment-entry>
+            <div class="qa__icon"><img src="assets/icon_qm_sendpayment.svg" alt="" /></div>
+            <span class="qa__content">Send payment<small class="muted">Make payments to counterparty bank accounts</small></span>
+            <img class="qa__chev" src="assets/icon_chevron_right.svg" alt="" width="20" height="20" />
+          </a>
+        </li>
+        <li>
+          <a href="#" class="qa__item">
+            <div class="qa__icon"><img src="assets/icon_qm_bitcheck.svg" alt="" /></div>
+            <span class="qa__content">BitCheck transfer<small class="muted">Escrow service for fiat and digital assets</small></span>
+            <img class="qa__chev" src="assets/icon_chevron_right.svg" alt="" width="20" height="20" />
+          </a>
+        </li>
+        <li>
+          <a href="#" class="qa__item">
+            <div class="qa__icon"><img src="assets/icon_qm_convert.svg" alt="" /></div>
+            <span class="qa__content">Convert asset</span>
+            <img class="qa__chev" src="assets/icon_chevron_right.svg" alt="" width="20" height="20" />
+          </a>
+        </li>
+        <li>
+          <a href="#" class="qa__item mobile_only">
+            <div class="qa__icon"><img src="assets/icon_qm_otc.svg" alt="" /></div>
+            <span class="qa__content">Request OTC quote</span>
+            <img class="qa__chev" src="assets/icon_chevron_right.svg" alt="" width="20" height="20" />
+          </a>
+        </li>
+      </ul>
+    </template>
+
+    <div id="needCounterpartyModal" class="modal modal--dialog" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="needCounterpartyTitle">
+      <div class="modal__dialog">
+        <div class="modal__content">
+          <div class="modal__header">
+            <button class="modal__close" data-modal-close aria-label="Close modal">
+              <img src="assets/icon_close.svg" width="24" height="24" alt="close" />
+            </button>
+          </div>
+          <div class="modal__body">
+            <h2 id="needCounterpartyTitle" class="modal__title">Add counterparty bank account</h2>
+            <p class="modal__desc">
+              Set up the recipient's bank account to continue. We will complete a quick safety and compliance check.
+            </p>
+            <div class="m-info">
+              <span class="mi-icon" aria-hidden="true"></span>
+              <span>
+                Verification takes 1–4 business days. Once it's complete, you'll be able to send payments to this account.
+              </span>
+            </div>
+          </div>
+          <div class="modal__footer">
+            <button type="button" class="btn btn--secondary btn--md" data-modal-close>Not now</button>
+            <a class="btn btn--primary btn--md" href="add-bank.html">Add counterparty account</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer__inner">
+        <div class="footer__copy">© XREX Pay Limited 2025</div>
+        <div class="footer__links">
+          <a href="https://intercom.help/xrex-sg/en/" target="_blank" rel="noopener noreferrer">Support</a>
+          <a href="https://info.xrex.sg/doc" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+          <a href="https://info.xrex.sg/doc" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+        </div>
+      </div>
+    </footer>
+
+    <template id="transactionsTemplate">
+      <section class="transactions">
+
+        <div class="transactions__tabs" role="tablist">
+          <button type="button" class="transactions__tab is-active" data-tab="deposit">Deposit</button>
+          <button type="button" class="transactions__tab" >Withdrawal</button>
+          <button type="button" class="transactions__tab" data-tab="payment">Payment</button>
+          <button type="button" class="transactions__tab" >BitCheck</button>
+          <button type="button" class="transactions__tab" >Convert</button>
+        </div>
+
+        <div class="transactions__filters">
+          <button type="button" class="transactions__filter transactions__filter--currency">
+            <img src="assets/icon_allcurrency.svg" alt="" width="16" height="16" />
+            <span>All currencies</span>
+            <img src="assets/icon_chevron_down.svg" alt="" width="16" height="16" />
+          </button>
+          <button type="button" class="transactions__filter transactions__filter--range">
+            <span>Past 30 days</span>
+            <img src="assets/icon_chevron_down.svg" alt="" width="16" height="16" />
+          </button>
+        </div>
+
+        <div class="transactions__panels">
+          <div class="transactions__panel is-active" data-panel="deposit">
+            <div class="transactions__head-row">
+              <span class="transactions__head-cell transactions__head-cell--activity"></span>
+              <span class="transactions__head-cell">Amount</span>
+              <span class="transactions__head-cell">Type</span>
+              <span class="transactions__head-cell">Status</span>
+              <span class="transactions__head-cell">Date</span>
+            </div>
+            <ul class="transactions__list">
+              <li class="transactions__item" data-action="deposit">
+                <div class="transactions__cell transactions__cell--activity">
+                  <span class="transactions__item-icon">
+                    <img src="assets/icon-tx-deposit.svg" alt="" width="20" height="20" />
+                  </span>
+                  <div class="transactions__item-meta">
+                    <div class="transactions__item-title">Deposit</div>
+                    <div class="transactions__item-status transactions__item-status--completed">Completed</div>
+                  </div>
+                </div>
+                <div class="transactions__cell transactions__cell--amount">
+                  + 200,000.00 USDT
+                </div>
+                <div class="transactions__cell transactions__cell--type">Crypto</div>
+                <div class="transactions__cell transactions__cell--status">
+                  <span class="transactions__item-status transactions__item-status--completed">Completed</span>
+                </div>
+                <div class="transactions__cell transactions__cell--date">24/06/2025, 18:11:45</div>
+              </li>
+              <li class="transactions__item" data-action="deposit">
+                <div class="transactions__cell transactions__cell--activity">
+                  <span class="transactions__item-icon">
+                    <img src="assets/icon-tx-deposit.svg" alt="" width="20" height="20" />
+                  </span>
+                  <div class="transactions__item-meta">
+                    <div class="transactions__item-title">Deposit</div>
+                    <div class="transactions__item-status transactions__item-status--completed">Completed</div>
+                  </div>
+                </div>
+                <div class="transactions__cell transactions__cell--amount">
+                  + 200,000.00 USD
+                </div>
+                <div class="transactions__cell transactions__cell--type">Fiat</div>
+                <div class="transactions__cell transactions__cell--status">
+                  <span class="transactions__item-status transactions__item-status--completed">Completed</span>
+                </div>
+                <div class="transactions__cell transactions__cell--date">22/06/2025, 17:21:12</div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="transactions__panel" data-panel="payment">
+            <div class="transactions__head-row">
+              <span class="transactions__head-cell transactions__head-cell--activity"></span>
+              <span class="transactions__head-cell">Payment amount</span>
+              <span class="transactions__head-cell">Purpose</span>
+              <span class="transactions__head-cell">Status</span>
+              <span class="transactions__head-cell">Requested date</span>
+            </div>
+            <ul class="transactions__list">
+              <li class="transactions__item transactions__item--link" data-action="payment" data-href="payment-details.html">
+                <div class="transactions__cell transactions__cell--activity">
+                  <span class="transactions__item-icon transactions__item-icon--payment">
+                    <img src="assets/icon-tx-payment.svg" alt="" width="20" height="20" />
+                  </span>
+                  <div class="transactions__item-meta">
+                    <div class="transactions__item-title">NovaQuill Ltd</div>
+                    <div class="transactions__item-status transactions__item-status--processing">Processing</div>
+                  </div>
+                </div>
+                <div class="transactions__cell transactions__cell--amount">50,000.00 USD</div>
+                <div class="transactions__cell transactions__cell--type">
+                  <div class="transactions__item-purpose">Goods purchase</div>
+                  <div class="transactions__item-purpose-sub">PI-001234</div>
+                </div>
+                <div class="transactions__cell transactions__cell--status">
+                  <span class="transactions__item-status transactions__item-status--processing">Processing</span>
+                </div>
+                <div class="transactions__cell transactions__cell--date">25/11/2025, 15:19:09</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </template>
+
+    <script defer src="js/main.js?v=20251108"></script>
+    <div class="build-badge" role="note"></div>
+  </body>
+  </html>
+
+

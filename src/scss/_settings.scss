@@ -1,0 +1,1354 @@
+// Container styles for settings page
+main.container {
+  max-width: 768px;
+  min-width: 320px;
+  margin: 0 auto;
+  padding: 96px 20px 40px;
+  display: flex;
+  width: 100%;
+  gap: 56px;
+  flex: 1 1 auto;
+
+  @media (min-width: $bp-desktop) {
+    max-width: 1280px;
+    padding: 120px 40px 40px;
+  }
+}
+
+// Mobile state switching - toggle between menu and content views
+@media (max-width: ($bp-desktop - 1px)) {
+  body.state-menu .content { display: none; }
+  body.state-menu .mobile-back { display: none; }
+  body.state-menu .mobile-menu-header { display: block; }
+  body.state-menu .sidebar { display: block; }
+  body.state-menu .sidebar .menu { border: 1px solid #EEEEEE; }
+  body.state-menu .sidebar .menu-item { color: $text-primary; font-weight: 600; }
+  // In State 1 (menu view) on mobile, suppress active styling
+  body.state-menu .sidebar .menu-item.active { color: $text-primary; }
+  body.state-menu .sidebar .menu-item.active .menu-item-icon { background: #f0f1f3; }
+  body.state-menu main.container { flex-direction: column; gap: 12px; }
+  body.state-menu .mobile-menu-header { width: 100%; }
+  body.state-menu .mobile-menu-header .link-close-menu { width: 100%; display: inline-flex; }
+  body.state-menu .sidebar { width: 100%; }
+  body.state-menu .sidebar .menu { background: #ffffff; padding: 0px; border-radius: 8px; width: 100%; }
+  body.state-menu .sidebar .menu-item { border-radius: 0px; padding: 20px 20px; }
+  body.state-menu .sidebar .menu-divider {
+    height: 1px;
+    background: $border-color;
+    margin: 0;
+    width: 100%;
+  }
+  body.state-menu .sidebar .menu-item-icon { width: 32px; height: 32px; }
+
+  body.state-content .mobile-menu-header { display: none; }
+  body.state-content .sidebar { display: none; }
+}
+
+.mobile-menu-header {
+  display: none;
+  margin: 4px 0 8px 0;
+  @media (min-width: $bp-desktop) { display: none; }
+  .link-close-menu {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-sizing: border-box;
+    color: #336AFF;
+    text-decoration: none;
+    font-family: $font-sora;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+  }
+}
+
+.sidebar {
+  // hidden on mobile by default
+  display: none;
+
+  // shared sidebar styles (apply on all breakpoints)
+  .menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    color: $text-secondary;
+    cursor: pointer;
+    border: 1px solid transparent;
+    font-family: $font-family-sans;
+    font-weight: 600;
+    font-size: 16px;
+    background: transparent;
+    appearance: none;
+    width: 100%;
+    text-align: left;
+
+    &:hover { background: transparent; }
+
+    &.active {
+      color: #194AF9;
+      .menu-item-icon { background: #ebf2ff; }
+    }
+
+    .menu-item-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 9999px;
+      background: #EEEEEE;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      img { width: 24px; height: 24px; }
+      svg { width: 24px; height: 24px; display: block; }
+    }
+
+    .menu-title { flex: 1; }
+
+    .menu-chevron {
+      background: transparent;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      transition: transform .2s ease;
+      display: grid;
+      place-items: center;
+      padding: 4px;
+      flex-shrink: 0;
+    }
+    &.open .menu-chevron { transform: rotate(180deg); }
+  }
+
+  .submenu {
+    display: flex;
+    flex-direction: column;
+    margin-left: 52px;
+    gap: 8px;
+    padding: 0 0 24px 0;
+
+    &[hidden] { display: none; }
+
+    .submenu-item {
+      color: #797A7B;
+      text-decoration: none;
+      font-family: $font-family-sans;
+      font-size: 16px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      font-weight: 600;
+      appearance: none;
+      text-align: left;
+      padding: 0;
+    }
+
+    .submenu-item.is-active {
+      color: $primary-600;
+    }
+  }
+
+  @media (min-width: $bp-desktop) {
+    display: block;
+    width: 260px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 96px;
+    align-self: flex-start;
+  }
+}
+
+.content {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 4px;
+
+  @media (min-width: $bp-desktop) {
+    margin-top: 0;
+    gap: 48px;
+  }
+
+  .content-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      color: #2D2F2F;
+      font-family: $font-sora;
+      @media (min-width: $bp-desktop) {
+        font-size: 32px;
+      }
+    }
+
+    // Title with avatar + handle
+    .title-with-avatar {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      .title-texts { display: flex; flex-direction: column; }
+      .title-avatar {
+        width: 40px; height: 40px; border-radius: 9999px; object-fit: cover;
+        @media (min-width: $bp-desktop) { width: 64px; height: 64px; }
+      }
+    }
+    .bot-handle {
+      color: #336AFF;
+      font-family: $font-family-sans;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 1.2;
+      margin-top: 2px;
+      text-decoration: none;
+      cursor: pointer;
+      @media (min-width: $bp-desktop) { font-size: 18px; }
+    }
+  }
+
+  // Back button visible only on mobile
+  .mobile-back {
+    display: block;
+    margin: 0 0 8px 0;
+    @media (min-width: $bp-desktop) { display: none; }
+    .link-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-sizing: border-box;
+      color: #336AFF;
+      text-decoration: none;
+      font-family: $font-sora;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      .icon-back { width: 20px; height: 20px; display: inline-block; }
+    }
+  }
+}
+
+// Account panel (no white card wrapper)
+.account-panel {
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  @media (min-width: $bp-desktop) {
+    gap: 48px;
+  }
+
+  .acct-status-line { 
+    display: flex; 
+    gap: 4px; 
+    align-items: center; 
+    margin: 0;
+  }
+  .acct-status-label {
+    font-family: $font-family-sans;
+    font-weight: 700;
+    font-size: 18px;
+    color: $text-primary;
+    @media (min-width: $bp-desktop) {
+      font-size: 26px;
+    }
+  }
+  .acct-status-value {
+    font-family: $font-family-sans;
+    font-weight: 700;
+    font-size: 18px;
+    color: #3fae64;
+    @media (min-width: $bp-desktop) {
+      font-size: 26px;
+    }
+  }
+
+  .section-heading {
+    margin: 0;
+    font-family: $font-family-sans;
+    font-weight: 700;
+    font-size: 18px;
+    color: $text-secondary;
+
+    @media (min-width: $bp-desktop) {
+      font-size: 20px;
+    }  
+  }
+
+  .mb-32 {
+    margin-bottom: 0;
+  }
+
+  .card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    padding: 16px;
+    background: #fff;
+
+    @media (min-width: $bp-desktop) {
+      gap: 24px;
+      padding: 24px;
+    }
+  }
+  .editable .icon-btn { margin-left: auto; background: transparent; border: none; cursor: pointer; padding: 0; }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 9999px;
+    background: #dbeafe;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+ 
+    @media (min-width: $bp-desktop) {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  .avatar img {
+    width: 32px;
+    height: 32px;
+     
+    @media (min-width: $bp-desktop) {
+      width: 60px;
+      height: 60px;
+    }
+  }
+  .name-block { display: flex; flex-direction: column; gap: 4px; }
+  .name { 
+    font-family: $font-family-sans; 
+    font-weight: 600; 
+    font-size: 16px; 
+    color: $text-primary; 
+
+    @media (min-width: $bp-desktop) {
+      font-weight: 700;
+      font-size: 22px;
+    }
+  }
+  .caption { 
+    font-family: $font-family-sans; 
+    font-weight: 600; 
+    font-size: 12px; 
+    color: $text-secondary; 
+
+    @media (min-width: $bp-desktop) {
+      font-size: 16px;
+    }
+  }
+
+  .grid-2 { 
+    display: grid; 
+    grid-template-columns: 1fr; 
+    gap: 16px; 
+    margin: 0;
+
+    @media (min-width: $bp-desktop) { 
+      grid-template-columns: 1fr 1fr; 
+      gap: 48px; 
+    } 
+  }
+  .field { display: flex; flex-direction: column; gap: 16px; }
+  .field-disabled .input-card { background-color: #F8F8F8; }
+  .field-disabled .value { color: $text-secondary }
+  .field-label { 
+    font-family: $font-family-sans; 
+    font-weight: 600; 
+    font-size: 12px; 
+    color: $text-secondary; 
+
+    @media (min-width: $bp-desktop) {
+      font-size: 14px;
+    }    
+  }
+  .input-card { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    border: 1px solid $border-color; 
+    border-radius: 8px; 
+    padding: 16px; 
+    background: #fff; 
+    min-height: 60px; 
+
+    @media (min-width: $bp-desktop) {
+      min-height: 74px;
+    }
+  }
+  .input-card:focus-within { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,.15); }
+  .input-card-split { justify-content: space-between; }
+  .value { 
+    font-family: $font-family-sans; 
+    font-weight: 600; 
+    font-size: 16px; 
+    color: $text-primary; 
+  }
+  .name-card { margin: 0; }
+  .auth-row { display: flex; align-items: center; gap: 8px; }
+  .auth-state.enabled { 
+    color: #3fae64; 
+    font-family: $font-family-sans; 
+    font-weight: 600; 
+    font-size: 16px; 
+  }
+  .auth-state.disabled { 
+    color: #dd483c; 
+    font-family: $font-family-sans; 
+    font-weight: 600; 
+    font-size: 16px; 
+  }
+
+  .divider { 
+    height: 1px; 
+    background: $border-color; 
+    margin: 0; 
+    width: 100%;
+  }
+
+  .logout-row { 
+    margin: 0; 
+    max-width: none;
+    width: 100%;
+
+    @media (min-width: $bp-desktop) {
+      max-width: 250px;
+    }
+  }
+  .btn-block { width: 100%; justify-content: center; }
+  .btn-secondary.btn-lg { 
+    max-width: 100%; 
+    width: 100%; 
+    height: 52px;
+    font-size: 16px;
+    font-weight: 700;
+
+    @media (min-width: $bp-desktop) { 
+      max-width: 250px; 
+    } 
+  }
+
+  // iOS-like switch
+  .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e5e7eb; transition: .2s; border-radius: 9999px; }
+  .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 2px; bottom: 2px; background-color: white; transition: .2s; border-radius: 50%; }
+  .switch input:checked + .slider { background-color: #2563eb; }
+  .switch input:checked + .slider:before { transform: translateX(20px); }
+
+  // Ensure currency row stays on one line inside account panel
+  .market-currency { display: flex; align-items: center; gap: 10px; flex-wrap: nowrap; white-space: nowrap; }
+  .market-currency .currency-label { display: inline-flex; flex-direction: row; gap: 4px; }
+  .market-currency .cl-primary { color: $text-primary; }
+  .market-currency .cl-secondary { color: $text-secondary; }
+
+  // Bank panel styles
+  .bank-card {
+    border: 1px solid $border-color;
+    border-radius: 12px;
+    padding: 18px;
+    background: #fff;
+    margin-bottom: 16px;
+
+    &.is-empty {
+      border-style: dashed;
+      background: $bg-subtle;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    &__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+
+      h3 {
+        margin: 0;
+        font-family: $font-family-sans;
+        font-weight: 700;
+        font-size: 18px;
+        color: $text-primary;
+      }
+
+      p {
+        margin: 4px 0 0 0;
+        font-family: $font-family-sans;
+        font-weight: 400;
+        font-size: 14px;
+        color: $text-secondary;
+      }
+    }
+
+    &__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+
+      span {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: $text-secondary;
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      strong {
+        font-weight: 600;
+        color: $text-primary;
+        display: block;
+      }
+    }
+  }
+
+  .bank-status {
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    flex-shrink: 0;
+
+    &--warning {
+      background: rgba($warning-500, 0.2);
+      color: $warning-500;
+    }
+  }
+}
+
+// Ensure inactive panels are fully hidden
+.account-panel[hidden],
+.banks-panel[hidden] {
+  display: none !important;
+}
+
+// Banks panel (USD bank accounts)
+.banks-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  @media (min-width: $bp-desktop) {
+    gap: 56px;
+  }
+
+  .banks-header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+
+    @media (min-width: $bp-desktop) {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .banks-subtitle {
+      margin: 0;
+      font-family: $font-family-sans;
+      font-weight: 700;
+      font-size: 18px;
+      color: $text-primary;
+      line-height: 1.2;
+
+      @media (min-width: $bp-desktop) {
+        font-size: 22px;
+      }
+    }
+
+    .btn {
+      width: 100%;
+
+      @media (min-width: $bp-desktop) {
+        width: 240px;
+        height: 40px;
+        font-size: 14px;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .banks-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .banks-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+
+      .banks-section-title {
+        margin: 0;
+        font-family: $font-family-sans;
+        font-weight: 600;
+        font-size: 16px;
+        color: $text-primary;
+        white-space: nowrap;
+      }
+
+      // Match select-counterparty "Verified accounts" filter styling
+      .banks-filter {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 14px;
+        color: $text-secondary;
+        font-weight: 700;
+        cursor: pointer;
+        user-select: none;
+
+        .banks-filter-checkbox {
+          appearance: none;
+          width: 24px;
+          height: 24px;
+          background-image: url('../assets/icon_checkbox_inactive.svg');
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 24px 24px;
+          border: none;
+          outline: none;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+
+        .banks-filter-checkbox:checked {
+          background-image: url('../assets/icon_checkbox_active.svg');
+        }
+
+        .banks-filter-label {
+          font-family: $font-family-sans;
+          font-weight: 700;
+          font-size: 14px;
+          color: $text-secondary;
+          white-space: nowrap;
+        }
+
+        &.is-disabled {
+          opacity: 0.4;
+          pointer-events: none;
+
+          .banks-filter-checkbox {
+            cursor: default;
+          }
+        }
+      }
+    }
+
+    .banks-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid $border-color;
+      border-radius: 8px;
+      overflow: hidden;
+
+      .bank-card {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 24px;
+        margin: 0;
+        border: none;
+        border-bottom: 1px solid $border-color;
+        border-radius: 0;
+        background: #fff;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &:first-child {
+          border-top-left-radius: 8px;
+          border-top-right-radius: 8px;
+        }
+
+        &:last-child {
+          border-bottom-left-radius: 8px;
+          border-bottom-right-radius: 8px;
+        }
+
+        .bank-card-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: #EEEEEE;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+
+          img {
+            width: 24px;
+            height: 24px;
+          }
+        }
+
+        .bank-card-content {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          min-width: 0;
+
+          .bank-card-name {
+            font-family: $font-family-sans;
+            font-weight: 700;
+            font-size: 18px;
+            color: $text-primary;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .bank-card-status {
+            font-family: $font-family-sans;
+            font-weight: 600;
+            font-size: 14px;
+
+            &.status-verified {
+              color: #3fae64;
+            }
+
+            &.status-under-review {
+              color: #73a2f5;
+            }
+
+            &.status-rejected {
+              color: #dd483c;
+            }
+
+            &.status-resubmission {
+              color: #ff926e;
+            }
+          }
+        }
+
+        .bank-card-details {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 16px;
+          white-space: nowrap;
+
+          .bank-card-code {
+            font-family: $font-family-sans;
+            font-weight: 600;
+            color: $text-primary;
+          }
+
+          .bank-card-number {
+            font-family: $font-family-sans;
+            font-weight: 400;
+            color: $text-secondary;
+            line-height: 23px;
+          }
+        }
+
+        .bank-card-chevron {
+          flex-shrink: 0;
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: $bp-desktop) {
+  .add-usdbank-modal {
+    .modal-wrapper {
+      max-width: 1000px;
+    }
+  }
+}
+
+
+// Add USD bank account modal (settings)
+.add-usdbank-modal-content {
+
+
+  .add-usdbank-card__title {
+    font-size: 18px;
+    margin: 0;
+    font-family: $font-family-sans;
+    font-size: 22px;
+    font-weight: 700;
+    color: $text-primary;
+
+    @media (min-width: $bp-desktop) {
+      font-size: 24px;
+    }
+  }
+
+  .add-usdbank-card__desc  {
+    margin: 0 0 16px 0;
+    font-family: $font-family-sans;
+    font-size: 16px;
+    font-weight: 500;
+    color: $text-primary;
+
+    @media (min-width: $bp-desktop) {
+      font-size: 18px;
+    }
+  }
+
+
+  .add-usdbank-card__icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    display: flex;
+    border: 1px solid $border-color;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+
+    img {
+      width: 46px;
+      height: 46px;
+    }
+
+    @media (min-width: $bp-desktop) {
+      width: 100px;
+      height: 100px;
+
+      img {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  }
+  
+  .modal-body {
+    padding: 24px;
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: $bp-desktop) {
+      padding: 32px;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+  }
+
+  .m-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: #EBF2FF;
+    margin: 0 0 24px 0;
+
+    .m-alert__icon {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      background-image: url('../assets/icon_info_blue.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      margin-top: 2px;
+    }
+
+    .m-alert__text {
+      font-family: $font-family-sans;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.4;
+      color: #336AFF;
+    }
+  }
+
+  .add-usdbank-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    width: 100%;
+    max-width: 500px;
+
+    @media (min-width: $bp-desktop) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      max-width: 100%;
+    }
+  }
+
+  .add-usdbank-card {
+    border-radius: 8px;
+    border: 1px solid $border-color;
+    background: #fff;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+
+    @media (min-width: $bp-desktop) {
+      padding: 48px;
+    }
+
+
+    &__btn {
+      margin-top: auto;
+      width: 100%;
+
+      @media (min-width: $bp-desktop) {
+        width: auto;
+        min-width: 220px;
+      }
+
+      &[aria-disabled='true'] {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+// On mobile/tablet, hide the inline header CTA for USD bank accounts;
+// the sticky footer CTA (cp-sticky) replaces it.
+@media (max-width: ($bp-desktop - 1px)) {
+  .banks-panel .banks-header .btn {
+    display: none;
+  }
+}
+
+// Empty state for banks panel
+.banks-empty {
+  padding: 80px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+
+  img {
+    width: 124px;
+    height: 100px;
+  }
+
+  .banks-empty__title {
+    margin: 8px 0 0 0;
+    font-family: $font-family-sans;
+    font-weight: 700;
+    font-size: 18px;
+    color: $text-primary;
+  }
+
+  .banks-empty__text {
+    margin: 0;
+    max-width: 480px;
+    font-family: $font-family-sans;
+    font-weight: 400;
+    font-size: 14px;
+    color: $text-secondary;
+  }
+
+  .banks-empty__btn {
+    margin-top: 8px;
+  }
+}
+
+// Banks list – align mobile RWD with cp-list items on Select counterparty
+@media (max-width: ($bp-desktop - 1px)) {
+  .banks-panel {
+    gap: 40px;
+
+    .banks-section .banks-list {
+      border-radius: 8px;
+
+      .bank-card {
+        padding: 16px;
+        gap: 12px;
+
+        .bank-card-icon {
+          width: 32px;
+          height: 32px;
+
+          img {
+            width: 22px;
+            height: 22px;
+          }
+        }
+
+        .bank-card-content {
+          gap: 2px;
+
+          .bank-card-name {
+            font-size: 16px;
+            font-weight: 700;
+          }
+
+          .bank-card-status {
+            font-size: 12px;
+            font-weight: 600;
+          }
+        }
+
+        .bank-card-details {
+          font-size: 14px;
+          gap: 6px;
+        }
+      }
+    }
+  }
+}
+
+// Counterparty bank details page (from settings)
+.page--cp-detail {
+  padding-top: 32px;
+  padding-bottom: 120px; // Space for mobile footer actions
+
+  @media (min-width: $bp-desktop) {
+    padding-top: 48px;
+    padding-bottom: 40px;
+  }
+
+  .page__header--crumb {
+    margin-bottom: 24px;
+
+    @media (min-width: $bp-desktop) {
+      margin-bottom: 32px;
+    }
+  }
+}
+
+.cp-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+
+  @media (min-width: $bp-desktop) {
+    gap: 24px;
+    margin-top: 50px;
+  }
+
+  .cp-detail__card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #eeeeee;
+    padding: 24px 16px;
+
+    @media (min-width: $bp-desktop) {
+      padding: 32px;
+    }
+  }
+
+  .cp-detail__card--summary {
+    position: relative;
+  }
+
+  .cp-detail__card--meta {
+    padding-top: 24px;
+    padding-bottom: 24px;
+
+    @media (min-width: $bp-desktop) {
+      padding-top: 32px;
+      padding-bottom: 32px;
+    }
+  }
+
+  .cp-detail__summary-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    @media (max-width: ($bp-desktop - 1px)) {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+
+  .cp-detail__summary-main {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .cp-detail__label {
+    font-family: $font-family-sans;
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-secondary;
+    line-height: 1.4;
+  }
+
+  .cp-detail__name {
+    font-family: $font-family-sans;
+    font-size: 20px;
+    font-weight: 700;
+    color: $text-primary;
+    line-height: 1.3;
+    @media (min-width: $bp-desktop) {
+      font-size: 24px;
+    }
+  }
+
+  .cp-detail__name-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cp-detail__status-wrap {
+    display: inline-flex;
+  }
+
+  .cp-detail__cta {
+    flex-shrink: 0;
+
+    // Desktop CTA; visibility is further controlled by page state helpers below
+    &.cp-detail__cta--desktop {
+      @media (max-width: ($bp-desktop - 1px)) {
+        display: none;
+      }
+    }
+
+    &.cp-detail__cta--mobile {
+      display: none;
+
+      @media (max-width: ($bp-desktop - 1px)) {
+        display: inline-flex;
+        width: 100%;
+      }
+    }
+  }
+
+  .cp-detail__info-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: #EBF2FF;
+    margin-bottom: 24px;
+    font-family: $font-family-sans;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #336AFF;
+  }
+
+  .cp-detail__info-icon {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    background-image: url('../assets/icon_info_blue.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin-top: 2px;
+  }
+
+  .cp-detail__info-text {
+    flex: 1;
+  }
+
+  .cp-detail__section-title {
+    margin: 0 0 16px;
+    font-family: $font-family-sans;
+    font-size: 16px;
+    font-weight: 700;
+    color: $text-primary;
+    line-height: 1.3;
+
+    @media (min-width: $bp-desktop) {
+      font-size: px;
+      margin-bottom: 24px;
+    }
+  }
+
+  .cp-detail__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+
+    &.cp-detail__grid--bank,
+    &.cp-detail__grid--receiver {
+      @media (min-width: $bp-desktop) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px 32px;
+      }
+    }
+  }
+
+  .cp-detail__item {
+    dt {
+      margin: 0 0 4px;
+      font-family: $font-family-sans;
+      font-size: 14px;
+      font-weight: 600;
+      color: $text-secondary;
+      line-height: 1.4;
+    }
+
+    dd {
+      margin: 0;
+      font-family: $font-family-sans;
+      font-size: 16px;
+      font-weight: 500;
+      color: $text-primary;
+      line-height: 1.4;
+
+      @media (min-width: $bp-desktop) {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .cp-detail__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: $font-family-sans;
+    font-size: 12px;
+    color: $text-secondary;
+  }
+
+  .cp-detail__meta-updated {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .cp-detail__meta-label {
+    font-weight: 600;
+    font-size: 14px;
+    color: $text-secondary
+  }
+
+  .cp-detail__meta-value {
+    font-weight: 500;
+    font-size: 16px;
+    color: $text-primary;
+  }
+
+  .cp-detail__delete {
+    padding: 0;
+    border: none;
+    background: transparent;
+    font-family: $font-family-sans;
+    font-size: 12px;
+    font-weight: 600;
+    color: #eb5347;
+    cursor: pointer;
+    text-decoration: none;
+
+    &.cp-detail__delete--mobile {
+      @media (min-width: $bp-desktop) {
+        display: none;
+      }
+    }
+  }
+
+  .cp-detail__footer-actions,
+  .cp-detail__footer-single {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background: #ffffff;
+    border-top: 1px solid #eeeeee;
+    padding: 16px 20px;
+    z-index: 3000;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .cp-detail__footer-actions {
+    gap: 12px;
+
+    .cp-detail__delete--mobile {
+      flex: 0 0 auto;
+      padding: 0;
+    }
+
+    .cp-detail__cta--mobile {
+      flex: 1 1 auto;
+    }
+  }
+
+  .cp-detail__footer-single {
+    .cp-detail__cta--mobile-single {
+      width: 100%;
+    }
+  }
+}
+
+.cp-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-family: $font-family-sans;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+
+  &--under-review {
+    background: #C2DAFF;
+    color: #3362C2;
+  }
+
+  &--verified {
+    background: #A8E8BD;
+    color: #2F9752;
+  }
+}
+
+// State-based CTA visibility for counterparty details
+@media (min-width: $bp-desktop) {
+  .page--cp-detail.is-verified {
+    .cp-detail__cta--desktop { display: inline-flex; }
+  }
+  .page--cp-detail.is-under-review {
+    .cp-detail__cta--desktop { display: none !important; }
+  }
+}
+
+@media (max-width: ($bp-desktop - 1px)) {
+  .page--cp-detail.is-verified {
+    .cp-detail__footer-single { display: flex; align-items: center; }
+  }
+  .page--cp-detail.is-under-review {
+    .cp-detail__footer-single { display: none; }
+  }
+}

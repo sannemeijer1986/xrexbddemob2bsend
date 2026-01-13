@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>XREX Pay - Counterparty account details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/main.css?v=20251108" />
+    <link rel="icon" href="assets/favicons/xrex-favicon-16x16.png" sizes="16x16" type="image/png" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header__content">
+        <a class="brand" href="index.html">
+          <img class="brand__img" src="assets/logo_xrexpay.svg" alt="XREX Pay" />
+        </a>
+        <div class="header__spacer"></div>
+        <div class="header__actions">
+          <a class="circle-icon" href="https://intercom.help/xrex-sg/en/" target="_blank" rel="noopener noreferrer" title="Support">
+            <img src="assets/icon_support.svg" alt="support" width="20" height="20" />
+          </a>
+          <a class="account-chip" id="accountChipLink" href="settings.html">
+            <span class="chip-avatar"><img src="assets/logo_agp.svg" alt="AGP" /></span>
+            <span class="chip-name">AGP Technology</span>
+            <img class="chevron" src="assets/icon_chevron_right.svg" alt="more" width="20" height="20" />
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page page--cp-detail">
+      <div class="container">
+        <section class="page__header page__header--crumb">
+          <a class="crumb" href="settings.html?view=content&page=banks" aria-label="Back">
+            <picture>
+              <source media="(min-width: 1280px)" srcset="assets/icon_header_back.svg" />
+              <img src="assets/icon_header_back_mobile.svg" width="32" height="32" alt="" />
+            </picture>
+          </a>
+          <h1 class="page__title">Counterparty account details</h1>
+        </section>
+
+                <section class="cp-detail">
+                <div class="cp-detail__card cp-detail__card--summary">
+                  <div class="cp-detail__summary-head">
+                    <div class="cp-detail__summary-main">
+                      <div class="cp-detail__label">Account name</div>
+                      <div class="cp-detail__name-row">
+                        <div class="cp-detail__name">NovaQuill Ltd</div>
+                        <div class="cp-detail__status-wrap">
+                          <span class="cp-tag cp-tag--state" id="cpDetailStatus"></span>
+                        </div>
+                      </div>
+                    </div>
+            <button type="button" class="btn btn--primary btn--md cp-detail__cta cp-detail__cta--desktop" id="cpDetailPrimaryCta">
+              Send payment
+            </button>
+          </div>
+
+          <div class="cp-detail__info-banner" id="cpDetailInfoBanner" style="display: none;">
+            <span class="cp-detail__info-icon"></span>
+            <span class="cp-detail__info-text">Bank account verification requires 1–4 business days.</span>
+          </div>
+
+          <dl class="cp-detail__grid cp-detail__grid--bank">
+            <div class="cp-detail__item">
+              <dt>Bank name</dt>
+              <dd>DBS Bank</dd>
+            </div>
+            <div class="cp-detail__item">
+              <dt>Bank country</dt>
+              <dd>Singapore</dd>
+            </div>
+            <div class="cp-detail__item">
+              <dt>Bank city</dt>
+              <dd>Singapore</dd>
+            </div>
+            <div class="cp-detail__item">
+              <dt>Account holder name</dt>
+              <dd>NovaQuill Ltd</dd>
+            </div>
+            <div class="cp-detail__item">
+              <dt>Account number</dt>
+              <dd>012-345678-9</dd>
+            </div>
+            <div class="cp-detail__item">
+              <dt>SWIFT code</dt>
+              <dd>DBSSSGSG</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="cp-detail__card">
+          <h2 class="cp-detail__section-title">Receiver information</h2>
+          <dl class="cp-detail__grid cp-detail__grid--receiver">
+            <div class="cp-detail__item">
+              <dt>Company legal name</dt>
+              <dd>NovaQuill Ltd</dd>
+            </div>
+            <div class="cp-detail__item">
+              <dt>Registration date</dt>
+              <dd>15/01/2024</dd>
+            </div>
+            <div class="cp-detail__item">
+              <dt>Registration number</dt>
+              <dd>202401234N</dd>
+            </div>
+            <div class="cp-detail__item">
+              <dt>Country of registration</dt>
+              <dd>Singapore</dd>
+            </div>
+            <div class="cp-detail__item">
+              <dt>Registered address</dt>
+              <dd>5 Battery Road, Singapore 049901</dd>
+            </div>
+            <div class="cp-detail__item">
+              <dt>Country of operation</dt>
+              <dd>Singapore</dd>
+            </div>
+            <div class="cp-detail__item">
+              <dt>Contact email address</dt>
+              <dd>accounts@novaquill.com</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="cp-detail__card cp-detail__card--meta">
+          <div class="cp-detail__meta">
+            <div class="cp-detail__meta-updated">
+              <span class="cp-detail__meta-label">Last updated</span>
+              <span class="cp-detail__meta-value">20/11/2025, 14:22:11</span>
+            </div>
+            <button type="button" class="cp-detail__delete" id="cpDetailDeleteBtn" style="display: none;">
+              Delete account
+            </button>
+          </div>
+        </div>
+
+        <div class="cp-detail__footer-single" id="cpDetailFooterSingle">
+          <button type="button" class="btn btn--primary btn--lg cp-detail__cta cp-detail__cta--mobile-single" id="cpDetailPrimaryCtaMobileSingle">
+            Send payment
+          </button>
+        </div>
+      </section>
+    </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer__inner">
+        <div class="footer__copy">© XREX Pay Limited 2025</div>
+        <div class="footer__links">
+          <a href="https://intercom.help/xrex-sg/en/" target="_blank" rel="noopener noreferrer">Support</a>
+          <a href="https://info.xrex.sg/doc" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+          <a href="https://info.xrex.sg/doc" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+        </div>
+      </div>
+    </footer>
+
+    <script defer src="js/main.js?v=20251108"></script>
+    <script>
+      window.addEventListener('DOMContentLoaded', function () {
+        try {
+          var badge = document.querySelector('.cp-tag--state');
+          var infoBanner = document.getElementById('cpDetailInfoBanner');
+          var ctaDesktop = document.getElementById('cpDetailPrimaryCta');
+          var delDesktop = document.getElementById('cpDetailDeleteBtn');
+          var footerSingle = document.getElementById('cpDetailFooterSingle');
+          var ctaMobileSingle = document.getElementById('cpDetailPrimaryCtaMobileSingle');
+          var pageRoot = document.querySelector('.page--cp-detail');
+          var headerCrumb = document.querySelector('.page__header--crumb');
+          var headerCrumbLink = headerCrumb && headerCrumb.querySelector('.crumb');
+
+          var applyState = function (state) {
+            var isUnderReview = state === 2;
+
+            // Mark page state for CSS-based visibility control
+            if (pageRoot) {
+              pageRoot.classList.toggle('is-under-review', isUnderReview);
+              pageRoot.classList.toggle('is-verified', !isUnderReview);
+            }
+
+            if (badge) {
+              badge.classList.remove('cp-tag--under-review', 'cp-tag--verified');
+              if (isUnderReview) {
+                badge.textContent = 'Under review';
+                badge.classList.add('cp-tag--under-review');
+              } else {
+                badge.textContent = 'Verified';
+                badge.classList.add('cp-tag--verified');
+              }
+            }
+
+            // Show/hide info banner based on state
+            if (infoBanner) {
+              infoBanner.style.display = isUnderReview ? 'flex' : 'none';
+            }
+
+            // Show/hide delete button based on state
+            if (delDesktop) {
+              delDesktop.style.display = isUnderReview ? 'none' : 'block';
+            }
+          };
+
+          // Initial apply
+          var initialState =
+            typeof getPrototypeState === 'function' ? getPrototypeState() : 2;
+          applyState(initialState);
+
+          // React to prototypeState changes from build-badge
+          document.addEventListener('prototypeStateChange', function (e) {
+            try {
+              var next =
+                e && e.detail && typeof e.detail.state === 'number'
+                  ? e.detail.state
+                  : typeof getPrototypeState === 'function'
+                  ? getPrototypeState()
+                  : 2;
+              applyState(next);
+            } catch (_) {}
+          });
+
+          // Wire up CTAs
+          var handleCtaClick = function (e) {
+            e.preventDefault();
+            try {
+              var state = typeof getPrototypeState === 'function' ? getPrototypeState() : 2;
+              var isUnderReview = state === 2;
+              if (!isUnderReview) {
+                // Verified (state 3+): go to Send payment and remember entrypoint
+                try {
+                  if (window.sessionStorage && typeof SEND_PAYMENT_RETURN_KEY !== 'undefined') {
+                    window.sessionStorage.setItem(SEND_PAYMENT_RETURN_KEY, 'cp-detail');
+                  }
+                } catch (_) {}
+                window.location.href = 'send-payment.html';
+                return;
+              }
+            } catch (_) {
+              // fall back to snackbar below
+            }
+            if (typeof window.showSnackbar === 'function') {
+              window.showSnackbar('Not supported in prototype', 2000, 'error');
+            }
+          };
+
+          if (ctaDesktop) {
+            ctaDesktop.addEventListener('click', handleCtaClick);
+          }
+          if (ctaMobileSingle) {
+            ctaMobileSingle.addEventListener('click', handleCtaClick);
+          }
+
+          // Wire up delete buttons
+          var handleDeleteClick = function (e) {
+            e.preventDefault();
+            if (typeof window.showSnackbar === 'function') {
+              window.showSnackbar('Not supported in prototype', 2000, 'error');
+            }
+          };
+
+          if (delDesktop) {
+            delDesktop.addEventListener('click', handleDeleteClick);
+          }
+
+          // Make entire page header clickable on mobile (use same target as crumb link)
+          if (headerCrumb && headerCrumbLink) {
+            headerCrumb.addEventListener('click', function (e) {
+              // If user already clicked the crumb link, let default behavior run
+              if (e.target.closest('.crumb')) return;
+              // Only treat as a header tap on breakpoints below desktop
+              if (window.innerWidth >= 1280) return;
+              e.preventDefault();
+              var href = headerCrumbLink.getAttribute('href') || 'settings.html?view=content&page=banks';
+              window.location.href = href;
+            });
+          }
+        } catch (e) {}
+      });
+    </script>
+    <div class="build-badge" role="note"></div>
+  </body>
+</html>
+
+

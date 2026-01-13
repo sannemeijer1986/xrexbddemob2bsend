@@ -1,0 +1,349 @@
+.root-scrollbar {
+  // placeholder to avoid accidental class collision
+}
+
+.show-mobile-only { display: none; }
+@media (max-width: ($bp-desktop - 1px)) {
+  .show-mobile-only { display: block; }
+}
+.show-desktop-only { display: none; }
+@media (min-width: $bp-desktop) {
+  .show-desktop-only { display: block; }
+}
+.show-desktop-only { display: none; }
+@media (min-width: $bp-desktop) {
+  .show-desktop-only { display: block; }
+}
+
+// Prevent layout shift when scrollbar appears
+html { overflow-y: scroll; }
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: $bg-page;
+  border-bottom: 1px solid #eeeeee;
+  // Improve stability with iOS virtual keyboard/viewport shifts
+  will-change: transform, top;
+  transform: translateZ(0);
+  .header__content {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    height: 64px;
+    width: 100%;
+    max-width: 768px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .brand { display: inline-flex; align-items: center; }
+  .brand__img { height: 16px; }
+  .header__spacer { flex: 1 1 auto; }
+  .header__actions { display: flex; align-items: center; gap: 16px; 
+  
+    @media (min-width: 960px) {
+      gap: 32px;
+    }
+  }
+
+
+
+
+  .circle-icon {
+    width: 32px; height: 32px; border-radius: 9999px;
+    display: flex; align-items: center; justify-content: center;
+    background: #f3f4f6; color: #1f2937;
+  }
+  .account-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 32px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .chip-avatar {
+    width: 32px; height: 32px; border-radius: 9999px;
+    background: #dbeafe; display: grid; place-items: center;
+    img { width: 100%; height: 100%; border-radius: 9999px; display: block; }
+  }
+  .chip-name { font-weight: 600; display: none; }
+  .account-chip .chevron { display: none; width: 20px; height: 20px; margin-top: 3px; }
+
+  @media (min-width: $bp-desktop) {
+    .header__content { max-width: $bp-wide; padding: 0 40px; height: 70px; }
+    .brand__img { height: 23px; }
+    .chip-name { display: inline; }
+    .account-chip .chevron { display: inline; }
+  }
+}
+
+/* Floating build badge */
+.build-badge {
+  position: fixed;
+  opacity: 0.5;
+  left: 16px;
+  bottom: 48px;
+  z-index: 1201;
+  min-height: 40px;
+  height: auto;
+  background: rgba(17, 24, 39, 0.5);
+  color: #ffffff;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  padding: 6px 12px 6px 8px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.build-badge__state {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.20);
+  border-radius: 999px;
+  padding: 4px 8px;
+  line-height: 1.2;
+}
+.build-badge__state-label {
+  font-size: 11px;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.build-badge__state-btn {
+  background: #ffffff;
+  color: #111827;
+  border: 0;
+  border-radius: 20px;
+  width: 16px;
+  height: 16px;
+  font-weight: 700;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0 2px 0;
+  cursor: pointer;
+}
+.build-badge__state-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.build-badge__state-value {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.build-badge__state-name {
+  font-size: 11px;
+  font-weight: 400;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.page {
+  padding-block: 28px 40px;
+  background: $bg-page;
+  .page__header {
+    margin-bottom: 32px;
+    gap: 6px;
+
+    @media (min-width: $bp-desktop) {
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .page__title {
+      margin: 0;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      color: #336AFF;
+      font-family: "Sora", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      @media (min-width: $bp-desktop) {
+        font-size: 32px;
+        color: $text-primary;
+      }
+    }
+    .crumb {
+      width: 16px;
+      height: 16px;
+      img { width: 16px; height: 16px; display: block; }
+      @media (min-width: $bp-desktop) {
+        width: 32px;
+        height: 32px;
+        img { width: 32px; height: 32px; }
+      }
+    }
+    .page__subtitle {
+      color: $text-secondary;
+    }
+
+    @media (min-width: $bp-desktop) {
+      margin-bottom: 48px;
+    }
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 72px;
+  align-items: start;
+}
+.grid { @media (min-width: $bp-desktop) {  grid-template-columns: minmax(0, 1fr) 430px; } }
+.grid__col--primary { min-width: 0; }
+.grid__col--sidebar { position: sticky; top: 124px; }
+
+// Home dashboard layout: make columns in first row share the same height on desktop
+.grid--home {
+  @media (min-width: $bp-desktop) {
+    align-items: stretch;
+  }
+}
+
+.card {
+  @include card;
+  padding: 18px;
+  & + .card { margin-top: 16px; }
+}
+
+.page--addbank .input-group input {
+  border-radius: 8px !important;
+}
+
+.page--addbank .card {
+  & + .card { margin-top: 0px; }
+}
+
+
+.card__title { /* when used outside a .card as a section label */
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 16px;
+  @media (min-width: $bp-desktop) {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.card__title--within {
+  font-size: 18px !important;
+  font-weight: 600;
+  margin: 0 0 16px;
+  @media (min-width: $bp-desktop) {
+    font-size: 22px !important;
+    font-weight: 600;
+  }
+}
+
+.modal--addbusiness .alert, .modal--accountdeclaration .alert, .modal--addbankdetails .alert {
+  margin-bottom: 24px;
+}
+
+// Wider column gap for address/bank/account declaration forms
+.modal--addbusiness .form__row--selects,
+.modal--addbankdetails .form__row--selects,
+.modal--accountdeclaration .form__row--selects {
+  gap: 32px;
+}
+
+.page--addbank .alert--info--content {
+  text-align: left;
+}
+
+.grid--home .grid__col--sidebar { top: 84px; }
+
+/* Footer (match xrextgbot proportions) */
+.site-footer {
+  background: #ffffff;
+  border-top: none;
+  padding: 16px 16px 72px 16px;
+  display: flex;
+  align-items: center;
+
+  @media (max-width: ($bp-desktop - 1px)) {
+    background: #ffffff;
+  }
+  @media (min-width: $bp-desktop) {
+    padding: 16px 16px;
+  }
+
+  .footer__inner {
+    width: 100%;
+    max-width: 768px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 0;
+
+    @media (min-width: $bp-desktop) {
+      height: 40px;
+    }
+  }
+  .footer__copy {
+    color: $text-primary;
+    font-size: 12px;
+    font-weight: 500;
+    width: 100%;
+    text-align: center;
+  }
+  .footer__links {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 0;
+    a {
+      color: #797a7b;
+      font-size: 12px;
+      font-weight: 300;
+      text-decoration: none;
+    }
+    a + a {
+      margin-left: 32px;
+      position: relative;
+      &:before {
+        content: "|";
+        color: $text-secondary;
+        position: relative;
+        left: -16px;
+      }
+    }
+  }
+  /* Mobile order: links first, copy second (to match xrextgbot) */
+  .footer__links { order: 1; }
+  .footer__copy { order: 2; }
+
+  @media (min-width: $bp-desktop) {
+    padding: 0;
+    height: 40px;
+    .footer__inner {
+      max-width: $bp-wide;
+      padding: 0 40px;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+    }
+    .footer__links {
+      width: auto;
+      justify-content: flex-end;
+      order: 0;
+    }
+    .footer__copy {
+      width: auto;
+      text-align: left;
+      order: 0;
+    }
+  }
+}
+

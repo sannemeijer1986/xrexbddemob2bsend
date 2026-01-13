@@ -1,0 +1,1184 @@
+.page__title { margin-bottom: 4px; }
+.page__subtitle { font-size: 14px; }
+
+// Generic crumb layout (back button + title inline)
+.page__header--crumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  .crumb {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    text-decoration: none;
+    border: none;
+    padding: 0;
+    background: transparent;
+    img { width: 24px; height: 24px; display: block; }
+    @media (min-width: $bp-desktop) {
+      width: 32px;
+      height: 32px;
+      img { width: 32px; height: 32px; display: block; }
+    }
+  }
+  // Make title feel clickable on tablet and below for cp page
+  @media (max-width: ($bp-desktop - 1px)) {
+    .page--cp & .page__title {
+      cursor: pointer;
+    }
+    .page--addbank & .page__title {
+      cursor: pointer;
+    }
+    .page--review & .page__title {
+      cursor: pointer;
+    }
+  }
+}
+
+// Ensure consistent gap on Select Counterparty header (override base header gap)
+.page--cp .page__header--crumb {
+  gap: 10px;
+}
+
+// Add-bank: hide steps panel on tablet and below
+@media (max-width: ($bp-desktop - 1px)) {
+  .addbank-steps { display: none; }
+}
+
+// Add Bank page styles
+.page--addbank {
+  .card--section {
+    padding: 20px;
+    @media (min-width: $bp-desktop) { padding: 32px; }
+  }
+  .card__title {
+    font-size: 17px;
+    font-weight: 700;
+    @media (min-width: $bp-desktop) { font-size: 20px; }
+  }
+  .form {
+    gap: 40px;
+  }
+  .form__row { grid-template-columns: 1fr; gap:40px; }
+  @media (min-width: $bp-desktop) {
+    .form__row--selects { grid-template-columns: 1fr 1fr; gap: 24px; }
+  }
+  .form label {
+    font-family: $font-family-sans;
+    font-weight: 600;
+    font-size: 14px;
+    color: $text-secondary;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="date"],
+  select {
+    height: 60px;
+    padding: 16px 16px;
+    font-family: $font-family-sans;
+    font-weight: 600;
+    color: $text-primary;
+    @media (min-width: $bp-desktop) {
+      height: 80px;
+    }
+  }
+  .form__actions {
+    border: none;
+    padding-top: 0;
+    margin-top: 8px;
+    .btn {
+      width: auto;
+      min-width: 160px;
+      height: 52px;
+      font-size: 16px;
+      border-radius: 8px;
+    }
+    justify-content: flex-end;
+  }
+  // Enable interactions on build badge dev links for this page
+  .build-badge { pointer-events: auto; }
+  .build-badge a { color: #fff; text-decoration: underline; }
+}
+
+// Add Bank - steps timeline (desktop)
+.ab-steps { display: grid; }
+.ab-step__content { margin-bottom: 48px;}
+
+.ab-step:last-child .ab-step__content { margin-bottom: 0px; }
+.ab-step {
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  column-gap: 16px;
+  align-items: stretch; // ensure rail fills available height
+}
+.ab-step__rail { display: flex; flex-direction: column; align-items: center; }
+.ab-dot {
+  width: 10px; height: 10px; border-radius: 999px; background: #D1D5DB; display: block; margin: 3px;
+}
+.ab-step.is-active .ab-dot { background: #22C55E; } // green
+.ab-line { width: 2px; background: #E5E7EB; flex: 1 1 auto; }
+.ab-step:not(.has-line) .ab-line { display: none; }
+.ab-step__label {
+  font-family: $font-family-sans;
+  margin-top: -3px;
+  font-weight: 700;
+  font-size: 14px;
+  color: $text-secondary;
+}
+.ab-step.is-active .ab-step__label { color: #3FAE64; }
+.ab-step__title {
+  font-family: $font-family-sans;
+  font-weight: 700;
+  font-size: 16px;
+  color: $text-primary;
+}
+.ab-step__title.is-muted { color: #BCBDBD; font-weight: 500; }
+
+// Counterparty selection list
+.page__subheader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+
+  .btn {
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  @media screen and (max-width: ($bp-desktop - 1px)) {
+    margin-bottom: 32px;
+    .btn {
+      background-color: transparent;
+      padding: 0px;
+      gap: 2px;
+    }
+  }
+}
+
+.page__subtitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: $text-primary;
+
+  @media screen and (min-width: $bp-desktop) {
+    font-size: 22px;
+    font-weight: 700;
+    color: $text-primary;
+  }
+}
+
+// Plus icon for "Add new Counterparty" on tablet and below
+.page__subheader .btn .btn-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+}
+@media (min-width: $bp-desktop) {
+  .page__subheader .btn .btn-icon { display: none; }
+}
+
+// Snackbar / Toast (lightweight)
+.snackbar {
+  position: fixed;
+  left: 50%;
+  top: 24px; // appear from top
+  transform: translateX(-50%) translateY(-8px);
+  z-index: 10000;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px; // bigger
+  border-radius: 16px; // rounder
+  background: #111827; // neutral dark
+  color: #fff;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+  font-family: $font-family-sans;
+  font-weight: 700;
+  font-size: 16px; // bigger text
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.snackbar.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.snackbar__icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+// Success and error share the same dark background; icon communicates state
+.snackbar--success,
+.snackbar--error {
+  background: #111827;
+  color: #fff;
+}
+.cp-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.cp-toolbar.is-hidden {
+  display: none;
+}
+.cp-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.cp-section-title {
+  margin: 0;
+  font-family: $font-family-sans;
+  font-weight: 700;
+  font-size: 16px;
+  color: $text-primary;
+}
+.cp-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: $text-secondary;
+  font-weight: 700;
+  input[type="checkbox"] {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    background-image: url('../assets/icon_checkbox_inactive.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px 24px;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  input[type="checkbox"]:checked {
+    background-image: url('../assets/icon_checkbox_active.svg');
+  }
+}
+.cp-filter.is-disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  input[type="checkbox"] {
+    cursor: default;
+  }
+}
+.cp-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0;
+}
+.cp-empty {
+  border: 1px dashed $border-color;
+  border-radius: $radius-lg;
+  padding: 32px;
+  text-align: center;
+  background: #fff;
+  display: grid;
+  gap: 12px;
+  align-items: center;
+  justify-items: center;
+}
+.cp-empty__title {
+  font-family: $font-family-sans;
+  font-weight: 700;
+  font-size: 18px;
+  color: $text-primary;
+  margin: 0;
+}
+.cp-empty__text {
+  font-family: $font-family-sans;
+  font-weight: 600;
+  font-size: 14px;
+  color: $text-secondary;
+  margin: 0;
+}
+.cp-empty .btn {
+  min-width: 220px;
+}
+.cp-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto; // mobile-first: icon | content | chevron
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid $border-color;
+  border-radius: 0;
+  background: #fff;
+  color: inherit;
+  text-decoration: none;
+  height: auto;
+  grid-auto-rows: min-content;
+
+  @media screen and (min-width: $bp-desktop) {
+    height: 100px;
+  }
+}
+.cp-list li + li .cp-item { border-top: none; }
+.cp-list li:first-child .cp-item { border-top-left-radius: $radius-md; border-top-right-radius: $radius-md; }
+.cp-list li:last-child .cp-item { border-bottom-left-radius: $radius-md; border-bottom-right-radius: $radius-md; }
+// When filtered, verified item should have border-radius on all corners
+.cp-item.is-verified.is-filtered {
+  border-radius: $radius-md;
+}
+.cp-item:hover { background: $gray-100; text-decoration: none; }
+.cp-item__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #EEEEEE;
+  display: grid;
+  place-items: center;
+}
+.cp-item__icon img { width: 22px; height: 22px; }
+.cp-item__content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.cp-item__title { font-size: 16px; font-weight: 700; color: $text-primary; }
+.cp-status { font-size: 12px; font-weight: 600; }
+.cp-status--ok { color: $success-500; }
+.cp-status--review { color: #73A2F5; }
+.cp-status--danger { color: $danger-500; }
+.cp-item__meta {
+  color: $text-secondary;
+  font-weight: 600;
+  font-size: 14px;
+}
+.cp-item__metablack {
+  color: $text-primary;
+  font-weight: 600;
+  font-size: 14px;
+}
+.cp-item__content { grid-column: 2; grid-row: 1; }
+.cp-item__metablack, .cp-item__meta { grid-column: 2; grid-row: 2; white-space: nowrap; }
+.cp-item__chev { opacity: .6; }
+
+// Mobile/tablet: show only ONE line below title
+// - Default (verified): show account meta, hide status
+// - Unverified (review/rejected): show status, hide account meta
+@media (max-width: ($bp-desktop - 1px)) {
+  .cp-item .cp-status { display: none; }
+  // Unverified: show status (Under review / Rejected)
+  .cp-item.is-unverified .cp-status { display: inline; }
+  .cp-item.is-unverified .cp-item__metablack,
+  .cp-item.is-unverified .cp-item__meta { display: none; }
+  // Verified: show account meta inside cp-status for consistent layout
+  .cp-item.is-verified .cp-status {
+    display: inline;
+    font-size: 0; // hide original "Verified" label text
+    position: relative;
+    color: $text-secondary;
+  }
+  .cp-item.is-verified .cp-status::after {
+    content: attr(data-mobile-label);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .cp-item.is-verified .cp-item__metablack,
+  .cp-item.is-verified .cp-item__meta { display: none; }
+}
+
+@media (min-width: $bp-desktop) {
+  .cp-item {
+    grid-template-columns: auto 1fr auto auto auto; // icon | content | (CIMB) | account | chev
+    padding: 24px 24px;
+    height: 100px;
+  }
+  .cp-item__title { font-size: 20px; }
+  .cp-status { font-size: 14px; }
+  .cp-item__meta { font-size: 16px; font-weight: 500; grid-row: auto; grid-column: auto; }
+  .cp-item__metablack { font-size: 16px; font-weight: 600; grid-row: auto; grid-column: auto; }
+}
+
+// Minimal modal styles (reusing temp_xrextgbot approach)
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45); // Default: black backdrop (for mobile/tablet)
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  
+  // Desktop: white backdrop with blur
+  @media (min-width: $bp-desktop) {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px); // Safari support
+  }
+}
+.modal[aria-hidden=false] { display: flex; }
+.modal__dialog {
+  background: #fff;
+  border-radius: $radius-lg;
+  width: calc(100% - 32px);
+  max-width: 600px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  
+  // Enhanced shadow on desktop for visibility against white backdrop
+  @media (min-width: $bp-desktop) {
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+  }
+}
+.modal__dialog--lg { max-width: 720px; }
+// Large modal (1200px on desktop)
+.modal--large .modal-wrapper {
+  width: calc(100% - 32px);
+  max-width: 720px;
+  @media (min-width: $bp-desktop) {
+    max-width: 1200px;
+  }
+}
+// Telegram unlink modal replica blocks
+.modal-wrapper { width: calc(100% - 32px); max-width: 720px; }
+.modal-content {
+  background: #fff;
+  border-radius: $radius-lg;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  
+  // Enhanced shadow on desktop for visibility against white backdrop
+  @media (min-width: $bp-desktop) {
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+  }
+}
+.modal-header {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: $radius-lg $radius-lg 0 0;
+  padding: 20px 24px;
+  border-bottom: 1px solid $border-color;
+
+  @media screen and (min-width: $bp-desktop) {
+    padding: 32px 32px;
+  }
+}
+.modal-header h2 {
+  margin: 0;
+  font-family: $font-sora;
+  font-weight: 700;
+  font-size: 18px;
+  color: $text-primary;
+
+  @media screen and (min-width: $bp-desktop) {
+    font-size: 20px;
+  }
+}
+.modal-close {
+  border: none;
+  background: transparent;
+  padding: 0;
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-body { 
+  padding: 24px; 
+
+  @media screen and (min-width: $bp-desktop) {
+    padding: 32px;
+  }
+}
+.modal-footer {
+  padding: 24px;
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+
+  @media screen and (min-width: $bp-desktop) {
+    padding: 16px 32px 32px;
+  }
+}
+.modal-footer .btn { line-height: inherit; } // keep rule non-empty; sizes follow btn modifiers
+.modal__content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+}
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+.modal__body { display: block; }
+.modal__footer,
+.modal__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+.modal__footer .btn,
+.modal__actions .btn {
+  height: 52px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+.modal__title {
+  margin: 0;
+  font-family: $font-family-sans;
+  font-weight: 800;
+  font-size: 20px;
+  color: $text-primary;
+}
+.modal__desc {
+  margin: 0;
+  font-family: $font-family-sans;
+  font-weight: 400;
+  font-size: 16px;
+  color: $text-primary;
+}
+.modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+// Modal form elements (inspired by temp_xrextgbot)
+.m-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: #E7F0FF;
+  border-radius: 12px;
+  color: #4D88FF;
+  font: 700 14px $font-family-sans;
+  margin: 16px 0;
+}
+.mi-icon { width: 16px; height: 16px; display: inline-block; background: url('../assets/icon_info_blue.svg') no-repeat center/16px 16px; flex: 0 0 16px; }
+.m-field { display: grid; gap: 8px; }
+.m-field-group { display: grid; gap: 16px; }
+.m-label { font: 600 14px $font-family-sans; color: $text-secondary; }
+.m-input-row { display: grid; grid-template-columns: 1fr; gap: 8px; position: relative; }
+.m-input {
+  height: 60px;
+  padding: 16px 44px 16px 16px;
+  border: 1px solid $border-color-hard;
+  border-radius: $radius-md;
+  font-family: $font-family-sans;
+  font-weight: 600;
+  font-size: 16px;
+  color: $text-primary;
+  letter-spacing: 0;
+  text-align: left;
+}
+@media (min-width: $bp-desktop) { .m-input { height: 74px; } }
+.m-clear {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px; height: 24px;
+  padding: 0;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 20px; height: 20px;
+  }
+}
+.m-clear.is-hidden { display: none !important; }
+.m-error { color: $danger-500; font: 700 14px $font-family-sans; }
+
+// Loading modal
+.modal.modal-loading { align-items: center !important; justify-content: center !important; }
+.modal-loading .modal-wrapper { width: calc(100% - 32px); max-width: 280px;  height: 240px; }
+.modal-loading .modal-content {
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(15,23,42,0.18);
+  border-radius: 16px;
+  padding: 24px 28px;
+  height: 240px;
+  display: grid;
+  place-items: center;
+}
+.loading-spinner {
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  border-radius: 9999px;
+  background: transparent;
+  border: 1px solid $border-color;
+}
+.loading-spinner img {
+  width: 40px; height: 40px; display: block;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.page--settings.container {
+  @media (max-width: ($bp-desktop - 1px)) {
+    padding-top: 80px;
+  }
+}
+
+// Receipt page quick styles
+.page--receipt .container { display: grid; place-items: center; padding: 40px 24px; }
+.page--receipt .muted {
+  font-weight: 600;
+}
+.receipt { display: grid; gap: 20px; max-width: 480px; width: 100%; text-align: center; margin: 0 auto; }
+.receipt__icon { display: grid; place-items: center; }
+.receipt__icon img { width: 104px; height: 104px; display: block; }
+.receipt__title { font-family: $font-family-sans; font-weight: 700; font-size: 24px; color: $text-primary; margin: 0; }
+.receipt__card { text-align: left; padding: 20px 24px; }
+.receipt__row, .receipt__subrow { display: flex; align-items: flex-start; justify-content: space-between; padding: 10px 0; border-bottom: none; }
+.receipt__row strong { font-weight: 400; }
+.receipt__row--first strong { font-weight: 700; }
+.receipt__subrow { padding: 10px 0 10px 24px; font-size: 16px; }
+.receipt__subrow strong { font-weight: 500; font-size: 16px; }
+.receipt__divider { height: 1px; background: $border-color; margin: 16px 0; }
+.receipt__row--em .muted { color: $text-primary; font-weight: 700; font-size: 18px; }
+.receipt__row--em strong { color: $text-primary; font-size: 18px; font-weight: 700; }
+
+// Mobile styles for payment-submitted page
+@media (max-width: ($bp-desktop - 1px)) {
+  .page--receipt {
+    .receipt__icon img {
+      width: 88px;
+      height: 88px;
+    }
+    
+    .receipt__card {
+      // Reduce all text by 2px
+      font-size: 14px; // Base reduced from 14px to 12px
+      
+      .receipt__row {
+        font-size: 14px;
+        
+        strong {
+          font-size: 14px;
+        }
+        
+        .muted {
+          font-size: 14px;
+        }
+      }
+      
+      .receipt__subrow {
+        font-size: 14px; // 16px - 2px
+        
+        strong {
+          font-size: 14px; // 16px - 2px
+        }
+        
+        .muted {
+          font-size: 14px; // 16px - 2px
+        }
+      }
+      
+      .receipt__row--em {
+        .muted {
+          font-size: 16px; // 18px - 2px
+        }
+        
+        strong {
+          font-size: 16px; // 18px - 2px
+        }
+      }
+    }
+  }
+}
+.receipt__row--em {
+  padding: 4px 0px 0px 0px;
+}
+.receipt__foot { margin-top: 16px; }
+.receipt__actions { display: grid; }
+.receipt__actions .btn { width: 100%; }
+/* Status highlight */
+#statusVal { color: #73A2F5; font-weight: 700; }
+.receipt__rcv { display: inline-flex; align-items: center; gap: 8px; }
+.receipt__badge {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #EEEEEE;
+  display: inline-grid;
+  place-items: center;
+}
+.receipt__badge img { width: 16px; height: 16px; display: block; }
+.receipt__note {
+  text-align: right;
+  color: $text-placeholder;
+  font-family: $font-family-sans;
+  font-weight: 600;
+  font-size: 12px;
+  margin-top: 2px;
+}
+@media (min-width: $bp-desktop) {
+  .receipt__title { font-size: 28px; font-weight: 700;}
+}
+
+// Ensure loading modal keeps card style on mobile/tablet (override full-screen modal rules)
+@media (max-width: ($bp-desktop - 1px)) {
+  .modal-loading .modal-content {
+    border-radius: 16px;
+    height: auto;
+    max-height: none;
+  }
+  .modal-loading .modal-wrapper {
+    width: auto;
+    max-width: 280px;
+    height: auto;
+  }
+  .modal-loading {
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
+// Desktop sizing for loading card (mimic temp_xrextgbot)
+@media (min-width: $bp-desktop) {
+  .modal-loading .modal-wrapper {
+    max-width: none;
+    width: 480px;
+    height: 240px;
+  }
+  .modal-loading .modal-content {
+    padding: 0;
+    height: 240px;
+    min-height: 240px; // override any generic min-height
+  }
+  .modal-loading .loading-spinner {
+    width: 140px; height: 140px;
+  }
+  .modal-loading .loading-spinner img {
+    width: 76px; height: 76px;
+  }
+}
+
+// Ensure loader overrides ANY generic desktop min-height rules (place after them)
+@media (min-width: $bp-desktop) {
+  .modal.modal-loading .modal-wrapper,
+  .modal.modal-loading .modal-content {
+    min-height: 240px !important;
+    height: 240px !important;
+  }
+}
+// Modal text and link styles
+.m-step-title {
+  font-family: $font-family-sans;
+  font-weight: 700;
+  font-size: 18px;
+  color: $text-primary;
+}
+.m-link {
+  font-family: $font-family-sans;
+  font-weight: 700;
+  font-size: 14px;
+  color: #336AFF;
+  cursor: pointer;
+  margin-bottom: 24px;
+}
+// Prevent background scroll when modal is open (desktop + mobile/iOS safe)
+html.modal-open,
+body.modal-open {
+  overflow: hidden !important;
+  height: 100%;
+}
+body.modal-locked {
+  position: fixed;
+  width: 100%;
+}
+
+// Page overrides for Select Counterparty
+.page--cp {
+  .grid { grid-template-columns: 1fr; } // fill available width at all breakpoints
+  .card--section {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+}
+
+// Select Counterparty - mobile sticky footer CTA
+@media (max-width: ($bp-desktop - 1px)) {
+  .page--cp {
+    // Make space so list content isn't hidden behind sticky CTA
+    padding-bottom: 96px;
+    .page__subheader .cp-header-cta {
+      display: none;
+    }
+  }
+  .cp-sticky {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background: #ffffff;
+    border-top: 1px solid #eeeeee;
+    box-shadow: 0 -12px 28px rgba(0, 0, 0, 0.08);
+    padding: 16px 20px;
+    display: flex;
+    justify-content: center;
+    z-index: 3000;
+  }
+  .cp-sticky__inner {
+    width: 100%;
+    // max-width: 768px;
+    margin: 0 auto;
+  }
+  .cp-sticky__btn {
+    width: 100%;
+  }
+  // Allow pages to hide cp-sticky via [hidden] (used on settings USD bank accounts)
+  .cp-sticky[hidden] {
+    display: none !important;
+  }
+  // Ensure site footer content isn't hidden behind sticky CTA on pages that use it
+  .page--cp ~ .site-footer,
+  .page--settings ~ .site-footer,
+  .page--cp-detail ~ .site-footer {
+    padding-bottom: 96px;
+  }
+  // Lift build badge above sticky CTA for pages using cp-sticky
+  .page--cp ~ .build-badge,
+  .page--settings ~ .build-badge {
+    bottom: 96px;
+  }
+  // For counterparty details, only lift when sticky footer is present (verified state)
+  .page--cp-detail.is-verified ~ .build-badge {
+    bottom: 120px;
+  }
+}
+@media (min-width: $bp-desktop) {
+  .cp-sticky { display: none; }
+}
+
+
+@media (min-width: $bp-desktop) {
+  .modal-wrapper, .modal-content {
+    min-height: 500px;
+  }
+}
+
+// RWD: full-viewport modal and sticky header/footer on tablet and below
+@media (max-width: ($bp-desktop - 1px)) {
+  // Fullscreen modal; constrain inner sections to 768px
+  .modal { align-items: stretch; justify-content: stretch; }
+  .modal-wrapper { width: 100%; max-width: none; height: 100%; }
+  // Ensure large modal also fills viewport on mobile
+  .modal--large .modal-wrapper { width: 100%; max-width: none; height: 100%; }
+  .modal-content {
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #F8F8F8;
+  }
+  .modal-header, .modal-body, .modal-footer {
+    width: 100%;
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .modal-header {
+    position: sticky;
+    top: 0;
+    background: #f8f8f8;
+    z-index: 2;
+    border-bottom: 1px solid $border-color;
+    .modal-close {
+      order: -1; // Move close button to the left on mobile
+    }
+    h2 {
+      flex: 1;
+      text-align: center; // Center the title
+      margin: 0; // Remove default margin
+      padding-right: 32px; // Balance the close button on the left (32px width)
+    }
+  }
+  .modal-body {
+    flex: 1 1 auto;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .modal-footer {
+    position: sticky;
+    bottom: 0;
+    background: #F8F8F8;
+    border-top: 1px solid $border-color;
+    z-index: 2;
+  }
+  .modal-footer .btn {
+    flex: 1 1 0%;
+    width: auto;
+    height: 52px;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+  .modal__dialog {
+    background: #F8F8F8;
+  }
+}
+
+// Desktop and larger: modal body fills remaining space, footer stays at bottom
+@media (min-width: $bp-desktop) {
+  // Constrain modal wrapper to viewport height
+  // Note: Loading modal has specific fixed height rules that override these
+  .modal-wrapper {
+    max-height: calc(100vh - 40px); // Leave 20px margin top and bottom
+
+    display: flex; // Make wrapper a flex container
+    flex-direction: column;
+  }
+  // Also handle modal__dialog structure
+  .modal__dialog {
+    max-height: calc(100vh - 40px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  // modal__content inside modal__dialog
+  .modal__dialog .modal__content {
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    overflow: hidden;
+    flex: 1;
+    min-height: 0; // Critical: allows flex item to shrink below content size
+  }
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 500px;
+    max-height: 100%; // Constrain to wrapper height
+    overflow: hidden; // Prevent content from scrolling, only body scrolls
+    flex: 1; // Take available space in wrapper
+    min-height: 0; // Critical: allows flex item to shrink below content size
+  }
+  .modal-header {
+    flex-shrink: 0; // Keep header fixed at top
+  }
+  .modal-body {
+    flex: 1 1 auto;
+    min-height: 0; // Critical: allows flex item to shrink and enable scrolling
+    overflow-y: auto; // Make body scrollable when content exceeds
+    overflow-x: hidden;
+    padding-top: 32px; // a bit more space on desktop and above
+    // Smooth scrolling
+    -webkit-overflow-scrolling: touch;
+  }
+  // Handle both modal-footer and modal-actions (some modals use modal-actions)
+  .modal-footer,
+  .modal-actions {
+    flex-shrink: 0; // Keep footer fixed at bottom
+    margin-top: auto; // Push footer to bottom
+  }
+  // Handle modal__body and modal__footer in dialog structure
+  .modal__dialog .modal__body {
+    flex: 1 1 auto;
+    min-height: 0; // Critical: allows flex item to shrink and enable scrolling
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  .modal__header,
+  .modal__footer {
+    flex-shrink: 0;
+  }
+  .modal__footer {
+    margin-top: auto; // Push footer to bottom
+  }
+  
+  // Hide close button for dialog modals on desktop
+  .modal.modal--dialog .modal-close,
+  .modal.modal--dialog .modal__close {
+    display: none;
+  }
+  
+  // Desktop dialog modal styling to match Figma
+  .modal.modal--dialog {
+    .modal__dialog {
+      width: 480px;
+      max-width: 480px;
+
+      .modal__header {
+        display: none;
+      }
+    }
+    
+    .modal__content {
+      padding: 32px;
+      border-radius: 16px;
+      gap: 24px; // Gap between title/text section and buttons
+    }
+    
+    .modal__header {
+      padding: 0;
+      border-bottom: none;
+    }
+    
+    .modal__body {
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px; // Gap between title and description
+      flex: 0 0 auto; // Don't grow, just fit content
+    }
+    
+    .modal__title {
+      margin: 0;
+      text-align: left;
+    }
+    
+    .modal__desc {
+      margin: 0;
+      text-align: left;
+    }
+    
+    .modal__footer {
+      padding: 0;
+      border-top: none;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      gap: 8px; // Gap between buttons
+      flex: 0 0 auto; // Don't grow, just fit content
+      
+      .btn {
+        // Apply btn--sm styling to all buttons in dialog footer on desktop
+        padding: 0px 16px;
+        height: 32px;
+        min-width: 100px;
+        border-radius: 16px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+// Dialog-style modals using .modal__dialog on mobile/tablet
+@media (max-width: ($bp-desktop - 1px)) {
+  .modal.modal--dialog {
+    // Full viewport sheet with light gray background (no visible dim layer)
+    align-items: stretch;
+    justify-content: stretch;
+    background: #F8F8F8;
+    z-index: 4001; // above cp-sticky and other fixed elements
+  }
+  .modal.modal--dialog .modal__dialog {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    min-width: 0;
+    margin: 0 auto;
+    display: flex;
+  }
+
+  .modal .modal__content {
+    background: #F8F8F8;
+  }
+
+  .modal.modal--dialog .modal__content {
+    width: 100%;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    box-shadow: none;
+    background: #F8F8F8;
+    padding: 0; // Remove base padding so header/body/footer control spacing
+  }
+  .modal.modal--dialog .modal__header,
+  .modal.modal--dialog .modal__body,
+  .modal.modal--dialog .modal__footer {
+    width: 100%;
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .modal.modal--dialog .modal__header {
+    padding: 16px 16px 0;
+    border-bottom: none;
+    justify-content: flex-start; // X on the left
+  }
+  .modal.modal--dialog .modal__title {
+    text-align: center;
+    margin: 0 0 8px;
+  }
+  .modal.modal--dialog .modal__body {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 24px 8px;
+    text-align: center;
+  }
+  .modal.modal--dialog .modal__desc {
+    text-align: center;
+  }
+  .modal.modal--dialog .modal__footer {
+    padding: 16px 24px 32px;
+    border-top: none;
+    justify-content: center;
+    flex-direction: column; // Stack CTA buttons vertically
+    align-items: stretch;
+    gap: 16px;
+    background: #F8F8F8;
+  }
+  .modal.modal--dialog .modal__footer .btn {
+    width: 100%;
+    // Match btn--md metrics for mobile/tablet dialogs
+    height: 40px;
+    min-width: 0;
+    font-size: 14px;
+    border-radius: 8px;
+    padding: 0 16px;
+  }
+
+  // For the home-page "Add counterparty bank account" dialog, invert CTA order on mobile/tablet
+  // so that "Add counterparty account" appears first and "Not now" second.
+  #needCounterpartyModal.modal.modal--dialog .modal__footer {
+    flex-direction: column-reverse;
+  }
+}

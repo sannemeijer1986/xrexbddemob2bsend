@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>XREX Pay - Payment submitted</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="icon" href="assets/favicons/xrex-favicon-16x16.png" sizes="16x16" type="image/png" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header__content">
+        <a class="brand" href="index.html" aria-label="XREX Pay">
+          <img class="brand__img" src="assets/logo_xrexpay.svg" alt="XREX Pay" />
+        </a>
+        <div class="header__spacer"></div>
+        <div class="header__actions">
+          <a class="circle-icon" href="https://intercom.help/xrex-sg/en/" target="_blank" rel="noopener noreferrer" title="Support">
+            <img src="assets/icon_support.svg" alt="support" width="20" height="20" />
+          </a>
+          <a class="account-chip" id="accountChipLink" href="settings.html">
+            <span class="chip-avatar"><img src="assets/logo_agp.svg" alt="AGP" /></span>
+            <span class="chip-name">AGP Technology</span>
+            <img class="chevron" src="assets/icon_chevron_right.svg" alt="more" width="20" height="20" />
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page page--receipt">
+      <section class="container">
+        <div class="receipt">
+          <div class="receipt__icon">
+            <img src="assets/icon_snackbar_success.svg" alt="" />
+          </div>
+
+          <div class="receipt__content">
+            <h1 class="receipt__title">Payment submitted</h1>
+            <div class="receipt__subtitle">We’re processing your payment</div>
+          </div>
+
+          <div class="card card--section receipt__card">
+          <div class="receipt__row receipt__row--first">
+            <span class="muted">Receiver</span>
+            <span class="receipt__rcv">
+              <span class="receipt__badge"><img src="assets/icon_bank_cp.svg" alt="" /></span>
+              <strong id="rcvName">Counterparty A</strong>
+            </span>
+            </div>
+            <div class="receipt__row">
+              <span class="muted">Receiving account</span>
+            <strong id="rcvBank">(CIMB) 012-345678-9</strong>
+            </div>
+            <!-- <div class="receipt__row">
+              <span class="muted">Payment amount</span>
+            <strong id="amtPayable">100,000.00 USD</strong>
+            </div>
+            <div class="receipt__row">
+              <span class="muted">Deducted from</span>
+            <strong id="deductedFrom">USDT account</strong>
+            </div>
+            <div class="receipt__row" id="convRow" hidden>
+              <span class="muted">Conversion rate</span>
+              <strong id="convVal">1 USDT = 1 USD</strong>
+            </div>
+            <button id="fees-details-open" type="button" class="summary-title-link">See convert details</button>
+            <div class="receipt__row">
+              <span class="muted">Service fee</span>
+            <strong id="feePct">1%</strong>
+            </div>
+          <div class="receipt__subrow">
+            <span class="muted" id="payerShareLabel">1% paid by you</span>
+            <strong id="payerShareAmt">1,000.00 USDT</strong>
+            </div>
+          <div class="receipt__subrow">
+            <span class="muted" id="receiverShareLabel">0% paid by receiver</span>
+            <strong id="receiverShareAmt">0.00 USD</strong>
+            </div> -->
+          <div class="receipt__divider"></div>
+            <div class="receipt__row">
+              <span class="muted">You paid</span>
+            <strong id="toBeDeducted">101,000.00 USDT</strong>
+            </div>
+            <div class="receipt__row receipt__row--em">
+              <span class="muted">Send to receiver
+              </span>
+            <strong id="receiverGets">100,000.00 USD</strong>
+            </div>
+          <div class="receipt__note" style="display:none;">Receiver is billed in US Dollar</div>
+            <div class="receipt__foot">
+              <div class="receipt__row">
+                <span class="muted">Submission date</span>
+              <strong id="dtVal">31/08/2022, 12:00:00</strong>
+              </div>
+              <div class="receipt__row">
+                <span class="muted">Status</span>
+              <strong id="statusVal">Processing</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="receipt__actions">
+            <a class="btn btn--secondary btn--lg" href="index.html">Back to homepage</a>
+            <a id="viewPaymentDetailsBtn" class="btn btn--primary btn--lg" href="payment-details.html">View payment details</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal: Convert details -->
+    <div id="convertDetailsModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="convertDetailsTitle">
+      <div class="modal-wrapper">
+        <div class="modal-content convert-modal">
+          <div class="convert-modal__icon">
+            <img src="assets/icon_convert.svg" alt="" width="28" height="28" />
+          </div>
+          <div class="modal-body">
+            <h2 id="convertDetailsTitle" class="convert-modal__title">Convert details for this payment</h2>
+            <div class="summary-box convert-box">
+              <div class="summary-pair">
+                <span class="muted">Convert from</span>
+                <strong id="rcv-cv-from">-</strong>
+              </div>
+              <div class="summary-pair">
+                <span class="muted">Conversion fee (<span id="rcv-cv-fee-pct">0.00%</span>)</span>
+                <strong id="rcv-cv-fee-amt">--</strong>
+              </div>
+              <div class="summary-pair">
+                <span class="muted">Net amount to convert</span>
+                <strong id="rcv-cv-net">-</strong>
+              </div>
+              <div class="summary-pair">
+                <button type="button" class="convert-rate-link">Rate</button>
+                <strong id="rcv-cv-rate">1 USDT = 1 USD</strong>
+              </div>
+              <div class="summary-separator"></div>
+              <div class="summary-pair">
+                <span class="muted">Convert to</span>
+                <strong id="rcv-cv-to">-</strong>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn--secondary btn--md" data-modal-close>Dismiss</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer__inner">
+        <div class="footer__copy">© XREX Pay Limited 2025</div>
+        <div class="footer__links">
+          <a href="https://intercom.help/xrex-sg/en/" target="_blank" rel="noopener noreferrer">Support</a>
+          <a href="https://info.xrex.sg/doc" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+          <a href="https://info.xrex.sg/doc" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+  <script>
+    (function populateReceipt() {
+      try {
+        const raw = sessionStorage.getItem('receiptData');
+        const d = raw ? JSON.parse(raw) : null;
+        if (!d) return;
+        const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+        // Strip any leading 'To ' just in case
+        const rcv = (d.receiverName || '').replace(/^To\s+/i, '');
+        set('rcvName', rcv);
+        set('rcvBank', d.receiverBank || '');
+        set('amtPayable', d.amountPayableFmt || '');
+        set('deductedFrom', d.deductedFrom || '');
+        set('feePct', d.feePct || '1%');
+        set('payerShareLabel', d.payerShareLabel || '');
+        set('payerShareAmt', d.payerShareAmt || '');
+        set('receiverShareLabel', d.receiverShareLabel || '');
+        set('receiverShareAmt', d.receiverShareAmt || '');
+        set('toBeDeducted', d.toBeDeducted || '');
+        set('receiverGets', d.receiverGets || '');
+        // Conversion: show only when deducted-from is NOT USD account.
+        // If conversion missing but currency suggests non-USD, synthesize a default message.
+        var convRow = document.getElementById('convRow');
+        var dfText = (d.deductedFrom || '');
+        var m = dfText.match(/^\\s*([A-Za-z]+)\\s+account/i);
+        var payerCur = m ? m[1].toUpperCase() : '';
+        var isUsd = payerCur === 'USD';
+        var convMsg = d.conversion || (payerCur && !isUsd ? `1 ${payerCur} = 1 USD` : '');
+        if (convRow) {
+          if (convMsg && !isUsd) {
+            set('convVal', convMsg);
+            convRow.hidden = false;
+            convRow.style.display = '';
+          } else {
+            convRow.hidden = true;
+            convRow.style.display = 'none';
+            set('convVal', '');
+          }
+        }
+        set('dtVal', d.dateTime || '');
+        set('statusVal', d.status || 'Processing');
+      } catch (_) {}
+    })();
+    (function initPaymentDetailsEntrypoint() {
+      try {
+        var btn = document.getElementById('viewPaymentDetailsBtn');
+        if (!btn) return;
+        var KEY = 'xrexb2b.paymentDetailsReturnUrl';
+        btn.addEventListener('click', function () {
+          try {
+            if (window.sessionStorage) {
+              // For now, always return user to Home after viewing payment details
+              window.sessionStorage.setItem(KEY, 'index.html');
+            }
+          } catch (_) {}
+        });
+      } catch (_) {}
+    })();
+  </script>
+</html>
+
+

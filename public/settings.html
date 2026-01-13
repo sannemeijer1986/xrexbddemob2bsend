@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>XREX Pay - Settings</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/main.css?v=20251108" />
+    <link rel="icon" href="assets/favicons/xrex-favicon-16x16.png" sizes="16x16" type="image/png" />
+</head>
+<body>
+    <header class="site-header">
+      <div class="container header__content">
+        <a class="brand" href="index.html" aria-label="XREX Pay">
+          <img class="brand__img" src="assets/logo_xrexpay.svg" alt="XREX Pay" />
+        </a>
+        <div class="header__spacer"></div>
+        <div class="header__actions">
+          <a class="circle-icon" href="https://intercom.help/xrex-sg/en/" target="_blank" rel="noopener noreferrer" title="Support">
+            <img src="assets/icon_support.svg" alt="support" width="20" height="20" />
+          </a>
+          <a class="account-chip" id="accountChipLink" href="settings.html">
+            <span class="chip-avatar"><img src="assets/logo_agp.svg" alt="AGP" /></span>
+            <span class="chip-name">AGP Technology</span>
+            <img class="chevron" src="assets/icon_chevron_right.svg" alt="more" width="20" height="20" />
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container page--settings">
+        <div class="mobile-menu-header">
+            <a href="index.html" class="link-close-menu" id="closeMenuLink" aria-label="Close menu">
+                <img src="assets/icon_close_blue.svg" alt="Close" width="20" height="20">
+                <span>Close menu</span>
+            </a>
+        </div>
+        <aside class="sidebar">
+            <nav class="menu">
+                <div class="menu-item active" data-link="settings.html?view=content&page=account" data-page="account" role="link" tabindex="0">
+                    <div class="menu-item-icon">
+                        <img
+                          src="assets/icon_account_neutral.svg"
+                          alt=""
+                          width="24"
+                          height="24"
+                          data-icon-neutral="assets/icon_account_neutral.svg"
+                          data-icon-active="assets/icon_account_blue.svg"
+                        />
+                    </div>
+                    <div>Account</div>
+                </div>
+                <div class="menu-divider" aria-hidden="true"></div>
+                <div class="menu-item">
+                    <div class="menu-item-icon">
+                        <img
+                          src="assets/icon_limits_neutral.svg"
+                          alt="Limits"
+                          width="24"
+                          height="24"
+                          data-icon-neutral="assets/icon_limits_neutral.svg"
+                          data-icon-active="assets/icon_limits_blue.svg"
+                        >
+                    </div>
+                    <div>Limits</div>
+                </div>
+                <div class="menu-divider" aria-hidden="true"></div>
+                <div class="menu-item" data-page="banks">
+                    <div class="menu-item-icon">
+                        <img
+                          src="assets/icon_bank_neutral.svg"
+                          alt="Custodian &amp; Bank"
+                          width="24"
+                          height="24"
+                          data-icon-neutral="assets/icon_bank_neutral.svg"
+                          data-icon-active="assets/icon_bank_blue.svg"
+                        >
+                    </div>
+                    <div class="menu-title">Custodian &amp; Bank</div>
+                    <button class="menu-chevron" aria-label="Toggle" aria-expanded="false" data-target="#submenu-bank">
+                        <img src="assets/icon_chevron_down.svg" alt="expand" width="20" height="20">
+                    </button>
+                </div>
+                <div class="submenu" id="submenu-bank" hidden>
+                    <a class="submenu-item" href="#" data-link="settings.html?view=content&page=banks" data-page="banks" role="link" tabindex="0">• USD bank accounts</a>
+                </div>
+                <div class="menu-divider" aria-hidden="true"></div>
+                <div class="menu-item" data-page="address">
+                    <div class="menu-item-icon">
+                        <img
+                          src="assets/icon_address_neutral.svg"
+                          alt="Address book"
+                          width="24"
+                          height="24"
+                          data-icon-neutral="assets/icon_address_neutral.svg"
+                        >
+                    </div>
+                    <div class="menu-title">Address book</div>
+                    <button class="menu-chevron" aria-label="Toggle" aria-expanded="false" data-target="#submenu-address">
+                        <img src="assets/icon_chevron_down.svg" alt="expand" width="20" height="20">
+                    </button>
+                </div>
+                <div class="submenu" id="submenu-address" hidden>
+                    <a class="submenu-item" href="#">• USDT addresses</a>
+                </div>
+                <div class="menu-divider" aria-hidden="true"></div>
+                <div class="menu-item" data-page="statements">
+                    <div class="menu-item-icon">
+                        <img
+                          src="assets/icon_statements_neutral.svg"
+                          alt="Statements"
+                          width="24"
+                          height="24"
+                          data-icon-neutral="assets/icon_statements_neutral.svg"
+                        >
+                    </div>
+                    <div class="menu-title">Statements</div>
+                    <button class="menu-chevron" aria-label="Toggle" aria-expanded="false" data-target="#submenu-statements">
+                        <img src="assets/icon_chevron_down.svg" alt="expand" width="20" height="20">
+                    </button>
+                </div>
+                <div class="submenu" id="submenu-statements" hidden>
+                    <a class="submenu-item" href="#">• Monthly statement</a>
+                    <a class="submenu-item" href="#">• Customised statement</a>
+                </div>
+            </nav>
+        </aside>
+
+        <section class="content">
+            <div class="mobile-back">
+                <a href="#" class="link-back" id="backLink" aria-label="Back">
+                    <svg class="icon-back" width="16" height="16" viewBox="0 0 25 25" aria-hidden="true" focusable="false">
+                        <path d="M15.7,16.3l-4.2-4.2,4.2-4.2c.4-.4.4-1.1,0-1.5-.4-.4-1.1-.4-1.5,0l-5.1,5.1c-.3.3-.3.9,0,1.2l5.1,5.1c.4.4,1.1.4,1.5,0,.4-.4.4-1.1,0-1.5Z" fill="currentColor"/>
+                    </svg>
+                    <span>Menu</span>
+                </a>
+            </div>
+            <div class="content-header">
+                <div class="title-texts">
+                    <h1 id="pageTitle">Account</h1>
+                </div>
+            </div>
+
+            <div id="panel-account" class="account-panel" role="tabpanel" aria-label="Account">
+                <div class="acct-status-line">
+                    <span class="acct-status-label">Account status :</span>
+                    <span class="acct-status-value verified">Verified</span>
+                </div>
+
+                <h3 class="section-heading">Information</h3>
+                <div class="field-row card editable name-card">
+                    <div class="avatar">
+                        <img src="assets/logo_agp.svg" alt="AGP" width="60" height="60">
+                    </div>
+                    <div class="name-block">
+                        <div class="name">AGP Technology</div>
+                        <div class="caption">@AGPTECH</div>
+                    </div>
+                    <button class="icon-btn" aria-label="Edit profile"><img src="assets/icon_edit.svg" width="20" height="20" alt="edit"></button>
+                </div>
+
+                <div class="grid-2">
+                    <div class="field field-disabled">
+                        <div class="field-label">Email</div>
+                        <div class="input-card editable">
+                            <div class="value">i***@agptechnology.com</div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">Mobile number</div>
+                        <div class="input-card editable">
+                            <div class="value">******5678</div>
+                            <button class="icon-btn" aria-label="Edit mobile"><img src="assets/icon_edit.svg" width="20" height="20" alt="edit"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <h3 class="section-heading">Security</h3>
+                <div class="grid-2">
+                    <div class="field">
+                        <div class="field-label">Password</div>
+                        <div class="input-card editable">
+                            <div class="value">************</div>
+                            <button class="icon-btn" aria-label="Edit password"><img src="assets/icon_edit.svg" width="20" height="20" alt="edit"></button>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">Authenticator app</div>
+                        <div class="input-card input-card-split">
+                            <div class="auth-row">
+                                <span class="auth-state enabled">Enabled</span>
+                            </div>
+                            <label class="switch" aria-label="Authenticator app (enabled)" aria-disabled="true">
+                                <input type="checkbox" checked disabled>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <h3 class="section-heading">Preferred currency</h3>
+                <div class="field field-disabled">
+                    <div class="field-label">Currency</div>
+                    <div class="input-card">
+                        <div class="market-currency"><img src="assets/icon_USD.svg" width="20" height="20" alt="USD"> <div class="currency-label"><span class="cl-primary value">USD</span><span class="cl-secondary value">(US Dollar)</span></div></div>
+                    </div>
+                </div>
+
+                <div class="logout-row">
+                    <button class="btn btn--secondary btn--lg btn-block" type="button">
+                        Log out
+                    </button>
+                </div>
+            </div>
+
+            <div id="panel-banks" class="banks-panel" role="tabpanel" aria-label="Banks" hidden>
+                <div class="banks-header">
+                    <h2 class="banks-subtitle">Manage and view company and counterparty accounts</h2>
+                    <button type="button" id="openAddUsdBankModal" class="btn btn--primary btn--md">Add new bank account</button>
+                </div>
+
+                <div class="banks-section">
+                    <div class="banks-section-header">
+                        <h3 class="banks-section-title">Your company accounts</h3>
+                        <label class="banks-filter">
+                            <input type="checkbox" class="banks-filter-checkbox">
+                            <span class="banks-filter-label">Verified accounts</span>
+                        </label>
+                    </div>
+                    <div class="banks-list">
+                        <div class="bank-card">
+                            <div class="bank-card-icon">
+                                <img src="assets/icon_bankaccount_grey.svg" alt="" width="24" height="24">
+                            </div>
+                            <div class="bank-card-content">
+                                <div class="bank-card-name">Company CIMB</div>
+                                <div class="bank-card-status status-verified">Verified</div>
+                            </div>
+                            <div class="bank-card-details">
+                                <span class="bank-card-code">(CIMB)</span>
+                                <span class="bank-card-number">012-345678-9</span>
+                            </div>
+                            <img src="assets/icon_chevron_right.svg" alt="" class="bank-card-chevron" width="24" height="24">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="banks-section">
+                    <div class="banks-section-header">
+                        <h3 class="banks-section-title">Counterparty accounts</h3>
+                        <label class="banks-filter">
+                            <input type="checkbox" class="banks-filter-checkbox">
+                            <span class="banks-filter-label">Verified accounts</span>
+                        </label>
+                    </div>
+                    <div class="banks-list">
+                        <div class="bank-card">
+                            <div class="bank-card-icon">
+                                <img src="assets/icon_bank_cp.svg" alt="" width="24" height="24">
+                            </div>
+                            <div class="bank-card-content">
+                                <div class="bank-card-name">Aurora account 1</div>
+                                <div class="bank-card-status status-under-review">Under review</div>
+                            </div>
+                            <div class="bank-card-details">
+                                <span class="bank-card-code">(CIMB)</span>
+                                <span class="bank-card-number">012-345678-9</span>
+                            </div>
+                            <img src="assets/icon_chevron_right.svg" alt="" class="bank-card-chevron" width="24" height="24">
+                        </div>
+                        <div class="bank-card">
+                            <div class="bank-card-icon">
+                                <img src="assets/icon_bank_cp.svg" alt="" width="24" height="24">
+                            </div>
+                            <div class="bank-card-content">
+                                <div class="bank-card-name">Counterparty B</div>
+                                <div class="bank-card-status status-verified">Verified</div>
+                            </div>
+                            <div class="bank-card-details">
+                                <span class="bank-card-code">(CIMB)</span>
+                                <span class="bank-card-number">012-345678-9</span>
+                            </div>
+                            <img src="assets/icon_chevron_right.svg" alt="" class="bank-card-chevron" width="24" height="24">
+                        </div>
+                        <div class="bank-card">
+                            <div class="bank-card-icon">
+                                <img src="assets/icon_bank_cp.svg" alt="" width="24" height="24">
+                            </div>
+                            <div class="bank-card-content">
+                                <div class="bank-card-name">Counterparty C</div>
+                                <div class="bank-card-status status-rejected">Rejected</div>
+                            </div>
+                            <div class="bank-card-details">
+                                <span class="bank-card-code">(CIMB)</span>
+                                <span class="bank-card-number">012-345678-9</span>
+                            </div>
+                            <img src="assets/icon_chevron_right.svg" alt="" class="bank-card-chevron" width="24" height="24">
+                        </div>
+                        <div class="bank-card">
+                            <div class="bank-card-icon">
+                                <img src="assets/icon_bank_cp.svg" alt="" width="24" height="24">
+                            </div>
+                            <div class="bank-card-content">
+                                <div class="bank-card-name">Counterparty D</div>
+                                <div class="bank-card-status status-resubmission">Resubmission</div>
+                            </div>
+                            <div class="bank-card-details">
+                                <span class="bank-card-code">(CIMB)</span>
+                                <span class="bank-card-number">012-345678-9</span>
+                            </div>
+                            <img src="assets/icon_chevron_right.svg" alt="" class="bank-card-chevron" width="24" height="24">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Mobile sticky CTA for USD bank accounts -->
+        <div id="banksSticky" class="cp-sticky" hidden>
+            <div class="cp-sticky__inner">
+                <button type="button" id="openAddUsdBankModalSticky" class="btn btn--primary btn--lg cp-sticky__btn">
+                    Add new bank account
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal: Add USD bank account (settings) -->
+        <div id="addUsdBankModal" class="modal modal--large add-usdbank-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="addUsdBankTitle">
+            <div class="modal-wrapper">
+                <div class="modal-content add-usdbank-modal-content">
+                    <div class="modal-header">
+                        <h2 id="addUsdBankTitle">Add USD bank account</h2>
+                        <button class="modal-close" data-modal-close aria-label="Close modal">
+                            <img src="assets/icon_close.svg" width="24" height="24" alt="close" />
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="m-alert m-alert--info">
+                            <span class="m-alert__icon" aria-hidden="true"></span>
+                            <span class="m-alert__text">Bank account verification requires 1–4 business days.</span>
+                        </div>
+                        <div class="add-usdbank-grid">
+                            <article class="add-usdbank-card">
+                                <div class="add-usdbank-card__icon">
+                                    <img src="assets/icon_modal_bank_company.svg" alt="" width="32" height="32" />
+                                </div>
+                                <h3 class="add-usdbank-card__title">Your company account</h3>
+                                <p class="add-usdbank-card__desc">For deposit and withdraw</p>
+                                <button type="button" id="addUsdCompanyBtn" class="btn btn--primary btn--md add-usdbank-card__btn">
+                                    Add company account
+                                </button>
+                            </article>
+                            <article class="add-usdbank-card">
+                                <div class="add-usdbank-card__icon">
+                                    <img src="assets/icon_modal_bank_counterparty.svg" alt="" width="32" height="32" />
+                                </div>
+                                <h3 class="add-usdbank-card__title">Counterparty account</h3>
+                                <p class="add-usdbank-card__desc">For payment purposes</p>
+                                <a href="add-bank.html" class="btn btn--primary btn--md add-usdbank-card__btn">
+                                    Add counterparty account
+                                </a>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer__inner">
+            <div class="footer__copy">© XREX Pay Limited 2025</div>
+            <div class="footer__links">
+                <a href="https://intercom.help/xrex-sg/en/" target="_blank" rel="noopener noreferrer">Support</a>
+                <a href="https://info.xrex.sg/doc" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+                <a href="https://info.xrex.sg/doc" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script defer src="js/main.js?v=20251108"></script>
+    <script defer src="js/settings.js?v=20251108"></script>
+    <div class="build-badge" role="note"></div>
+</body>
+</html>

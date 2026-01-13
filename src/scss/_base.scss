@@ -1,0 +1,56 @@
+/* CSS Reset (modern minimal) */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body, h1, h2, h3, h4, p, figure, blockquote, dl, dd { margin: 0; }
+ul[role="list"], ol[role="list"] { list-style: none; }
+img, picture { max-width: 100%; display: block; }
+input, button, textarea, select { font: inherit; }
+button { cursor: pointer; }
+
+/* Base */
+:root {
+  color-scheme: light only;
+}
+
+body {
+  font-family: $font-family-sans;
+  color: $text-primary;
+  background: $bg-page;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container { @include container; }
+
+.muted { color: $text-secondary; }
+
+a {
+  color: $primary-700;
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+/* Utilities */
+.visually-hidden {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0 !important;
+  border: 0 !important;
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Ensure footer sits at bottom */
+main.page { 
+  flex: 1 0 auto; 
+  padding:0px;
+  margin-top: 64px;
+}
+
+

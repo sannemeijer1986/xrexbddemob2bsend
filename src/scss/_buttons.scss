@@ -1,0 +1,72 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: $radius-md;
+  background: $gray-800;
+  color: #fff;
+  padding: 10px 14px;
+  font-weight: 600;
+  transition: filter .15s ease, transform .02s ease, background-color .15s ease, border-color .15s ease;
+  text-decoration: none !important;
+}
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: .6; cursor: not-allowed; }
+
+.btn--primary {
+  background: #3F78FF;
+}
+.btn--ghost {
+  background: transparent;
+  color: $gray-800;
+  border-color: $border-color;
+}
+.btn--sm {
+  padding: 0px 12px;
+  height: 32px;
+  min-width: 100px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Icon-only circular button, pairs with size modifiers (e.g., btn--sm) */
+.btn--icon {
+  padding: 0;
+  min-width: 32px;
+  width: 32px;
+  height: 32px;
+  display: inline-grid;
+  place-items: center;
+}
+
+/* Secondary (light blue) and medium size to mirror xrextgbot */
+.btn--secondary {
+  background: #EBF2FF;
+  color: #2563eb;
+}
+
+/* Alert button (same as primary but with alert red background) */
+.btn--alert {
+  background: #EB5347;
+  color: #fff;
+}
+.btn--md {
+  height: 40px;
+  min-width: 160px;
+  font-size: 14px;
+  border-radius: 8px;
+  padding: 0 16px;
+}
+
+.btn--lg {
+  height: 52px;
+  min-width: 160px;
+  font-size: 16px;
+  border-radius: 8px;
+  padding: 0 16px;
+}
+
+

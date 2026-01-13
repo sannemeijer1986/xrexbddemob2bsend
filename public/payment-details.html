@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>XREX Pay - Payment details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/main.css?v=20251108" />
+    <link rel="icon" href="assets/favicons/xrex-favicon-16x16.png" sizes="16x16" type="image/png" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header__content">
+        <a class="brand" href="index.html">
+          <img class="brand__img" src="assets/logo_xrexpay.svg" alt="XREX Pay" />
+        </a>
+        <div class="header__spacer"></div>
+        <div class="header__actions">
+          <a class="circle-icon" href="https://intercom.help/xrex-sg/en/" target="_blank" rel="noopener noreferrer" title="Support">
+            <img src="assets/icon_support.svg" alt="support" width="20" height="20" />
+          </a>
+          <a class="account-chip" id="accountChipLink" href="settings.html">
+            <span class="chip-avatar"><img src="assets/logo_agp.svg" alt="AGP" /></span>
+            <span class="chip-name">AGP Technology</span>
+            <img class="chevron" src="assets/icon_chevron_right.svg" alt="more" width="20" height="20" />
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page page--payment-detail">
+      <div class="container">
+        <section class="page__header page__header--crumb">
+          <a class="crumb" href="payment-submitted.html" aria-label="Back">
+            <picture>
+              <source media="(min-width: 1280px)" srcset="assets/icon_header_back.svg" />
+              <img src="assets/icon_header_back_mobile.svg" width="32" height="32" alt="" />
+            </picture>
+          </a>
+          <h1 class="page__title">Payment details</h1>
+        </section>
+
+        <section class="pd-detail">
+          <div class="pd-detail__layout">
+            <div class="pd-detail__main">
+              <div class="pd-detail__card pd-detail__card--summary">
+                <div class="pd-detail__summary-head">
+                  <div class="pd-detail__summary-main">
+                    <div class="pd-detail__label">Payment amount</div>
+                    <div class="pd-detail__amount-row">
+                      <div id="pdAmount" class="pd-detail__amount">--</div>
+                      <span id="pdStatusBadge" class="pd-status pd-status--processing">Processing</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="pdInfoBanner" class="pd-detail__info-banner">
+                  <span class="pd-detail__info-icon"></span>
+                  <span class="pd-detail__info-text">Sending the payment will require 1–5 business days.</span>
+                </div>
+
+                <div class="pd-detail__rows">
+                  <div class="pd-detail__row" id="pdConvertSummaryRow" style="display: none;">
+                    <span class="pd-detail__row-label">Converted from</span>
+                    <span class="pd-detail__row-value">
+                      <span id="pdConvertSummaryAmount">--</span>
+                      <a href="#" id="pdConvertDetailsOpen" class="pd-detail__link pd-detail__link--sub">See convert details</a>
+                    </span>
+                  </div>
+                  <div class="pd-detail__row">
+                    <span class="pd-detail__row-label">Service fee (Sender / Receiver)</span>
+                    <span id="pdServiceFee" class="pd-detail__row-value">-- / --</span>
+                  </div>
+                  <div class="pd-detail__row">
+                    <span class="pd-detail__row-label">Total amount deducted</span>
+                    <span id="pdTotalPaid" class="pd-detail__row-value">--</span>
+                  </div>
+                  <div class="pd-detail__row">
+                    <span class="pd-detail__row-label">Total amount sent</span>
+                    <span id="pdTotalSent" class="pd-detail__row-value">--</span>
+                  </div>
+                </div>
+
+                <div class="pd-detail__receiver">
+                  <div class="pd-detail__receiver-label">Receiver</div>
+                  <div class="pd-detail__receiver-main">
+                    <div class="pd-detail__receiver-left">
+                      <span class="pd-detail__receiver-avatar">
+                        <img src="assets/icon_bank_cp.svg" alt="" width="24" height="24" />
+                      </span>
+                      <div id="pdReceiverName" class="pd-detail__receiver-name">- -</div>
+                    </div>
+                    <div id="pdReceiverBank" class="pd-detail__receiver-bank">- -</div>
+                  </div>
+                </div>
+
+                <div class="pd-detail__rows pd-detail__rows--meta">
+                  <div class="pd-detail__row">
+                    <span class="pd-detail__row-label">Message to beneficiary</span>
+                    <span id="pdPaymentNote" class="pd-detail__row-value">- -</span>
+                  </div>
+                  <div class="pd-detail__row pd-detail__row--id">
+                    <span class="pd-detail__row-label">Payment ID</span>
+                    <span class="pd-detail__row-value pd-detail__row-value--id">
+                      <span id="pdPaymentId">- -</span>
+                      <button type="button" class="pd-detail__copy-btn" aria-label="Copy payment ID">
+                        <img src="assets/icon_copy.svg" alt="" width="16" height="16" />
+                      </button>
+                    </span>
+                  </div>
+                  <div class="pd-detail__row">
+                    <span class="pd-detail__row-label">Requested date</span>
+                    <span id="pdRequestedDate" class="pd-detail__row-value">- -</span>
+                  </div>
+                  <div class="pd-detail__row">
+                    <span class="pd-detail__row-label">Sent date</span>
+                    <span id="pdSentDate" class="pd-detail__row-value">- -</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <aside class="pd-detail__aside">
+              <div class="pd-detail__card">
+                <dl class="pd-detail__grid">
+                  <div class="pd-detail__item">
+                    <dt>Nature of payment</dt>
+                    <dd id="pdNature">- -</dd>
+                  </div>
+                  <div class="pd-detail__item">
+                    <dt>Purpose of payment</dt>
+                    <dd id="pdPurpose">- -</dd>
+                  </div>
+                  <div class="pd-detail__item">
+                    <dt id="pdDocLabel">Proforma Invoice (PI)</dt>
+                    <dd>
+                      <a id="pdDocLink" href="#" class="pd-detail__link">- -</a>
+                    </dd>
+                  </div>
+                  <div class="pd-detail__item">
+                    <dt id="pdDocNumberLabel">Proforma Invoice (PI) number</dt>
+                    <dd id="pdDocNumber">- -</dd>
+                  </div>
+                </dl>
+              </div>
+
+              <div id="pdReceiptCard" class="pd-detail__card pd-detail__card--receipt" style="display: none;">
+                <h2 id="pdReceiptTitle" class="pd-detail__section-title">Payment advice</h2>
+                <a id="pdDownloadReceipt" href="payment-receipt.html" target="_blank" class="pd-detail__link">
+                  Download Payment advice
+                </a>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Modal: Convert details -->
+    <div id="pdConvertDetailsModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="pdConvertDetailsTitle">
+      <div class="modal-wrapper">
+        <div class="modal-content convert-modal">
+          <div class="convert-modal__icon">
+            <img src="assets/icon_qm_convert.svg" alt="" width="28" height="28" />
+          </div>
+          <div class="modal-body">
+            <h2 id="pdConvertDetailsTitle" class="convert-modal__title">Convert details for this payment</h2>
+            <div class="summary-box convert-box">
+              <div class="summary-pair summary-pair--convertfrom">
+                <span class="muted">Converted from</span>
+                <strong id="pd-cv-from">-</strong>
+              </div>
+              <div class="summary-pair summary-pair--convertto">
+                <span class="muted">Converted to</span>
+                <strong id="pd-cv-to">-</strong>
+              </div>
+              <div class="summary-pair summary-pair--convertrate">
+                <span class="muted">Conversion rate</span>
+                <strong id="pd-cv-rate">1 USDT = 1 USD</strong>
+              </div>
+            </div>
+            <div class="review-declare" style="margin-top: 16px;">
+              <div class="review-declare__head">
+                <img class="review-declare__icon" src="assets/icon_info_blue.svg" width="16" height="16" alt="">
+                <p class="review-declare__text">
+                  Recorded consent for USDT-to-USD conversion, with acknowledgment that any refunds may be issued in USD.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn--secondary btn--md" data-modal-close>Dismiss</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer__inner">
+        <div class="footer__copy">© XREX Pay Limited 2025</div>
+        <div class="footer__links">
+          <a href="https://intercom.help/xrex-sg/en/" target="_blank" rel="noopener noreferrer">Support</a>
+          <a href="https://info.xrex.sg/doc" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+          <a href="https://info.xrex.sg/doc" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+        </div>
+      </div>
+    </footer>
+
+    <script defer src="js/main.js?v=20251108"></script>
+    <script>
+      window.addEventListener('DOMContentLoaded', function () {
+        try {
+          var STATUS_SENT_STATE = 5;
+          var SENT_DATE_KEY = 'xrexb2b.paymentSentAt';
+          var BACK_KEY = 'xrexb2b.paymentDetailsReturnUrl';
+
+          var setText = function (id, value, fallback) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = (value !== undefined && value !== null && value !== '') ? value : (fallback !== undefined ? fallback : '- -');
+          };
+
+          // Populate from receiptData
+          var data = null;
+          try {
+            var raw = window.sessionStorage ? window.sessionStorage.getItem('receiptData') : null;
+            data = raw ? JSON.parse(raw) : null;
+          } catch (_) {}
+
+          if (data) {
+            setText('pdAmount', data.amountPayableFmt || '');
+            setText('pdServiceFee', ((data.payerShareAmt || '--') + ' / ' + (data.receiverShareAmt || '--')).trim());
+            setText('pdTotalPaid', data.toBeDeducted || '');
+            setText('pdTotalSent', data.receiverGets || '');
+            setText('pdReceiverName', data.receiverName || '');
+            setText('pdReceiverBank', data.receiverBank || '');
+            setText('pdPaymentNote', data.docNotes || '- -');
+            setText('pdRequestedDate', data.dateTime || '');
+            setText('pdPaymentId', data.paymentId || '- -');
+            setText('pdNature', data.nature || '- -');
+            setText('pdPurpose', data.purpose || '- -');
+
+            // Converted summary (only when payer currency is USDT and conversion exists)
+            (function () {
+              var deducted = data.deductedFrom || '';
+              var payerCur = (deducted.split(' ')[0] || '').toUpperCase();
+              var amountStr = data.amountPayableFmt || '';
+              var num = (amountStr || '').replace(/[^\d.]/g, '');
+              var n = Number(num || 0);
+              var isUSDT = /USDT/.test(deducted.toUpperCase());
+
+              var summaryRow = document.getElementById('pdConvertSummaryRow');
+              var summaryAmt = document.getElementById('pdConvertSummaryAmount');
+
+              if (isUSDT && n > 0 && summaryRow && summaryAmt) {
+                var fromTxt = n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + (payerCur || 'USDT');
+                summaryAmt.textContent = fromTxt;
+                summaryRow.style.display = '';
+              } else if (summaryRow) {
+                summaryRow.style.display = 'none';
+              }
+            })();
+
+            // Documents (pre-shipment vs post-shipment)
+            var docsDetail = Array.isArray(data.docsDetail) ? data.docsDetail : null;
+            var natureLabel = (data.nature || '').toLowerCase();
+            var isPostShipment = natureLabel.indexOf('post') === 0;
+
+            var docs = [];
+            if (docsDetail && docsDetail.length) {
+              docs = docsDetail.slice();
+            } else if (data.attachedDocs) {
+              docs = [{ title: data.attachedDocs, declared: false }];
+            }
+
+            // For post-shipment, ensure "Commercial invoice" appears last in the list
+            if (isPostShipment && docs.length > 1) {
+              var ciDocs = [];
+              var otherDocs = [];
+              docs.forEach(function (d) {
+                var t = (d && d.title ? String(d.title) : '').toLowerCase();
+                if (t.indexOf('commercial invoice') === 0) {
+                  ciDocs.push(d);
+                } else {
+                  otherDocs.push(d);
+                }
+              });
+              docs = otherDocs.concat(ciDocs);
+            }
+
+            var docLabelEl = document.getElementById('pdDocLabel');
+            var docLink = document.getElementById('pdDocLink');
+            var docNumberLabelEl = document.getElementById('pdDocNumberLabel');
+            var docNumberEl = document.getElementById('pdDocNumber');
+            var docsGrid = document.querySelector('.pd-detail__grid');
+            var ciItem = docLabelEl ? docLabelEl.closest('.pd-detail__item') : null;
+
+            // Remove any previously injected extra doc rows
+            if (docsGrid) {
+              Array.prototype.slice.call(docsGrid.querySelectorAll('.pd-detail__item[data-doc-extra="1"]'))
+                .forEach(function (node) { node.parentNode.removeChild(node); });
+            }
+
+            // Determine primary doc (shown in pdDocLabel/pdDocLink) and extra docs
+            var primaryDoc = null;
+            var extraDocs = [];
+            if (docs.length) {
+              if (isPostShipment) {
+                var ciIndex = -1;
+                for (var di = 0; di < docs.length; di++) {
+                  var t2 = (docs[di] && docs[di].title ? String(docs[di].title) : '').toLowerCase();
+                  if (t2.indexOf('commercial invoice') === 0) {
+                    ciIndex = di;
+                    break;
+                  }
+                }
+                if (ciIndex >= 0) {
+                  primaryDoc = docs[ciIndex];
+                  extraDocs = docs.slice(0, ciIndex).concat(docs.slice(ciIndex + 1));
+                } else {
+                  primaryDoc = docs[0];
+                  extraDocs = docs.slice(1);
+                }
+              } else {
+                primaryDoc = docs[0];
+                extraDocs = docs.slice(1);
+              }
+            }
+
+            if (primaryDoc && docLabelEl && docLink) {
+              var firstTitle = primaryDoc.title || (data.attachedDocs || 'Proforma Invoice (PI)');
+              docLabelEl.textContent = firstTitle;
+
+              if (primaryDoc.declared) {
+                docLink.textContent = 'Declared no document required';
+                docLink.classList.add('pd-detail__declared');
+                docLink.removeAttribute('href');
+              } else {
+                docLink.classList.remove('pd-detail__declared');
+                var linkText;
+                if (!isPostShipment && data.docNumber) {
+                  linkText = data.docNumber + '.pdf';
+                } else {
+                  linkText = firstTitle || 'Document';
+                }
+                docLink.textContent = linkText;
+                docLink.href = '#';
+              }
+            } else if (docLink) {
+              docLink.textContent = '- -';
+              docLink.removeAttribute('href');
+            }
+
+            if (docNumberLabelEl) {
+              docNumberLabelEl.textContent = data.docNumLabel || 'Proforma Invoice (PI) number';
+            }
+            if (docNumberEl) {
+              docNumberEl.textContent = data.docNumber || '- -';
+            }
+
+            // Extra docs (post-shipment multiple documents)
+            if (extraDocs.length && docsGrid && ciItem) {
+              for (var i = 0; i < extraDocs.length; i++) {
+                var doc = extraDocs[i];
+                var item = document.createElement('div');
+                item.className = 'pd-detail__item';
+                item.setAttribute('data-doc-extra', '1');
+                var dt = document.createElement('dt');
+                dt.textContent = doc.title || 'Document';
+                var dd = document.createElement('dd');
+                if (doc.declared) {
+                  var span = document.createElement('span');
+                  span.className = 'pd-detail__declared';
+                  span.textContent = 'Declared no document required';
+                  dd.appendChild(span);
+                } else {
+                  var a = document.createElement('a');
+                  a.href = '#';
+                  a.className = 'pd-detail__link';
+                  a.textContent = doc.title || 'Document';
+                  dd.appendChild(a);
+                }
+                item.appendChild(dt);
+                item.appendChild(dd);
+                docsGrid.insertBefore(item, ciItem);
+              }
+            }
+          }
+
+          var statusBadge = document.getElementById('pdStatusBadge');
+          var infoBanner = document.getElementById('pdInfoBanner');
+          var receiptCard = document.getElementById('pdReceiptCard');
+          var receiptTitle = document.getElementById('pdReceiptTitle');
+          var receiptLink = document.getElementById('pdDownloadReceipt');
+          var convertModal = document.getElementById('pdConvertDetailsModal');
+          var convertOpen = document.getElementById('pdConvertDetailsOpen');
+          var sentDateEl = document.getElementById('pdSentDate');
+
+          var applyState = function (state) {
+            var isSent = state >= STATUS_SENT_STATE;
+            // Receipt is available from state 4 (Processing) onwards
+            var hasReceipt = state >= 4;
+
+            if (statusBadge) {
+              statusBadge.classList.remove('pd-status--processing', 'pd-status--sent');
+              if (isSent) {
+                statusBadge.textContent = 'Sent';
+                statusBadge.classList.add('pd-status--sent');
+              } else {
+                statusBadge.textContent = 'Processing';
+                statusBadge.classList.add('pd-status--processing');
+              }
+            }
+
+            if (infoBanner) {
+              infoBanner.style.display = isSent ? 'none' : 'flex';
+            }
+
+            if (receiptCard) {
+              receiptCard.style.display = hasReceipt ? '' : 'none';
+            }
+
+            if (receiptTitle || receiptLink) {
+              var receiptTitleText = 'Payment advice';
+              var receiptLinkText = 'Download Payment advice';
+
+              if (state === 4) {
+                receiptTitleText = 'Submission Receipt';
+                receiptLinkText = 'Download';
+              } else if (state >= 5) {
+                receiptTitleText = 'Transaction Receipt';
+                receiptLinkText = 'Download';
+              }
+
+              if (receiptTitle) {
+                receiptTitle.textContent = receiptTitleText;
+              }
+              if (receiptLink) {
+                receiptLink.textContent = receiptLinkText;
+              }
+            }
+
+            if (sentDateEl) {
+              if (isSent) {
+                var ts = null;
+                try {
+                  if (window.sessionStorage) {
+                    ts = window.sessionStorage.getItem(SENT_DATE_KEY);
+                  }
+                } catch (_) {}
+                if (!ts) {
+                  ts = new Date().toLocaleString('en-GB', { hour12: false });
+                  try {
+                    if (window.sessionStorage) {
+                      window.sessionStorage.setItem(SENT_DATE_KEY, ts);
+                    }
+                  } catch (_) {}
+                }
+                sentDateEl.textContent = ts;
+              } else {
+                sentDateEl.textContent = '- -';
+              }
+            }
+          };
+
+          var initialState = typeof getPrototypeState === 'function' ? getPrototypeState() : 4;
+          applyState(initialState);
+
+          // Wire Convert details modal
+          (function () {
+            if (!convertModal || !convertOpen || !data) return;
+
+            var openConvertModal = function () {
+              try {
+                var deducted = data.deductedFrom || '';
+                var payerCur = (deducted.split(' ')[0] || '').toUpperCase() || 'USDT';
+                var amountStr = data.amountPayableFmt || '';
+                var num = (amountStr || '').replace(/[^\d.]/g, '');
+                var n = Number(num || 0);
+                var isUSDT = /USDT/.test(deducted.toUpperCase());
+
+                var fmt = function (v, cur) {
+                  return Number(v || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + cur;
+                };
+
+                var fromVal = fmt(n, payerCur);
+                var toVal = fmt(n, 'USD');
+
+                setText('pd-cv-from', fromVal, '-');
+                setText('pd-cv-rate', data.conversion || '1 USDT = 1 USD', '1 USDT = 1 USD');
+                setText('pd-cv-to', toVal, '-');
+
+                // Only meaningful when we actually converted from USDT
+                if (!isUSDT || !n) return;
+              } catch (_) {}
+
+              convertModal.setAttribute('aria-hidden', 'false');
+              document.documentElement.classList.add('modal-open');
+              document.body.classList.add('modal-open');
+            };
+
+            convertOpen.addEventListener('click', function (e) {
+              e.preventDefault();
+              openConvertModal();
+            });
+
+            // Close handlers
+            convertModal.querySelectorAll('[data-modal-close]').forEach(function (btn) {
+              btn.addEventListener('click', function () {
+                convertModal.setAttribute('aria-hidden', 'true');
+                document.documentElement.classList.remove('modal-open');
+                document.body.classList.remove('modal-open');
+              });
+            });
+          })();
+
+          document.addEventListener('prototypeStateChange', function (e) {
+            try {
+              var next = e && e.detail && typeof e.detail.state === 'number'
+                ? e.detail.state
+                : (typeof getPrototypeState === 'function' ? getPrototypeState() : 4);
+              applyState(next);
+            } catch (_) {}
+          });
+
+          // Back crumb: return to stored entrypoint (default: index)
+          try {
+            var backHeader = document.querySelector('.page__header--crumb');
+            var backLink = backHeader && backHeader.querySelector('.crumb');
+            if (backLink) {
+              var href = 'index.html';
+              if (window.sessionStorage) {
+                var from = window.sessionStorage.getItem(BACK_KEY);
+                if (from) href = from;
+              }
+              backLink.setAttribute('href', href);
+
+              // Below desktop, make the entire header (chevron + title) behave as a back button.
+              var mqDesktop = window.matchMedia('(min-width: 1280px)');
+              var headerClickHandler = function (ev) {
+                // Ignore clicks that originate from the actual link (it will navigate anyway)
+                if (ev.target.closest && ev.target.closest('.crumb')) return;
+                // Only treat as back when below desktop
+                if (!mqDesktop.matches) {
+                  ev.preventDefault();
+                  backLink.click();
+                }
+              };
+              if (backHeader && backHeader.addEventListener) {
+                backHeader.addEventListener('click', headerClickHandler);
+              }
+            }
+          } catch (_) {}
+
+          // Copy payment ID to clipboard (best-effort) + snackbar
+          try {
+            var copyPaymentId = function () {
+              var idEl = document.getElementById('pdPaymentId');
+              if (!idEl) return;
+              var text = (idEl.textContent || '').trim();
+              if (!text) return;
+              try {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                  navigator.clipboard.writeText(text);
+                }
+              } catch (_) {}
+              try {
+                if (typeof window.showSnackbar === 'function') {
+                  window.showSnackbar('Payment ID copied to clipboard', 2000);
+                }
+              } catch (_) {}
+            };
+
+            var copyBtn = document.querySelector('.pd-detail__copy-btn');
+            if (copyBtn) {
+              copyBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                copyPaymentId();
+              });
+            }
+
+            var idWrapper = document.querySelector('.pd-detail__row-value--id');
+            if (idWrapper) {
+              idWrapper.style.cursor = 'pointer';
+              idWrapper.addEventListener('click', function () {
+                copyPaymentId();
+              });
+            }
+          } catch (_) {}
+
+          // Ensure receiptData is populated before opening the receipt print-friendly page
+          try {
+            var dl = document.getElementById('pdDownloadReceipt');
+            if (dl) {
+              dl.addEventListener('click', function (e) {
+                try {
+                  var data = {};
+                  if (window.sessionStorage) {
+                    var raw = window.sessionStorage.getItem('receiptData');
+                    if (raw) {
+                      try { data = JSON.parse(raw) || {}; } catch (e) {}
+                    }
+                  }
+
+                  var textOf = function (sel) {
+                    var el = document.querySelector(sel);
+                    return el && el.textContent ? el.textContent.trim() : '';
+                  };
+
+                  data.receiverName = textOf('#pdReceiverName') || data.receiverName;
+                  data.receiverBank = textOf('#pdReceiverBank') || data.receiverBank;
+                  data.amountPayableFmt = textOf('#pdAmount') || data.amountPayableFmt;
+                  data.toBeDeducted = textOf('#pdTotalPaid') || data.toBeDeducted;
+                  data.receiverGets = textOf('#pdTotalSent') || data.receiverGets;
+                  data.nature = textOf('#pdNature') || data.nature;
+                  data.purpose = textOf('#pdPurpose') || data.purpose;
+                  data.docNumLabel = textOf('#pdDocNumberLabel') || data.docNumLabel;
+                  data.docNumber = textOf('#pdDocNumber') || data.docNumber;
+                  data.dateTime = textOf('#pdRequestedDate') || data.dateTime;
+
+                  var feeTxt = textOf('#pdServiceFee');
+                  if (feeTxt) {
+                    var parts = feeTxt.split('/');
+                    if (!data.payerShareAmt && parts[0]) data.payerShareAmt = parts[0].trim();
+                    if (!data.receiverShareAmt && parts[1]) data.receiverShareAmt = parts[1].trim();
+                  }
+
+                  if (window.sessionStorage) {
+                    window.sessionStorage.setItem('receiptData', JSON.stringify(data));
+                  }
+
+                  // Also encode key fields into the href as query params so a new tab can read them
+                  try {
+                    var qp = [];
+                    if (data.receiverName)     qp.push('receiverName=' + encodeURIComponent(data.receiverName));
+                    if (data.amountPayableFmt) qp.push('amount=' + encodeURIComponent(data.amountPayableFmt));
+                    if (data.payerShareAmt)    qp.push('payerShare=' + encodeURIComponent(data.payerShareAmt));
+                    if (data.receiverShareAmt) qp.push('receiverShare=' + encodeURIComponent(data.receiverShareAmt));
+                    if (data.toBeDeducted)     qp.push('totalPaid=' + encodeURIComponent(data.toBeDeducted));
+                    if (data.nature)           qp.push('nature=' + encodeURIComponent(data.nature));
+                    if (data.purpose)          qp.push('purpose=' + encodeURIComponent(data.purpose));
+                    if (data.docNumLabel)      qp.push('docNumLabel=' + encodeURIComponent(data.docNumLabel));
+                    if (data.docNumber)        qp.push('docNumber=' + encodeURIComponent(data.docNumber));
+                    if (data.deductedFrom)     qp.push('deductedFrom=' + encodeURIComponent(data.deductedFrom));
+                    if (data.conversion)       qp.push('conversion=' + encodeURIComponent(data.conversion));
+
+                    var baseHref = 'payment-receipt.html';
+                    var query = qp.length ? ('?' + qp.join('&')) : '';
+                    dl.setAttribute('href', baseHref + query);
+                  } catch (_) {}
+                } catch (e) {}
+              });
+            }
+          } catch (_) {}
+        } catch (e) {}
+      });
+    </script>
+    <div class="build-badge" role="note"></div>
+  </body>
+</html>
+
+

@@ -1,0 +1,26 @@
+@mixin focus-ring($color: $focus-ring) {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba($color, 0.45);
+}
+
+@mixin card {
+  background: #fff;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+}
+
+@mixin container {
+  width: 100%;
+  max-width: $container-max-tablet;
+  padding-inline: $gutter;
+  margin-inline: auto;
+  padding: 20px;
+
+  @media (min-width: $bp-desktop) {
+    padding: 64px 40px 40px;
+    max-width: $container-max-desktop;
+  }
+}
+
+

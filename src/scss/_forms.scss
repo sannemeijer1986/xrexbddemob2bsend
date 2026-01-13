@@ -1,0 +1,395 @@
+.form {
+  display: grid;
+  gap: 40px;
+}
+
+.form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  @media (max-width: $bp-mobile-lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Modal forms: stack all rows on mobile
+@media (max-width: ($bp-desktop - 1px)) {
+  .modal .form .form__row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form__field {
+  display: grid;
+  gap: 16px;
+  &--grow { grid-column: span 1; }
+}
+
+label {
+  font-size: 13px;
+  color: $text-secondary;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="email"],
+textarea,
+select {
+  width: 100%;
+  border: 1px solid $border-color-hard;
+  border-radius: $radius-md;
+  background: #fff;
+  padding: 16px 16px;
+  color: $text-primary;
+  height: 60px;
+  @media (min-width: $bp-desktop) {
+    height: 80px;
+  }
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #BCBDBD;
+  font-weight: 400;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  box-shadow: none;
+  outline: 1px solid #0184FF;
+  outline-offset: -1px;
+  border-color: transparent
+}
+
+textarea { resize: vertical; }
+
+.input-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid $border-color-hard;
+  border-radius: $radius-md;
+  background: #fff;
+  padding: 0;
+  position: relative;
+  input {
+    flex: 1;
+    border: none;
+    border-radius: 0;
+    padding: 16px 16px 16px 16px;
+    height: 60px;
+    @media (min-width: $bp-desktop) {
+      height: 74px;
+    }
+  }
+  select {
+    border: none;
+    border-radius: 0;
+    padding: 10px 12px;
+    min-width: 84px;
+  }
+  .input-group__badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 12px;
+    margin-right: 16px;
+    background: #F8F8F8;
+    border-radius: 999px;
+    font-family: $font-family-sans;
+    font-weight: 700;
+    font-size: 12px;
+    color: $text-primary;
+    white-space: nowrap;
+    img {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+  }
+  .form__field--amount__badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px;
+    margin-right: 16px;
+    background: #F8F8F8;
+    border-radius: 16px;
+    font-family: $font-family-sans;
+    font-weight: 700;
+    font-size: 12px;
+    color: $text-primary;
+    white-space: nowrap;
+    img {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+  }
+}
+
+// Border radius for avgVolume input
+#avgVolume {
+  border-radius: 8px;
+  
+  // Remove focus outline from the input itself
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+// When avgVolume is focused, show outline on parent input-group instead
+.input-group:has(#avgVolume:focus) {
+  outline: 1px solid #0184FF;
+  outline-offset: -1px;
+}
+
+// Fallback for browsers that don't support :has() - only apply to input-groups containing avgVolume
+.input-group:has(#avgVolume):focus-within {
+  outline: 1px solid #0184FF;
+  outline-offset: -1px;
+}
+
+// (avgVolume special formatting is handled purely in JS on the real input)
+
+.form__actions {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+  padding-top: 8px;
+  border-top: 1px dashed $border-color;
+  margin-top: 8px;
+}
+
+.summary {
+  display: grid;
+  gap: 10px;
+}
+.summary__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  span { color: $text-secondary; }
+  strong { color: $text-primary; font-weight: 600; }
+}
+
+// Clickable input field (for business address pattern)
+.form__field--clickable {
+  .clickable-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    
+    input[readonly] {
+      cursor: pointer;
+      padding-right: 48px; // Space for icon
+    }
+    
+    .clickable-input__icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      z-index: 1;
+      
+      img {
+        display: block;
+        width: 24px;
+        height: 24px;
+      }
+      
+      &:hover {
+        opacity: 0.8;
+      }
+      
+      &:active {
+        transform: translateY(-50%) scale(0.95);
+      }
+    }
+    
+    &__display {
+      width: 100%;
+      border: 1px solid $border-color-hard;
+      border-radius: $radius-md;
+      background: #fff;
+      padding: 16px;
+      min-height: 60px;
+      @media (min-width: $bp-desktop) {
+        min-height: 74px;
+      }
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      cursor: pointer;
+      
+      &-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 0;
+      }
+      
+      &-title {
+        font-family: $font-family-sans;
+        font-weight: 600;
+        font-size: 16px;
+        color: $text-primary;
+        line-height: 1.2;
+      }
+      
+      &-details {
+        font-family: $font-family-sans;
+        font-weight: 600;
+        font-size: 14px;
+        color: $text-secondary;
+        line-height: 1.4;
+        p {
+          margin: 0;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+    
+    &__empty {
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      
+      input[readonly] {
+        cursor: pointer;
+        padding-right: 48px;
+      }
+    }
+  }
+}
+
+// Required field asterisk
+.required {
+  color: #DD483C;
+}
+
+// Business address modal labels
+#businessAddressModal label {
+  font-size: 14px;
+  font-weight: 600;
+  color: $text-secondary;
+}
+
+// Bank details and account declaration modal labels
+#bankDetailsModal label,
+#accountDeclarationModal label {
+  font-size: 14px;
+  font-weight: 600;
+  color: $text-secondary;
+}
+
+// Business address modal inputs - heavier when filled
+#businessAddressModal input:not(:placeholder-shown) {
+  font-weight: 600;
+  color: $text-primary;
+}
+
+// Business address modal selects - default placeholder styling
+#businessAddressModal select {
+  color: #BCBDBD; // Placeholder color
+  font-weight: 400; // Normal weight
+}
+
+// Business address modal selects - heavier when a real value is selected (not placeholder)
+#businessAddressModal select.is-filled {
+  font-weight: 600;
+  color: $text-primary;
+}
+
+// Bank details and account declaration modal inputs - heavier when filled
+#bankDetailsModal input:not(:placeholder-shown),
+#accountDeclarationModal input:not(:placeholder-shown) {
+  font-weight: 600;
+  color: $text-primary;
+}
+
+// Bank details and account declaration modal selects - default placeholder styling
+#bankDetailsModal select,
+#accountDeclarationModal select {
+  color: #BCBDBD; // Placeholder color
+  font-weight: 400; // Normal weight
+}
+
+// Bank details and account declaration modal selects - heavier when a real value is selected (not placeholder)
+#bankDetailsModal select.is-filled,
+#accountDeclarationModal select.is-filled {
+  font-weight: 600;
+  color: $text-primary;
+}
+
+// Disabled select styling for account declaration modal
+#accountDeclarationModal select:disabled {
+  background: #F8F8F8;
+  border-color: #DBDBDC;
+  color: $text-secondary;
+  cursor: not-allowed;
+}
+
+// Remove number input spinners
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+// Alert warning box
+.alert {
+  border-radius: 8px;
+  padding: 8px;
+  
+  &--warning {
+    background: rgba(242, 132, 86, 0.15);
+  }
+  
+  .alert__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .alert__icon {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+  }
+  
+  .alert__title {
+    font-family: $font-family-sans;
+    font-size: 14px;
+    font-weight: 600;
+    color: #F28456;
+    line-height: 1.4;
+  }
+}
+
+

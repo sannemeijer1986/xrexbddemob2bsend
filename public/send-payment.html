@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>XREX Pay - Send payment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/main.css?v=20251108" />
+    <link rel="icon" href="assets/favicons/xrex-favicon-16x16.png" sizes="16x16" type="image/png" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header__content">
+        <a class="brand" href="index.html">
+          <img class="brand__img" src="assets/logo_xrexpay.svg" alt="XREX Pay" />
+        </a>
+        <div class="header__spacer"></div>
+        <div class="header__actions">
+          <a class="circle-icon" href="https://intercom.help/xrex-sg/en/" target="_blank" rel="noopener noreferrer" title="Support">
+            <img src="assets/icon_support.svg" alt="support" width="20" height="20" />
+          </a>
+          <a class="account-chip" id="accountChipLink" href="settings.html">
+            <span class="chip-avatar"><img src="assets/logo_agp.svg" alt="AGP" /></span>
+            <span class="chip-name">AGP Technology</span>
+            <img class="chevron" src="assets/icon_chevron_right.svg" alt="more" width="20" height="20" />
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page page--send">
+      <div class="container">
+        <section class="page__header page__header--crumb">
+          <a class="crumb" href="select-counterparty.html" aria-label="Back to Select counterparty">
+            <picture>
+              <source media="(min-width: 1280px)" srcset="assets/icon_header_back.svg" />
+              <img src="assets/icon_header_back_mobile.svg" width="32" height="32" alt="">
+            </picture>
+          </a>
+          <h1 id="sp-back-title" class="page__title">Send payment</h1>
+        </section>
+
+        <section class="grid">
+          <div class="grid__col grid__col--primary">
+            <h2 id="send-payment-title" class="card__title">Payment information</h2>
+            <form class="card card--section form card--paymentto" aria-labelledby="send-payment-title">
+
+              <div class="form__row">
+                <div class="form__field form__field--recipient">
+                  <div class="field-header">
+                    <label for="pay-to">Receiver</label>
+                    <!-- <button type="button" class="btn btn--secondary btn--sm">
+                      <img src="assets/icon_plus.svg" width="16" height="16" alt="" />
+                      New Payee
+                    </button> -->
+                  </div>
+                  <button id="pay-to" type="button" class="recipient-select" aria-haspopup="listbox" aria-expanded="false">
+                    <span class="recipient-select__avatar">
+                      <img src="assets/icon_bank_cp.svg" alt="" />
+                    </span>
+                    <span class="recipient-select__content">
+                      <span class="recipient-select__title">NovaQuill Ltd</span>
+                      <span class="recipient-select__subtitle">(CIMB) 012-345678-9</span>
+                    </span>
+                    <span class="recipient-select__right">
+                      <span class="recipient-select__right-text recipient-select__right-text--mobile">USD</span>
+                      <span class="recipient-select__right-text recipient-select__right-text--desktop">USD account</span>
+                      <img src="assets/icon_USD.svg" width="20" height="20" alt="" />
+                    </span>
+                    <!-- <span class="recipient-select__chev">
+                      <img src="assets/icon_chevron_down.svg" width="20" height="20" alt="" />
+                    </span> -->
+                  </button>
+                </div>
+              </div>
+
+              <div class="form__row form__row--selects">
+                <div class="form__field form__field--select">
+                  <label for="nature">Nature of payment</label>
+                  <select id="nature" name="nature">
+                    <option value="" selected>Select</option>
+                    <option value="pre_shipment">Pre-shipment advance</option>
+                    <option value="post_shipment">Post-shipment</option>
+                  </select>
+                  <div id="nature-error" class="form-error" hidden>This field is required</div>
+                </div>
+                <div class="form__field form__field--select">
+                  <label for="purpose">Purpose of payment</label>
+                  <select id="purpose" name="purpose">
+                    <option value="" selected>Select</option>
+                    <option value="goods_purchase">Goods purchase</option>
+                    <option value="sample_purchase">Sample order</option>
+                    <option value="tooling_mold_fee">Tooling / mold fee</option>
+                    <option value="freight_charges">Freight charges</option>
+                    <option value="customs_taxes">Customs and taxes</option>
+                    <option value="trade_settlement">Trade settlement</option>
+                    <option value="returned_goods_refund">Returned goods refund</option>
+                    <option value="others">Others</option>
+                  </select>
+                  <div id="purpose-error" class="form-error" hidden>This field is required</div>
+                </div>
+              </div>
+              <div class="form__field" id="purpose-others-field" style="display: none;">
+                <label for="purposeOthers">Purpose of payment description</label>
+                <input id="purposeOthers" name="purposeOthers" type="text" placeholder="Describe the purpose of this payment" maxlength="50" />
+                <div id="purpose-others-error" class="form-error" hidden>This field is required</div>
+              </div>
+
+            </form>
+
+            <h2 class="card__title">Amount and fees</h2>
+            <div class="card card--section">
+              <div class="form">
+
+              <div class="form__row form__row--amount">
+                <div class="form__field">
+                  <label for="amount">Payment amount<span class="label__meta" style="display:none;">Billed in USD</span></label>
+                  <div class="amount-input">
+                    <span class="amount-input__prefix"><img src="assets/icon_USD.svg" alt="" /></span>
+                    <input id="amount" name="amount" type="text" inputmode="decimal" placeholder="0" autocomplete="off" />
+                    <span class="amount-input__suffix">USD</span>
+                  </div>
+                  <div class="amount-meta">
+                    <span class="amount-meta__text">Min/max per transaction {$minval} - {$maxval}</span>
+                    <!-- <img class="amount-meta__icon" src="assets/icon_info.svg" width="16" height="16" alt=""> -->
+                  </div>
+                </div>
+                <!-- <div class="form__field form__field--currency">
+                  <label for="bill-currency">Billed to Payee in</label>
+                  <button id="bill-currency" type="button" class="currency-display" disabled aria-disabled="true">
+                    <span class="currency-display__content">
+                      <span class="currency-display__title">USD</span>
+                      <span class="currency-display__subtitle">US Dollar</span>
+                    </span>
+                    <span class="currency-display__chev">
+                      <img src="assets/icon_chevron_down.svg" width="20" height="20" alt="" />
+                    </span>
+                  </button>
+                </div> -->
+              </div>
+
+              <div class="form__row">
+                <div class="form__field form__field--fees">
+                  <label>Deduct from</label>
+                  <div class="fee-options fee-options--deduct" id="deduct-options">
+                    <label class="fee-option">
+                      <span class="fee-option__icon fee-option__icon--deduct">
+                        <img src="assets/icon_USD.svg" width="28" height="28" alt="USD" />
+                      </span>
+                      <span class="fee-option__content">
+                        <span class="fee-option__title">USD account</span>
+                        <small class="muted">250,000.00 balance</small>
+                      </span>
+                      <input type="radio" name="deduct" value="USD" checked />
+                      <span class="fee-option__check" aria-hidden="true"></span>
+                    </label>
+                    <label class="fee-option">
+                      <span class="fee-option__icon fee-option__icon--deduct">
+                        <img src="assets/icon_USDT.svg" width="28" height="28" alt="USDT" />
+                      </span>
+                      <span class="fee-option__content">      
+                        <span class="fee-option__title">USDT account</span>
+                        <small class="muted">250,000.00 balance</small>
+                      </span>
+                      <input type="radio" name="deduct" value="USDT" />
+                      <span class="fee-option__check" aria-hidden="true"></span>
+                    </label>
+                  </div>
+                  <div class="deduct-footer">
+                    <div id="amount-error" class="form-error" hidden>Payment amount exceeds available balance</div>
+                    <div id="deduct-rate" class="deduct-rate" hidden>
+                      <span class="deduct-rate__sub">USDT will be converted to USD</span>
+                      <span class="deduct-rate__main">Conversion rate: 1 USDT = 1 USD</span>
+                    </div>
+                    <div id="conversion-terms" class="conversion-terms" hidden>
+                      <label class="conversion-terms__label">Conversion confirmation</label>
+                      <div class="conversion-terms__card">
+                        <input type="checkbox" id="conversionTermsCheckbox" name="conversionTerms" />
+                        <label for="conversionTermsCheckbox" class="conversion-terms__text">
+                          I agree to convert my USDT to USD. <br />I understand that any returned funds will be in USD.
+                        </label>
+                      </div>
+                      <div id="conversion-terms-error" class="form-error" hidden>This field is required</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form__row">
+                <div class="form__field form__field--fees">
+                  <label class="fees-label">
+                    <span>Service fee (1.00%) paid by</span>
+                    <span class="fees-label__min">min. 60 USD</span>
+                  </label>
+                  <div class="fee-options">
+                    <label class="fee-option">
+                      <span class="fee-option__icon">
+                        <img src="assets/icon_fees_100_0.svg" width="28" height="28" alt="" />
+                      </span>
+                      <span class="fee-option__content">
+                        <span class="fee-option__title">Paid by you</span>
+                        <small class="muted">Added to payment amount</small>
+                      </span>
+                      <input type="radio" name="fee" value="you" checked />
+                      <span class="fee-option__check" aria-hidden="true"></span>
+                    </label>
+                    <label class="fee-option">
+                      <span class="fee-option__icon">
+                        <img src="assets/icon_fees_50_50.svg" width="28" height="28" alt="" />
+                      </span>
+                      <span class="fee-option__content">      
+                        <span class="fee-option__title">Share 50/50</span>
+                        <small class="muted">Partially added to payment amount and deducted from total to send</small>
+                      </span>
+                      <input type="radio" name="fee" value="split" />
+                      <span class="fee-option__check" aria-hidden="true"></span>
+                    </label>
+                    <label class="fee-option">
+                      <span class="fee-option__icon">
+                        <img src="assets/icon_fees_0_100.svg" width="28" height="28" alt="" />
+                      </span>
+                      <span class="fee-option__content">
+                        <span class="fee-option__title">Paid by receiver</span>
+                        <small class="muted">Deducted from total to send</small>
+                      </span>
+                      <input type="radio" name="fee" value="receiver" />
+                      <span class="fee-option__check" aria-hidden="true"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              </div>
+            </div>
+
+            <h2 class="card__title" id="docs-title" hidden>Supporting documents for <span data-docs-nature></span> payment</h2>
+            <div class="card card--section" id="docs" hidden>
+              <!-- Variant A: Pre-shipment advance -->
+              <div id="docs-pre" class="docs-variant" hidden>
+                <div class="docs-group docs-group--required">
+                  <div class="docs-section">
+                    <div class="docs-section__head">
+                      <img class="docs-section__icon" src="assets/icon_required.svg" alt="" width="16" height="16" />
+                      <span class="docs-section__title">Required</span>
+                    </div>
+                    <div class="docs-section__divider"></div>
+                  </div>
+                  <div class="docs-group__content">
+                    <div class="docs-type">
+                      <div class="form__field">
+                        <label for="docType">Document type</label>
+                        <!-- visual card to mimic select -->
+                        <div class="doc-type-card is-placeholder" aria-disabled="true">
+                          <span class="doc-type__badge is-hidden"><img src="assets/icon_document.svg" alt=""></span>
+                          <div class="doc-type__texts">
+                            <span class="doc-type__title">Select</span>
+                            <small class="muted"></small>
+                          </div>
+                          <span class="doc-type__chev"><img src="assets/icon_chevron_down.svg" width="20" height="20" alt=""></span>
+                          <!-- overlay select for dropdown interaction -->
+                          <select id="docType" name="docType" class="doc-type-select">
+                            <option value="" selected>Select</option>
+                            <option value="PI">Proforma invoice (PI)</option>
+                            <option value="PO">Purchase order (PO)</option>
+                            <option value="CC">Commercial contract (CC)</option>
+                          </select>
+                        </div>
+                        <div id="doc-type-error" class="form-error" hidden>This field is required</div>
+                      </div>
+                    </div>
+                    <div class="docs-upload" id="docUploadBlock" hidden>
+                      <div class="docs-head" id="docUploadHead">
+                        <span class="docs-head__label">Attach document</span>
+                        <span class="docs-head__meta">PDF, PNG, JPG under 50MB</span>
+                      </div>
+                      <div class="upload-list" id="docUploadList">
+                        <div class="upload-item" data-doc-key="required">
+                          <span class="upload-item__badge" id="docUploadBadge">
+                            <img id="docUploadIcon" src="assets/icon_upload_1.svg" alt="">
+                          </span>
+                          <div class="upload-item__meta">
+                            <span class="upload-item__title" id="docUploadTitle">Proforma Invoice (PI)</span>
+                            <small class="muted" id="docUploadDesc"></small>
+                          </div>
+                          <button type="button" class="btn btn--primary btn--sm">Upload</button>
+                        </div>
+                      </div>
+                      <div id="doc-upload-error" class="form-error" hidden>This field is required</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="docs-group docs-group--optional">
+                  <div class="docs-section">
+                    <div class="docs-section__head">
+                      <!-- <img class="docs-section__icon" src="assets/icon_optional.svg" alt="" width="16" height="16" /> -->
+                      <span class="docs-section__title docs-section__title--optional">Optional</span>
+                    </div>
+                    <div class="docs-section__divider"></div>
+                  </div>
+                  <div class="docs-group__content">
+                    <div class="docs-num" id="docNumberField" hidden>
+                      <div class="form__field">
+                        <label for="piNumber" id="docNumberLabel">Proforma Invoice (PI) number</label>
+                        <input id="piNumber" name="piNumber" type="text" placeholder="Enter number" maxlength="50" />
+                        <div class="field-counter" id="piNumberCounter">0/50</div>
+                      </div>
+                    </div>
+                    <div class="docs-notes" id="docNotesField">
+                      <div class="form__field">
+                        <label for="docNotes">Message to beneficiary</label>
+                        <input id="docNotes" name="docNotes" type="text" placeholder="Add a reference/memo to bank transfer" maxlength="40" />
+                        <div class="field-counter" id="docNotesCounter">0/40</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Variant B: Post-shipment -->
+              <div id="docs-post" class="docs-variant" hidden>
+                <div class="docs-group docs-group--required">
+                  <div class="docs-section">
+                    <div class="docs-section__head">
+                      <img class="docs-section__icon" src="assets/icon_required.svg" alt="" width="16" height="16" />
+                      <span class="docs-section__title">Required</span>
+                    </div>
+                    <div class="docs-section__divider"></div>
+                  </div>
+                  <div class="docs-group__content docs-group__content--first">
+                    <div class="docs-post__attach">
+                      <span class="muted">Attach documents</span>
+                      <small class="muted">PDF, PNG, JPG under 50MB</small>
+                    </div>
+                    <div class="upload-list upload-list--post">
+                      <div class="upload-item" data-doc-key="ci">
+                        <span class="upload-item__badge"><img src="assets/icon_upload_1.svg" alt=""></span>
+                        <div class="upload-item__meta">
+                          <span class="upload-item__title">Commercial invoice (CI)</span>
+                          <small class="muted">Under construction</small>
+                        </div>
+                        <div class="upload-item__actions">
+                          <button type="button" class="btn btn--primary btn--sm">Upload</button>
+                        </div>
+                      </div>
+                      <div class="doc-miss-row doc-miss-row-none">
+                        <div class="doc-miss-row__left">
+                          <div class="form-error docs-post-error" id="doc-post-error-ci" hidden>This field is required</div>
+                        </div>
+                        <div class="doc-miss-row__right"></div>
+                      </div>
+                      <div class="upload-item" data-doc-key="transport">
+                        <span class="upload-item__badge"><img src="assets/icon_upload_1.svg" alt=""></span>
+                        <div class="upload-item__meta">
+                          <span class="upload-item__title">Transport document</span>
+                          <small class="muted">Under construction</small>
+                        </div>
+                        <div class="upload-item__actions">
+                          <button type="button" class="btn btn--primary btn--sm">Upload</button>
+                        </div>
+                      </div>
+                      <div class="doc-miss-row">
+                        <div class="doc-miss-row__left">
+                          <div class="form-error docs-post-error" id="doc-post-error-transport" hidden>This field is required</div>
+                        </div>
+                        <div class="doc-miss-row__right">
+                          <label class="doc-miss"><input type="checkbox" /> <span>I declare this transaction does not involve this document</span></label>
+                        </div>
+                      </div>
+                      <div class="upload-item" data-doc-key="packing">
+                        <span class="upload-item__badge"><img src="assets/icon_upload_1.svg" alt=""></span>
+                        <div class="upload-item__meta">
+                          <span class="upload-item__title">Packing list (PL)</span>
+                          <small class="muted">Under construction</small>
+                        </div>
+                        <div class="upload-item__actions">
+                          <button type="button" class="btn btn--primary btn--sm">Upload</button>
+                        </div>
+                      </div>
+                      <div class="doc-miss-row">
+                        <div class="doc-miss-row__left">
+                          <div class="form-error docs-post-error" id="doc-post-error-packing" hidden>This field is required</div>
+                        </div>
+                        <div class="doc-miss-row__right">
+                          <label class="doc-miss"><input type="checkbox" /> <span>I declare this transaction does not involve this document</span></label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="docs-declare" id="docsDeclare" hidden>
+                      <div class="docs-declare__box">
+                        <div class="docs-declare__head">
+                          <img class="docs-declare__icon" src="assets/icon_info_blue.svg" width="16" height="16" alt="">
+                          <span class="docs-declare__title">By proceeding, I confirm that this payment does not involve any transport documents or packing lists</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="docs-group docs-group--optional">
+                  <div class="docs-section">
+                    <div class="docs-section__head">
+                      <!-- <img class="docs-section__icon" src="assets/icon_optional.svg" alt="" width="16" height="16" /> -->
+                      <span class="docs-section__title docs-section__title--optional">Optional</span>
+                    </div>
+                    <div class="docs-section__divider"></div>
+                  </div>
+                  <div class="docs-group__content">
+                    <div class="form__field">
+                      <label for="ciNumber">Commercial invoice number</label>
+                      <input id="ciNumber" name="ciNumber" type="text" placeholder="Enter CI number" maxlength="50" />
+                      <div class="field-counter" id="ciNumberCounter">0/50</div>
+                    </div>
+                    <div class="docs-notes" id="docNotesFieldPost">
+              <div class="form__field">
+                        <label for="docNotesPost">Message to beneficiary</label>
+                        <input id="docNotesPost" name="docNotesPost" type="text" placeholder="Add a note for the bank transfer reference" maxlength="25" />
+                        <div class="field-counter" id="docNotesPostCounter">0/25</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <aside class="grid__col grid__col--sidebar">
+            <h3 class="card__title">Payment preview</h3>
+            <div class="card card--section card--summary">
+              <div class="summary-recipient">
+                <span class="recipient-select__avatar">
+                  <img src="assets/icon_bank_cp.svg" alt="" />
+                </span>
+                <span class="recipient-select__content">
+                  <span class="recipient-select__title">To NovaQuill Ltd</span>
+                  <span class="recipient-select__subtitle">(CIMB) 012-345678-9</span>
+                  <span class="recipient-select__currency show-mobile-only">USD account</span>
+                </span>
+                <span class="summary-recipient__currency">
+                  <span class="summary-recipient__currency-text show-desktop-only">USD</span>
+                  <img src="assets/icon_USD.svg" alt="" />
+                </span>
+              </div>
+
+              <div class="summary-box" style="display:none;">
+                <div class="summary-pair">
+                  <span class="muted">Nature</span>
+                  <strong>Pre-shipment advance</strong>
+                </div>
+                <div class="summary-pair">
+                  <span class="muted">Purpose</span>
+                  <strong>Goods payment</strong>
+                </div>
+              </div>
+
+              <!-- Amount and fees breakdown panel -->
+
+              <div class="summary-section-head" style="display:none;">
+                <span class="summary-section-title">Amount and fees</span>
+              </div>
+              <div class="summary-box" id="summaryBoxAmount">
+                <div class="summary-pair">
+                  <span class="muted">Payment amount</span>
+                  <strong>0.00 USD</strong>
+                </div>
+                <div class="summary-pair">
+                  <span class="muted">Deduct from</span>
+                  <div class="convertrate-wrapper">
+                    <strong>USD account</strong>
+                    <span id="fees-details-open" class="summary-title-link" style="display:none;">Conversion rate: 1 USDT = 1 USD</span>
+                  </div>
+                </div>
+                <!-- <div class="summary-pair summary-pair--convertrate">
+                  <span class="muted">Conversion rate</span>
+                  <strong>1 USDT = 1 USD</strong>
+                </div> -->
+                <div class="summary-pair" data-summary="service-title">
+                  <span class="muted">
+                    Service fee
+                    <span class="service-fee__min-label">min. 60 USD</span>
+                  </span>
+                  <strong>
+                    <span class="service-fee__percentage">1.00%</span>
+                    <span class="service-fee__minimum">60.00 USD</span>
+                  </strong>
+                </div>
+                <div class="summary-pair summary-pair--sub" data-summary="service-payer">
+                  <span class="muted">0% paid by you</span>
+                  <strong>0.00 USDT</strong>
+                </div>
+                <div class="summary-pair summary-pair--sub" data-summary="service-payee">
+                  <span class="muted">0% paid by receiver</span>
+                  <strong>0.00 USD</strong>
+                </div>
+                <div class="summary-separator"></div>
+                <div class="summary-pair summary-pair--yourtotal">
+                  <span class="muted">You pay</span>
+                  <strong>0.00 USD</strong>
+                </div>
+                <div class="summary-pair summary-pair--totalreceive">
+                  <span class="muted">Send to receiver</span>
+                  <strong class="summary-total--primary">0.00 USD</strong>
+                </div>
+              </div>
+              <button id="confirm-send" class="btn btn--primary btn--block" aria-disabled="true" disabled>Review and Pay</button>
+              <div id="confirm-error" class="form-error form-error--cta" hidden>Please complete all required fields</div>
+              <div class="summary-note">Received amount may vary due to bank fees. <br />Processing typically takes 1–5 business days.<br />
+                Receiver will be billed in USD.</div>
+            </div>
+          </aside>
+        </section>
+      </div>
+    </main>
+
+    <!-- Mobile sticky summary bar -->
+    <div id="mobileSticky" class="mobile-stickybar" aria-hidden="false">
+      <div id="confirm-error-mobile" class="mobile-stickybar__error" hidden>Please complete all required fields</div>
+      <div class="mobile-stickybar__inner">
+        <button id="mobileSummaryOpen" type="button" class="ms-left" aria-label="Open summary">
+          <span class="ms-label">Send to receiver</span>
+          <strong id="mobileStickyAmount">0.00 USD<img src="assets/icon_chevron_right_blue.svg" alt="" width="12" height="12" class="ms-chevron"></strong>
+        </button>
+        <button id="confirm-send-sticky" class="btn btn--primary ms-review" aria-disabled="true" disabled>Review and Pay</button>
+      </div>
+    </div>
+
+    <!-- Modal: Fees Details -->
+    <div id="feesDetailsModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="feesDetailsTitle">
+      <div class="modal-wrapper">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="feesDetailsTitle">Amount and fees details TO BE DESIGNED</h2>
+            <button class="modal-close" data-modal-close aria-label="Close modal">
+              <img src="assets/icon_close.svg" width="24" height="24" alt="close">
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="summary-box">
+              <div class="summary-pair">
+                <span class="muted">Payment amount</span>
+                <strong id="fd-subtotal">-</strong>
+              </div>
+              <div class="summary-pair">
+                <span class="muted" id="fd-payer-label">Fee paid by you</span>
+                <strong id="fd-payer">-</strong>
+              </div>
+              <div class="summary-pair">
+                <span class="muted" id="fd-receiver-label">Fee paid by receiver</span>
+                <strong id="fd-receiver">-</strong>
+              </div>
+              <div class="summary-separator"></div>
+              <div class="summary-pair">
+                <span class="muted">You padasfasdg</span>
+                <strong id="fd-youpay">-</strong>
+              </div>
+              <div class="summary-pair">
+                <span class="muted">Receiver gedsagts</span>
+                <strong id="fd-getspaid">-</strong>
+              </div>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn btn--secondary btn--md" data-modal-close>Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Mobile Payment preview -->
+    <div id="mobileSummaryModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="mobileSummaryTitle">
+      <div class="modal-wrapper">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="mobileSummaryTitle">Payment preview</h2>
+            <button class="modal-close" data-modal-close aria-label="Close modal">
+              <img src="assets/icon_close.svg" width="24" height="24" alt="close">
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="mobileSummaryContent"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn--secondary btn--md" data-modal-close>Back</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Convert details -->
+    <div id="convertDetailsModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="convertDetailsTitle">
+      <div class="modal-wrapper">
+        <div class="modal-content convert-modal">
+          <div class="convert-modal__icon">
+            <img src="assets/icon_qm_convert.svg" alt="" width="28" height="28" />
+          </div>
+          <div class="modal-body">
+            <h2 id="convertDetailsTitle" class="convert-modal__title">Convert details for this payment</h2>
+            <div class="summary-box convert-box">
+              <div class="summary-pair summary-pair--convertfrom">
+                <span class="muted">Convert from</span>
+                <strong id="cv-from">-</strong>
+              </div>
+              <!-- <div class="summary-pair summary-pair--convertfee">
+                <span class="muted">Covert fee (<span id="cv-fee-pct">0.00%</span>)</span>
+                <strong id="cv-fee-amt">--</strong>
+              </div>-->
+             <div class="summary-pair summary-pair--netamount">
+                <span class="muted">Net amount to convert</span>
+                <strong id="cv-net">-</strong>
+              </div>
+              <div class="summary-pair summary-pair--convertrate">
+                <button type="button" class="convert-rate-link">Rate</button>
+                <strong id="cv-rate">1 USDT = 1 USD</strong>
+              </div>
+              <div class="summary-separator"></div>
+              <div class="summary-pair summary-pair--convertto">
+                <span class="muted">Convert to</span>
+                <strong id="cv-to">-</strong>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn--secondary btn--md" data-modal-close>Dismiss</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Confirm send -->
+    <div id="confirmPaymentModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="unlinkTitle">
+      <div class="modal-wrapper">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="unlinkTitle">Two-factor authentication</h2>
+            <button class="modal-close" data-modal-close aria-label="Close modal">
+              <img src="assets/icon_close.svg" width="24" height="24" alt="close">
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="m-step">
+              <div class="m-step-title">Please enter the 6-digit code from your authenticator app</div>
+              <div class="m-link">How to enter your authenticator code?</div>
+              <div class="m-field">
+                <div class="m-field-group">
+                  <label class="m-label" for="unlinkCodeInput">Authentication code</label>
+                  <div class="m-input-row">
+                    <input id="unlinkCodeInput" class="m-input" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="Enter 6-digit code" maxlength="6">
+                    <button id="unlinkClearBtn" class="m-clear is-hidden" type="button" aria-label="Clear input">
+                      <img src="assets/icon_clear.svg" width="16" height="16" alt="">
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn--secondary btn--md" data-modal-close id="unlinkCancel">Back</button>
+            <button class="btn btn--primary btn--md" id="unlinkConfirm" disabled>Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="modal modal-loading" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="modal-wrapper">
+        <div class="modal-content">
+          <div class="loading-spinner" aria-live="polite" aria-label="Loading">
+            <img src="assets/loader.svg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer__inner">
+        <div class="footer__copy">© XREX Pay Limited 2025</div>
+        <div class="footer__links">
+          <a href="https://intercom.help/xrex-sg/en/" target="_blank" rel="noopener noreferrer">Support</a>
+          <a href="https://info.xrex.sg/doc" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+          <a href="https://info.xrex.sg/doc" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+        </div>
+      </div>
+    </footer>
+
+    <script defer src="js/main.js?v=20251108"></script>
+    <div class="build-badge" role="note">
+      <a id="sp-fill" href="#" style="color:#fff; text-decoration:underline; margin-left:8px;">Fill</a>
+      <span style="opacity:.7">&nbsp;/&nbsp;</span>
+      <a id="sp-clear" href="#" style="color:#fff; text-decoration:underline;">Clear</a>
+    </div>
+  </body>
+  </html>
+
+

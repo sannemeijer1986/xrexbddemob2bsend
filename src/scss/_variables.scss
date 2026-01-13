@@ -1,0 +1,59 @@
+$font-family-sans: 'Manrope', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+$font-sora: 'Sora', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+
+// Colors (placeholder until design tokens are provided)
+$gray-50: #f8fafc;
+$gray-100: #f1f5f9;
+$gray-200: #e2e8f0;
+$gray-300: #cbd5e1;
+$gray-400: #94a3b8;
+$gray-500: #797A7B;
+$gray-600: #475569;
+$gray-700: #334155;
+$gray-800: #1f2937;
+$gray-900: #0f172a;
+
+$primary-50: #eff6ff;
+$primary-100: #dbeafe;
+$primary-200: #bfdbfe;
+$primary-300: #93c5fd;
+$primary-400: #60a5fa;
+$primary-500: #3b82f6;
+$primary-600: #2563eb;
+$primary-700: #1d4ed8;
+$primary-800: #1e40af;
+$primary-900: #1e3a8a;
+
+$success-500: #10b981;
+$warning-500: #f59e0b;
+$danger-500: #ef4444;
+
+$text-primary: $gray-900;
+$text-secondary: $gray-500;
+$text-placeholder: $gray-400;
+$bg-page: #F8F8F8;
+$bg-subtle: $gray-50;
+$border-color: #eeeeee;
+$border-color-hard: #DBDBDC;
+$focus-ring: $primary-400;
+
+$radius-sm: 6px;
+$radius-md: 8px;
+$radius-lg: 16px;
+
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+$shadow-md: 0 2px 8px rgba(15, 23, 42, 0.08);
+$shadow-lg: 0 8px 24px rgba(15, 23, 42, 0.12);
+
+$container-max-desktop: 1280px;
+$container-max-tablet: 760px;
+$gutter: 16px;
+
+// Breakpoints
+// Keep one source of truth for media queries
+$bp-mobile-lg: 720px;
+$bp-tablet: 960px;
+$bp-desktop: 1280px;
+$bp-wide: 1440px;
+
+

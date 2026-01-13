@@ -1,0 +1,1116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>XREX Pay - Add counterparty bank account</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/main.css?v=20251108" />
+    <link rel="icon" href="assets/favicons/xrex-favicon-16x16.png" sizes="16x16" type="image/png" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header__content">
+        <a class="brand" href="index.html">
+          <img class="brand__img" src="assets/logo_xrexpay.svg" alt="XREX Pay" />
+        </a>
+        <div class="header__spacer"></div>
+        <div class="header__actions">
+          <a class="circle-icon" href="https://intercom.help/xrex-sg/en/" target="_blank" rel="noopener noreferrer" title="Support">
+            <img src="assets/icon_support.svg" alt="support" width="20" height="20" />
+          </a>
+          <a class="account-chip" id="accountChipLink" href="settings.html">
+            <span class="chip-avatar"><img src="assets/logo_agp.svg" alt="AGP" /></span>
+            <span class="chip-name">AGP Technology</span>
+            <img class="chevron" src="assets/icon_chevron_right.svg" alt="more" width="20" height="20" />
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page page--addbank">
+      <div class="container">
+        <section class="page__header page__header--crumb">
+          <a class="crumb" href="select-counterparty.html" id="abBackLink" aria-label="Back">
+            <picture>
+              <source media="(min-width: 1280px)" srcset="assets/icon_header_back.svg" />
+              <img src="assets/icon_header_back_mobile.svg" width="32" height="32" alt="">
+            </picture>
+          </a>
+          <h1 id="ab-back-title" class="page__title">Add USD counterparty account</h1>
+        </section>
+
+        <section class="grid">
+          <div class="grid__col grid__col--primary">
+            <!-- Step 1: Receiver information -->
+            <form id="step1-form" class="card card--section form" aria-label="Receiver information">
+              <h2 class="card__title card__title--within">Enter receiver information</h2>
+              <div class="form__row">
+                <div class="form__field">
+                  <label for="companyName">Company legal name</label>
+                  <input id="companyName" name="companyName" type="text" placeholder="Enter legal name" />
+                </div>
+              </div>
+              <div class="form__row form__row--selects">
+                <div class="form__field">
+                  <label for="regDate">Registration date</label>
+                  <input id="regDate" name="regDate" type="date" placeholder="Registration date" />
+                </div>
+                <div class="form__field">
+                  <label for="regNum">Registration number</label>
+                  <input id="regNum" name="regNum" type="text" placeholder="Enter registration number" />
+                </div>
+              </div>
+              <div class="form__row">
+                <div class="form__field form__field--select">
+                  <label for="country">Country of registration</label>
+                  <select id="country" name="country">
+                    <option value="" selected disabled>Select country</option>
+                    <option value="Albania">Albania</option>
+                    <option value="Algeria">Algeria</option>
+                    <option value="Angola">Angola</option>
+                    <option value="Anguilla">Anguilla</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Armenia">Armenia</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Austria">Austria</option>
+                    <option value="Azerbaijan">Azerbaijan</option>
+                    <option value="Bahamas">Bahamas</option>
+                    <option value="Bahrain">Bahrain</option>
+                    <option value="Bangladesh">Bangladesh</option>
+                    <option value="Belgium">Belgium</option>
+                    <option value="Belize">Belize</option>
+                    <option value="Bhutan">Bhutan</option>
+                    <option value="Bolivia">Bolivia</option>
+                    <option value="Brazil">Brazil</option>
+                    <option value="Brunei">Brunei</option>
+                    <option value="Bulgaria">Bulgaria</option>
+                    <option value="Burkina Faso">Burkina Faso</option>
+                    <option value="Cambodia">Cambodia</option>
+                    <option value="Canada">Canada</option>
+                    <option value="Cayman Islands">Cayman Islands</option>
+                    <option value="Chile">Chile</option>
+                    <option value="Colombia">Colombia</option>
+                    <option value="Costa Rica">Costa Rica</option>
+                    <option value="Croatia">Croatia</option>
+                    <option value="Czech Republic">Czech Republic</option>
+                    <option value="Denmark">Denmark</option>
+                    <option value="Djibouti">Djibouti</option>
+                    <option value="Dominica">Dominica</option>
+                    <option value="Dominican Republic">Dominican Republic</option>
+                    <option value="Ecuador">Ecuador</option>
+                    <option value="Egypt">Egypt</option>
+                    <option value="El Salvador">El Salvador</option>
+                    <option value="Eritrea">Eritrea</option>
+                    <option value="Estonia">Estonia</option>
+                    <option value="Finland">Finland</option>
+                    <option value="France">France</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Germany">Germany</option>
+                    <option value="Gibraltar">Gibraltar</option>
+                    <option value="Greece">Greece</option>
+                    <option value="Guam">Guam</option>
+                    <option value="Guatemala">Guatemala</option>
+                    <option value="Haiti">Haiti</option>
+                    <option value="Holy See, Vatican City State">Holy See, Vatican City State</option>
+                    <option value="Honduras">Honduras</option>
+                    <option value="Hong Kong">Hong Kong</option>
+                    <option value="Hungary">Hungary</option>
+                    <option value="Iceland">Iceland</option>
+                    <option value="India">India</option>
+                    <option value="Indonesia">Indonesia</option>
+                    <option value="Ireland">Ireland</option>
+                    <option value="Israel">Israel</option>
+                    <option value="Italy">Italy</option>
+                    <option value="Ivory Coast">Ivory Coast</option>
+                    <option value="Jamaica">Jamaica</option>
+                    <option value="Japan">Japan</option>
+                    <option value="Jordan">Jordan</option>
+                    <option value="Kazakhstan">Kazakhstan</option>
+                    <option value="Kenya">Kenya</option>
+                    <option value="Kuwait">Kuwait</option>
+                    <option value="Kyrgyzstan">Kyrgyzstan</option>
+                    <option value="Laos">Laos</option>
+                    <option value="Latvia">Latvia</option>
+                    <option value="Liechtenstein">Liechtenstein</option>
+                    <option value="Lithuania">Lithuania</option>
+                    <option value="Luxembourg">Luxembourg</option>
+                    <option value="Macao, China">Macao, China</option>
+                    <option value="Malaysia">Malaysia</option>
+                    <option value="Maldives">Maldives</option>
+                    <option value="Malta">Malta</option>
+                    <option value="Mexico">Mexico</option>
+                    <option value="Moldova">Moldova</option>
+                    <option value="Monaco">Monaco</option>
+                    <option value="Mongolia">Mongolia</option>
+                    <option value="Montenegro">Montenegro</option>
+                    <option value="Morocco">Morocco</option>
+                    <option value="Nepal">Nepal</option>
+                    <option value="Netherlands">Netherlands</option>
+                    <option value="New Zealand">New Zealand</option>
+                    <option value="Nigeria">Nigeria</option>
+                    <option value="North Macedonia">North Macedonia</option>
+                    <option value="Norway">Norway</option>
+                    <option value="Oman">Oman</option>
+                    <option value="Pakistan">Pakistan</option>
+                    <option value="Palau">Palau</option>
+                    <option value="Panama">Panama</option>
+                    <option value="Paraguay">Paraguay</option>
+                    <option value="Peru">Peru</option>
+                    <option value="Philippines">Philippines</option>
+                    <option value="Poland">Poland</option>
+                    <option value="Portugal">Portugal</option>
+                    <option value="Puerto Rico">Puerto Rico</option>
+                    <option value="Qatar">Qatar</option>
+                    <option value="Romania">Romania</option>
+                    <option value="Rwanda">Rwanda</option>
+                    <option value="Saudi Arabia">Saudi Arabia</option>
+                    <option value="Senegal">Senegal</option>
+                    <option value="Serbia">Serbia</option>
+                    <option value="Seychelles">Seychelles</option>
+                    <option value="Singapore">Singapore</option>
+                    <option value="Slovakia">Slovakia</option>
+                    <option value="Slovenia">Slovenia</option>
+                    <option value="South Africa">South Africa</option>
+                    <option value="South Korea">South Korea</option>
+                    <option value="Spain">Spain</option>
+                    <option value="Sri Lanka">Sri Lanka</option>
+                    <option value="State of Palestine">State of Palestine</option>
+                    <option value="Sweden">Sweden</option>
+                    <option value="Switzerland">Switzerland</option>
+                    <option value="Taiwan">Taiwan</option>
+                    <option value="Tajikistan">Tajikistan</option>
+                    <option value="Thailand">Thailand</option>
+                    <option value="Timor-Leste">Timor-Leste</option>
+                    <option value="Uganda">Uganda</option>
+                    <option value="United Arab Emirates">United Arab Emirates</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="United States">United States</option>
+                    <option value="Uruguay">Uruguay</option>
+                    <option value="Uzbekistan">Uzbekistan</option>
+                    <option value="Vietnam">Vietnam</option>
+                    <option value="Virgin Islands, British">Virgin Islands, British</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form__row">
+                <div class="form__field form__field--clickable">
+                  <label for="businessAddress">Registered address</label>
+                  <div class="clickable-input" id="businessAddressWrapper">
+                    <input id="businessAddress" name="businessAddress" type="text" placeholder="Enter registered address" readonly />
+                    <button type="button" class="clickable-input__icon" id="businessAddressBtn" aria-label="Add business address">
+                      <img id="businessAddressIcon" src="assets/icon_add.svg" alt="" width="20" height="20" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="form__row">
+                <div class="form__field form__field--select">
+                  <label for="operationCountry">Country of operation</label>
+                  <select id="operationCountry" name="operationCountry">
+                    <option value="" selected disabled>Select country</option>
+                    <option value="Albania">Albania</option>
+                    <option value="Algeria">Algeria</option>
+                    <option value="Angola">Angola</option>
+                    <option value="Anguilla">Anguilla</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Armenia">Armenia</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Austria">Austria</option>
+                    <option value="Azerbaijan">Azerbaijan</option>
+                    <option value="Bahamas">Bahamas</option>
+                    <option value="Bahrain">Bahrain</option>
+                    <option value="Bangladesh">Bangladesh</option>
+                    <option value="Belgium">Belgium</option>
+                    <option value="Belize">Belize</option>
+                    <option value="Bhutan">Bhutan</option>
+                    <option value="Bolivia">Bolivia</option>
+                    <option value="Brazil">Brazil</option>
+                    <option value="Brunei">Brunei</option>
+                    <option value="Bulgaria">Bulgaria</option>
+                    <option value="Burkina Faso">Burkina Faso</option>
+                    <option value="Cambodia">Cambodia</option>
+                    <option value="Canada">Canada</option>
+                    <option value="Cayman Islands">Cayman Islands</option>
+                    <option value="Chile">Chile</option>
+                    <option value="Colombia">Colombia</option>
+                    <option value="Costa Rica">Costa Rica</option>
+                    <option value="Croatia">Croatia</option>
+                    <option value="Czech Republic">Czech Republic</option>
+                    <option value="Denmark">Denmark</option>
+                    <option value="Djibouti">Djibouti</option>
+                    <option value="Dominica">Dominica</option>
+                    <option value="Dominican Republic">Dominican Republic</option>
+                    <option value="Ecuador">Ecuador</option>
+                    <option value="Egypt">Egypt</option>
+                    <option value="El Salvador">El Salvador</option>
+                    <option value="Eritrea">Eritrea</option>
+                    <option value="Estonia">Estonia</option>
+                    <option value="Finland">Finland</option>
+                    <option value="France">France</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Germany">Germany</option>
+                    <option value="Gibraltar">Gibraltar</option>
+                    <option value="Greece">Greece</option>
+                    <option value="Guam">Guam</option>
+                    <option value="Guatemala">Guatemala</option>
+                    <option value="Haiti">Haiti</option>
+                    <option value="Holy See, Vatican City State">Holy See, Vatican City State</option>
+                    <option value="Honduras">Honduras</option>
+                    <option value="Hong Kong">Hong Kong</option>
+                    <option value="Hungary">Hungary</option>
+                    <option value="Iceland">Iceland</option>
+                    <option value="India">India</option>
+                    <option value="Indonesia">Indonesia</option>
+                    <option value="Ireland">Ireland</option>
+                    <option value="Israel">Israel</option>
+                    <option value="Italy">Italy</option>
+                    <option value="Ivory Coast">Ivory Coast</option>
+                    <option value="Jamaica">Jamaica</option>
+                    <option value="Japan">Japan</option>
+                    <option value="Jordan">Jordan</option>
+                    <option value="Kazakhstan">Kazakhstan</option>
+                    <option value="Kenya">Kenya</option>
+                    <option value="Kuwait">Kuwait</option>
+                    <option value="Kyrgyzstan">Kyrgyzstan</option>
+                    <option value="Laos">Laos</option>
+                    <option value="Latvia">Latvia</option>
+                    <option value="Liechtenstein">Liechtenstein</option>
+                    <option value="Lithuania">Lithuania</option>
+                    <option value="Luxembourg">Luxembourg</option>
+                    <option value="Macao, China">Macao, China</option>
+                    <option value="Malaysia">Malaysia</option>
+                    <option value="Maldives">Maldives</option>
+                    <option value="Malta">Malta</option>
+                    <option value="Mexico">Mexico</option>
+                    <option value="Moldova">Moldova</option>
+                    <option value="Monaco">Monaco</option>
+                    <option value="Mongolia">Mongolia</option>
+                    <option value="Montenegro">Montenegro</option>
+                    <option value="Morocco">Morocco</option>
+                    <option value="Nepal">Nepal</option>
+                    <option value="Netherlands">Netherlands</option>
+                    <option value="New Zealand">New Zealand</option>
+                    <option value="Nigeria">Nigeria</option>
+                    <option value="North Macedonia">North Macedonia</option>
+                    <option value="Norway">Norway</option>
+                    <option value="Oman">Oman</option>
+                    <option value="Pakistan">Pakistan</option>
+                    <option value="Palau">Palau</option>
+                    <option value="Panama">Panama</option>
+                    <option value="Paraguay">Paraguay</option>
+                    <option value="Peru">Peru</option>
+                    <option value="Philippines">Philippines</option>
+                    <option value="Poland">Poland</option>
+                    <option value="Portugal">Portugal</option>
+                    <option value="Puerto Rico">Puerto Rico</option>
+                    <option value="Qatar">Qatar</option>
+                    <option value="Romania">Romania</option>
+                    <option value="Rwanda">Rwanda</option>
+                    <option value="Saudi Arabia">Saudi Arabia</option>
+                    <option value="Senegal">Senegal</option>
+                    <option value="Serbia">Serbia</option>
+                    <option value="Seychelles">Seychelles</option>
+                    <option value="Singapore">Singapore</option>
+                    <option value="Slovakia">Slovakia</option>
+                    <option value="Slovenia">Slovenia</option>
+                    <option value="South Africa">South Africa</option>
+                    <option value="South Korea">South Korea</option>
+                    <option value="Spain">Spain</option>
+                    <option value="Sri Lanka">Sri Lanka</option>
+                    <option value="State of Palestine">State of Palestine</option>
+                    <option value="Sweden">Sweden</option>
+                    <option value="Switzerland">Switzerland</option>
+                    <option value="Taiwan">Taiwan</option>
+                    <option value="Tajikistan">Tajikistan</option>
+                    <option value="Thailand">Thailand</option>
+                    <option value="Timor-Leste">Timor-Leste</option>
+                    <option value="Uganda">Uganda</option>
+                    <option value="United Arab Emirates">United Arab Emirates</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="United States">United States</option>
+                    <option value="Uruguay">Uruguay</option>
+                    <option value="Uzbekistan">Uzbekistan</option>
+                    <option value="Vietnam">Vietnam</option>
+                    <option value="Virgin Islands, British">Virgin Islands, British</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form__row">
+                <div class="form__field">
+                  <label for="email">Contact email address</label>
+                  <input id="email" name="email" type="email" placeholder="Enter email" />
+                </div>
+              </div>
+              <div class="form__actions">
+                <button id="ab-next" class="btn btn--primary btn--md" type="button" disabled aria-disabled="true">Next</button>
+              </div>
+            </form>
+            
+            <!-- Step 2: Bank account details -->
+            <form id="step2-form" class="card card--section form" aria-label="Bank account details" hidden>
+              <h2 class="card__title card__title--within">Enter bank account details</h2>
+              <div class="form__row">
+                <div class="form__field">
+                  <label for="accountHolderName">Account holder name</label>
+                  <input id="accountHolderName" name="accountHolderName" type="text" placeholder="Enter account Holder Name" />
+                </div>
+              </div>
+              <div class="form__row">
+                <div class="form__field form__field--clickable">
+                  <label for="bankDetails">Bank</label>
+                  <div class="clickable-input" id="bankDetailsWrapper">
+                    <input id="bankDetails" name="bankDetails" type="text" placeholder="Add bank details" readonly style="display: none;" />
+                    <div id="bankDetailsDisplay" class="clickable-input__display" style="display: none;">
+                      <div class="clickable-input__display-content">
+                        <div class="clickable-input__display-title" id="bankDetailsTitle"></div>
+                        <div class="clickable-input__display-details" id="bankDetailsDetails"></div>
+                      </div>
+                      <button type="button" class="clickable-input__icon" id="bankDetailsBtn" aria-label="Edit bank details">
+                        <img id="bankDetailsIcon" src="assets/icon_edit.svg" alt="" width="24" height="24" />
+                      </button>
+                    </div>
+                    <div id="bankDetailsEmpty" class="clickable-input__empty">
+                      <input type="text" placeholder="Add counterparty bank details" readonly />
+                      <button type="button" class="clickable-input__icon" aria-label="Add bank details">
+                        <img src="assets/icon_add.svg" alt="" width="24" height="24" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form__row">
+                <div class="form__field form__field--clickable">
+                  <label for="accountDeclaration">Transaction information</label>
+                  <div class="clickable-input" id="accountDeclarationWrapper">
+                    <input id="accountDeclaration" name="accountDeclaration" type="text" placeholder="Add declaration" readonly style="display: none;" />
+                    <div id="accountDeclarationDisplay" class="clickable-input__display" style="display: none;">
+                      <div class="clickable-input__display-content">
+                        <div class="clickable-input__display-title" id="accountDeclarationTitle"></div>
+                        <div class="clickable-input__display-details" id="accountDeclarationDetails"></div>
+                      </div>
+                      <button type="button" class="clickable-input__icon" id="accountDeclarationBtn" aria-label="Edit account declaration">
+                        <img id="accountDeclarationIcon" src="assets/icon_edit.svg" alt="" width="24" height="24" />
+                      </button>
+                    </div>
+                    <div id="accountDeclarationEmpty" class="clickable-input__empty">
+                      <input type="text" placeholder="Add declaration" readonly />
+                      <button type="button" class="clickable-input__icon" aria-label="Add declaration">
+                        <img src="assets/icon_add.svg" alt="" width="24" height="24" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="height: 1px; background: #EEEEEE; margin: 24px 0;"></div>
+              <div class="form__row">
+                <div class="form__field">
+                  <h3 class="card__title card__title--within" style="margin-bottom: 16px;">Bank account document proof</h3>
+                  <div id="bankProofUpload" class="upload-area" style="border: 1px solid #EEEEEE; border-radius: 8px; padding: 32px; text-align: center; background: #fff;">
+                    <div id="bankProofUploadEmpty" style="display: flex; flex-direction: column; gap: 32px; align-items: center;">
+                      <div style="display: flex; flex-direction: column; gap: 16px; align-items: center; width: 100%;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: #EEEEEE; display: flex; align-items: center; justify-content: center;">
+                          <img src="assets/icon_upload_1.svg" alt="" width="28" height="28" />
+                        </div>
+                        <div>
+                          <p style="font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 18px; color: #2D2F2F; margin: 0 0 4px 0;">Bank account document proof</p>
+                          <p style="font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 14px; color: #797A7B; margin: 0;">(jpg, png, pdf under 50 MB)</p>
+                        </div>
+                        <div class="alert alert--info" style="background: rgba(77, 136, 255, 0.15); border-radius: 8px; padding: 8px; width: 100%; max-width: 320px;">
+                          <div class="alert__header" style="display: flex; gap: 8px; align-items: flex-start;">
+                            <img class="alert__icon" src="assets/icon_info_blue.svg" alt="" width="16" height="16" />
+                            <div class="alert--info--content" style="flex: 1;">
+                              <p style="font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 14px; color: #4D88FF; margin: 0 0 4px 0;">Document proof must include:</p>
+                              <ul style="font-family: 'Manrope', sans-serif; font-weight: 400; font-size: 14px; color: #4D88FF; margin: 0; padding-left: 21px; line-height: 20px;">
+                                <li>Beneficiary name</li>
+                                <li>Bank name</li>
+                                <li>Account number</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <button type="button" id="bankProofUploadBtn" class="btn btn--primary btn--md" style="width: 200px;">Upload</button>
+                    </div>
+                    <div id="bankProofUploadFilled" style="display: none; flex-direction: column; gap: 16px; align-items: center; width: 100%;">
+                      <div style="width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <img src="assets/icon_snackbar_success.svg" alt="" width="60" height="60" />
+                      </div>
+                      <div style="text-align: center;">
+                        <p id="bankProofFileName" style="font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 18px; color: #336AFF; margin: 0 0 4px 0;">Proof1.jpg</p>
+                        <p style="font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 14px; color: #797A7B; margin: 0;">(jpg, png, pdf under 50 MB)</p>
+                      </div>
+                      <button type="button" id="bankProofRemoveBtn" class="btn btn--text" style="color: #DD483C; font-weight: 700; font-size: 14px; padding: 0; background: transparent; border: none;">Remove file</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form__actions">
+                <button id="ab-back" class="btn btn--secondary btn--md" type="button">Back</button>
+                <button id="ab-next-step2" class="btn btn--primary btn--md" type="button" disabled aria-disabled="true">Next</button>
+              </div>
+            </form>
+
+            <!-- Step 3: Review & submit -->
+            <section id="step3-summary" class="step3-summary" aria-label="Review & submit" hidden>
+              <div class="step3-summary__content">
+                <!-- Receiver information card -->
+                <div class="step3-card">
+                  <div class="step3-card__header">
+                    <h3 class="step3-card__title">Receiver information</h3>
+                    <button id="ab-edit-step1" type="button" class="step3-card__edit">Edit</button>
+                  </div>
+                  <div class="step3-card__body">
+                    <div class="step3-kv">
+                      <div class="step3-kv__row">
+                        <span class="step3-kv__label">Company legal name</span>
+                        <span class="step3-kv__value" id="ab-summary-companyName">-</span>
+                      </div>
+                      <div class="step3-kv__row">
+                        <span class="step3-kv__label">Registration date</span>
+                        <span class="step3-kv__value" id="ab-summary-regDate">-</span>
+                      </div>
+                      <div class="step3-kv__row">
+                        <span class="step3-kv__label">Registration number</span>
+                        <span class="step3-kv__value" id="ab-summary-regNum">-</span>
+                      </div>
+                      <div class="step3-kv__row">
+                        <span class="step3-kv__label">Country of registration</span>
+                        <span class="step3-kv__value" id="ab-summary-country">-</span>
+                      </div>
+                      <div class="step3-kv__row">
+                        <span class="step3-kv__label">Registered address</span>
+                        <span class="step3-kv__value" id="ab-summary-businessAddress">-</span>
+                      </div>
+                      <div class="step3-kv__row">
+                        <span class="step3-kv__label">Country of operation</span>
+                        <span class="step3-kv__value" id="ab-summary-operationCountry">-</span>
+                      </div>
+                      <div class="step3-kv__row">
+                        <span class="step3-kv__label">Contact email address</span>
+                        <span class="step3-kv__value" id="ab-summary-email">-</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bank account details card -->
+                <div class="step3-card">
+                  <div class="step3-card__header">
+                    <h3 class="step3-card__title">Bank account details</h3>
+                    <button id="ab-edit-step2" type="button" class="step3-card__edit">Edit</button>
+                  </div>
+                  <div class="step3-card__body">
+                    <div class="step3-kv">
+                      <div class="step3-kv__row">
+                        <span class="step3-kv__label">Account nickname</span>
+                        <span class="step3-kv__value step3-kv__value--nickname" id="ab-summary-accountNickname">-</span>
+                      </div>
+                      <div class="step3-kv__row">
+                        <span class="step3-kv__label">Bank name</span>
+                        <span class="step3-kv__value" id="ab-summary-bankName">-</span>
+                      </div>
+                      <div class="step3-kv__row">
+                        <span class="step3-kv__label">Bank country</span>
+                        <span class="step3-kv__value" id="ab-summary-bankCountry">-</span>
+                      </div>
+                      <div class="step3-kv__row">
+                        <span class="step3-kv__label">Bank city</span>
+                        <span class="step3-kv__value" id="ab-summary-bankCity">-</span>
+                      </div>
+                      <div class="step3-kv__row">
+                        <span class="step3-kv__label">Account holder name</span>
+                        <span class="step3-kv__value" id="ab-summary-accountHolderName">-</span>
+                      </div>
+                      <div class="step3-kv__row" id="ab-summary-accountNumber-row" style="display: none;">
+                        <span class="step3-kv__label">Account number</span>
+                        <span class="step3-kv__value" id="ab-summary-accountNumber">-</span>
+                      </div>
+                      <div class="step3-kv__row" id="ab-summary-ibanNumber-row" style="display: none;">
+                        <span class="step3-kv__label">IBAN number</span>
+                        <span class="step3-kv__value" id="ab-summary-ibanNumber">-</span>
+                      </div>
+                      <div class="step3-kv__row" id="ab-summary-swiftCode-row" style="display: none;">
+                        <span class="step3-kv__label">SWIFT code</span>
+                        <span class="step3-kv__value" id="ab-summary-swiftCode">-</span>
+                      </div>
+                      <div class="step3-kv__row">
+                        <span class="step3-kv__label">Bank account document proof</span>
+                        <span class="step3-kv__value step3-kv__value--uploaded" id="ab-summary-docProof">Not uploaded</span>
+                      </div>
+                    </div>
+                    <div class="step3-divider"></div>
+                    <h4 class="step3-declaration-title">Transaction information</h4>
+                    <div class="step3-kv">
+                      <div class="step3-kv__row">
+                        <span class="step3-kv__label">Transaction direction</span>
+                        <span class="step3-kv__value" id="ab-summary-accountUsedFor">-</span>
+                      </div>
+                      <div class="step3-kv__row">
+                        <span class="step3-kv__label">Purpose</span>
+                        <span class="step3-kv__value" id="ab-summary-declarationPurpose">-</span>
+                      </div>
+                      <div class="step3-kv__row">
+                        <span class="step3-kv__label">Average monthly transaction count with this account</span>
+                        <span class="step3-kv__value" id="ab-summary-avgTransactions">-</span>
+                      </div>
+                      <div class="step3-kv__row">
+                        <span class="step3-kv__label">Average monthly transaction volume with this account</span>
+                        <span class="step3-kv__value" id="ab-summary-avgVolume">-</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Info alert -->
+              <div class="step3-alert">
+                <div class="step3-alert__icon">
+                  <img src="assets/icon_info_blue.svg" alt="" width="16" height="16" />
+                </div>
+                <p class="step3-alert__text">Verification takes 1–4 business days. Once it's complete, you'll be able to send payments to this account.</p>
+              </div>
+
+              <!-- Action buttons -->
+              <div class="step3-actions">
+                <button id="ab-cancel-step3" class="btn btn--secondary btn--lg" type="button">Cancel</button>
+                <button id="ab-submit-step3" class="btn btn--primary btn--lg" type="button">Submit</button>
+              </div>
+            </section>
+          </div>
+          <aside class="grid__col grid__col--sidebar addbank-steps">
+            <div class="card card--section">
+              <div class="ab-steps">
+                <div class="ab-step has-line" id="step-indicator-1" data-step="1">
+                  <div class="ab-step__rail">
+                    <span class="ab-dot"></span>
+                    <span class="ab-line"></span>
+                  </div>
+                  <div class="ab-step__content">
+                    <div class="ab-step__label">Step 1</div>
+                    <div class="ab-step__title">Receiver information</div>
+                  </div>
+                </div>
+                <div class="ab-step has-line" id="step-indicator-2" data-step="2">
+                  <div class="ab-step__rail">
+                    <span class="ab-dot"></span>
+                    <span class="ab-line"></span>
+                  </div>
+                  <div class="ab-step__content">
+                    <div class="ab-step__label">Step 2</div>
+                    <div class="ab-step__title">Bank account details</div>
+                  </div>
+                </div>
+                <div class="ab-step" id="step-indicator-3" data-step="3">
+                  <div class="ab-step__rail">
+                    <span class="ab-dot"></span>
+                  </div>
+                  <div class="ab-step__content">
+                    <div class="ab-step__label">Step 3</div>
+                    <div class="ab-step__title">Review & submit</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer__inner">
+        <div class="footer__copy">© XREX Pay Limited 2025</div>
+        <div class="footer__links">
+          <a href="https://intercom.help/xrex-sg/en/" target="_blank" rel="noopener noreferrer">Support</a>
+          <a href="https://info.xrex.sg/doc" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+          <a href="https://info.xrex.sg/doc" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Modal: Add bank details -->
+    <div id="bankDetailsModal" class="modal modal--large modal--addbankdetails" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bankDetailsModalTitle">
+      <div class="modal-wrapper">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="bankDetailsModalTitle">Add counterparty bank details</h2>
+            <button class="modal-close" data-modal-close aria-label="Close modal">
+              <img src="assets/icon_close.svg" width="24" height="24" alt="close" />
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert--warning">
+              <div class="alert__header">
+                <img class="alert__icon" src="assets/icon_alert.svg" alt="" width="16" height="16" />
+                <span class="alert__title">Make sure your banking details match your proof documents to prevent failures and extra fees.</span>
+              </div>
+            </div>
+            <div class="form">
+              <div class="form__row form__row--selects">
+                <div class="form__field form__field--select">
+                  <label for="bankCountry">Bank country</label>
+                  <select id="bankCountry" name="bankCountry">
+                    <option value="" disabled>Select</option>
+                    <option value="Albania">Albania</option>
+                    <option value="Algeria">Algeria</option>
+                    <option value="Angola">Angola</option>
+                    <option value="Anguilla">Anguilla</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Armenia">Armenia</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Austria">Austria</option>
+                    <option value="Azerbaijan">Azerbaijan</option>
+                    <option value="Bahamas">Bahamas</option>
+                    <option value="Bahrain">Bahrain</option>
+                    <option value="Bangladesh">Bangladesh</option>
+                    <option value="Belgium">Belgium</option>
+                    <option value="Belize">Belize</option>
+                    <option value="Bhutan">Bhutan</option>
+                    <option value="Bolivia">Bolivia</option>
+                    <option value="Brazil">Brazil</option>
+                    <option value="Brunei">Brunei</option>
+                    <option value="Bulgaria">Bulgaria</option>
+                    <option value="Burkina Faso">Burkina Faso</option>
+                    <option value="Cambodia">Cambodia</option>
+                    <option value="Canada">Canada</option>
+                    <option value="Cayman Islands">Cayman Islands</option>
+                    <option value="Chile">Chile</option>
+                    <option value="Colombia">Colombia</option>
+                    <option value="Costa Rica">Costa Rica</option>
+                    <option value="Croatia">Croatia</option>
+                    <option value="Czech Republic">Czech Republic</option>
+                    <option value="Denmark">Denmark</option>
+                    <option value="Djibouti">Djibouti</option>
+                    <option value="Dominica">Dominica</option>
+                    <option value="Dominican Republic">Dominican Republic</option>
+                    <option value="Ecuador">Ecuador</option>
+                    <option value="Egypt">Egypt</option>
+                    <option value="El Salvador">El Salvador</option>
+                    <option value="Eritrea">Eritrea</option>
+                    <option value="Estonia">Estonia</option>
+                    <option value="Finland">Finland</option>
+                    <option value="France">France</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Germany">Germany</option>
+                    <option value="Gibraltar">Gibraltar</option>
+                    <option value="Greece">Greece</option>
+                    <option value="Guam">Guam</option>
+                    <option value="Guatemala">Guatemala</option>
+                    <option value="Haiti">Haiti</option>
+                    <option value="Holy See, Vatican City State">Holy See, Vatican City State</option>
+                    <option value="Honduras">Honduras</option>
+                    <option value="Hong Kong">Hong Kong</option>
+                    <option value="Hungary">Hungary</option>
+                    <option value="Iceland">Iceland</option>
+                    <option value="India">India</option>
+                    <option value="Indonesia">Indonesia</option>
+                    <option value="Ireland">Ireland</option>
+                    <option value="Israel">Israel</option>
+                    <option value="Italy">Italy</option>
+                    <option value="Ivory Coast">Ivory Coast</option>
+                    <option value="Jamaica">Jamaica</option>
+                    <option value="Japan">Japan</option>
+                    <option value="Jordan">Jordan</option>
+                    <option value="Kazakhstan">Kazakhstan</option>
+                    <option value="Kenya">Kenya</option>
+                    <option value="Kuwait">Kuwait</option>
+                    <option value="Kyrgyzstan">Kyrgyzstan</option>
+                    <option value="Laos">Laos</option>
+                    <option value="Latvia">Latvia</option>
+                    <option value="Liechtenstein">Liechtenstein</option>
+                    <option value="Lithuania">Lithuania</option>
+                    <option value="Luxembourg">Luxembourg</option>
+                    <option value="Macao, China">Macao, China</option>
+                    <option value="Malaysia">Malaysia</option>
+                    <option value="Maldives">Maldives</option>
+                    <option value="Malta">Malta</option>
+                    <option value="Mexico">Mexico</option>
+                    <option value="Moldova">Moldova</option>
+                    <option value="Monaco">Monaco</option>
+                    <option value="Mongolia">Mongolia</option>
+                    <option value="Montenegro">Montenegro</option>
+                    <option value="Morocco">Morocco</option>
+                    <option value="Nepal">Nepal</option>
+                    <option value="Netherlands">Netherlands</option>
+                    <option value="New Zealand">New Zealand</option>
+                    <option value="Nigeria">Nigeria</option>
+                    <option value="North Macedonia">North Macedonia</option>
+                    <option value="Norway">Norway</option>
+                    <option value="Oman">Oman</option>
+                    <option value="Pakistan">Pakistan</option>
+                    <option value="Palau">Palau</option>
+                    <option value="Panama">Panama</option>
+                    <option value="Paraguay">Paraguay</option>
+                    <option value="Peru">Peru</option>
+                    <option value="Philippines">Philippines</option>
+                    <option value="Poland">Poland</option>
+                    <option value="Portugal">Portugal</option>
+                    <option value="Puerto Rico">Puerto Rico</option>
+                    <option value="Qatar">Qatar</option>
+                    <option value="Romania">Romania</option>
+                    <option value="Rwanda">Rwanda</option>
+                    <option value="Saudi Arabia">Saudi Arabia</option>
+                    <option value="Senegal">Senegal</option>
+                    <option value="Serbia">Serbia</option>
+                    <option value="Seychelles">Seychelles</option>
+                    <option value="Singapore" selected>Singapore</option>
+                    <option value="Slovakia">Slovakia</option>
+                    <option value="Slovenia">Slovenia</option>
+                    <option value="South Africa">South Africa</option>
+                    <option value="South Korea">South Korea</option>
+                    <option value="Spain">Spain</option>
+                    <option value="Sri Lanka">Sri Lanka</option>
+                    <option value="State of Palestine">State of Palestine</option>
+                    <option value="Sweden">Sweden</option>
+                    <option value="Switzerland">Switzerland</option>
+                    <option value="Taiwan">Taiwan</option>
+                    <option value="Tajikistan">Tajikistan</option>
+                    <option value="Thailand">Thailand</option>
+                    <option value="Timor-Leste">Timor-Leste</option>
+                    <option value="Uganda">Uganda</option>
+                    <option value="United Arab Emirates">United Arab Emirates</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="United States">United States</option>
+                    <option value="Uruguay">Uruguay</option>
+                    <option value="Uzbekistan">Uzbekistan</option>
+                    <option value="Vietnam">Vietnam</option>
+                    <option value="Virgin Islands, British">Virgin Islands, British</option>
+                  </select>
+                </div>
+                <div class="form__field">
+                  <label for="bankName">Bank name</label>
+                  <input id="bankName" name="bankName" type="text" placeholder="Name or Abbreviation for the bank" />
+                </div>
+              </div>
+              <div class="form__row">
+                <div class="form__field">
+                  <label for="bankCity">Bank city</label>
+                  <input id="bankCity" name="bankCity" type="text" placeholder="City of address" />
+                </div>
+              </div>
+              <!-- SWIFT/BIC fields (shown for non-IBAN countries) -->
+              <div id="swiftFields" class="form__row form__row--selects" style="display: none;">
+                <div class="form__field">
+                  <label for="swiftCode">SWIFT / BIC code</label>
+                  <input id="swiftCode" name="swiftCode" type="text" placeholder="SWIFT code or BIC code" />
+                </div>
+                <div class="form__field">
+                  <label for="accountNumber">Account number</label>
+                  <input id="accountNumber" name="accountNumber" type="text" placeholder="Account number" />
+                </div>
+              </div>
+              <!-- IBAN fields (shown for IBAN countries) -->
+              <div id="ibanFields" class="form__row form__row--selects" style="display: none;">
+                <div class="form__field">
+                  <label for="ibanNumber">IBAN number</label>
+                  <input id="ibanNumber" name="ibanNumber" type="text" placeholder="IBAN number" />
+                </div>
+                <div class="form__field">
+                  <label for="accountNickname">Account nickname (Optional)</label>
+                  <input id="accountNickname" name="accountNickname" type="text" placeholder="Give your bank account a nickname" />
+                </div>
+              </div>
+              <!-- Account nickname for SWIFT/BIC (shown separately) -->
+              <div id="swiftNicknameRow" class="form__row" style="display: none;">
+                <div class="form__field">
+                  <label for="accountNicknameSwift">Account nickname (Optional)</label>
+                  <input id="accountNicknameSwift" name="accountNicknameSwift" type="text" placeholder="Give your bank account a nickname" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn--secondary btn--md" data-modal-close>Cancel</button>
+            <button type="button" class="btn btn--primary btn--md" id="saveBankDetails">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Account declaration -->
+    <div id="accountDeclarationModal" class="modal modal--large modal--accountdeclaration" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="accountDeclarationModalTitle">
+      <div class="modal-wrapper">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="accountDeclarationModalTitle">Transaction information</h2>
+            <button class="modal-close" data-modal-close aria-label="Close modal">
+              <img src="assets/icon_close.svg" width="24" height="24" alt="close" />
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form">
+              <div class="form__row form__row--selects">
+                <div class="form__field form__field--select">
+                  <label for="accountUsedFor">Transaction direction</label>
+                  <select id="accountUsedFor" name="accountUsedFor">
+                    <option value="" selected disabled>Select</option>
+                    <option value="incoming">Send payments to this account</option>
+                    <option value="outgoing">Receive payments from this account</option>
+                    <option value="both">Both send and receive payments</option>
+                  </select>
+                </div>
+                <div class="form__field form__field--select">
+                  <label for="declarationPurpose">Transaction purpose</label>
+                  <select id="declarationPurpose" name="declarationPurpose">
+                    <option value="Payments" selected>Payments</option>
+                    <option value="Remittance">Remittance</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form__row form__row--selects">
+                <div class="form__field">
+                  <label for="avgTransactions">Average monthly transaction count with this account</label>
+                  <input id="avgTransactions" name="avgTransactions" type="text" inputmode="numeric" placeholder="0" />
+                </div>
+                <div class="form__field">
+                  <label for="avgVolume">Average monthly transaction volume with this account</label>
+                  <div class="input-group">
+                    <input id="avgVolume" name="avgVolume" type="text" inputmode="decimal" placeholder="0.00" />
+                    <div class="input-group__badge">
+                      <img src="assets/icon_USD.svg" alt="USD" width="16" height="16" />
+                      <span>USD</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn--secondary btn--md" data-modal-close>Cancel</button>
+            <button type="button" class="btn btn--primary btn--md" id="saveAccountDeclaration">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Cancel confirmation -->
+    <div id="cancelConfirmModal" class="modal modal--dialog" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="cancelConfirmTitle">
+      <div class="modal__dialog">
+        <div class="modal__content">
+          <div class="modal__header">
+            <button class="modal-close" data-modal-close aria-label="Close modal">
+              <img src="assets/icon_close.svg" width="24" height="24" alt="close" />
+            </button>
+          </div>
+          <div class="modal__body">
+            <h2 id="cancelConfirmTitle" class="modal__title">Attention</h2>
+            <p class="modal__desc">The counterparty account setup is incomplete. Do you want to cancel anyway?</p>
+          </div>
+                  <div class="modal__footer">
+                    <button type="button" class="btn btn--secondary btn--md" id="cancelConfirmContinue">Continue setup</button>
+                    <button type="button" class="btn btn--alert btn--md" id="cancelConfirmCancel">Cancel</button>
+                  </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Add business address -->
+    <div id="businessAddressModal" class="modal modal--large modal--addbusiness" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="businessAddressModalTitle">
+      <div class="modal-wrapper">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="businessAddressModalTitle">Add registered address</h2>
+            <button class="modal-close" data-modal-close aria-label="Close modal">
+              <img src="assets/icon_close.svg" width="24" height="24" alt="close" />
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert--warning">
+              <div class="alert__header">
+                <img class="alert__icon" src="assets/icon_alert.svg" alt="" width="16" height="16" />
+                <span class="alert__title">Ensure your registered address is correct to prevent transaction failure.</span>
+              </div>
+            </div>
+            <div class="form">
+              <div class="form__row form__row--selects">
+                <div class="form__field form__field--select">
+                  <label for="addressCountry">Country <span class="required">*</span></label>
+                  <select id="addressCountry" name="addressCountry">
+                    <option value="" selected disabled>Select</option>
+                    <option value="Albania">Albania</option>
+                    <option value="Algeria">Algeria</option>
+                    <option value="Angola">Angola</option>
+                    <option value="Anguilla">Anguilla</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Armenia">Armenia</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Austria">Austria</option>
+                    <option value="Azerbaijan">Azerbaijan</option>
+                    <option value="Bahamas">Bahamas</option>
+                    <option value="Bahrain">Bahrain</option>
+                    <option value="Bangladesh">Bangladesh</option>
+                    <option value="Belgium">Belgium</option>
+                    <option value="Belize">Belize</option>
+                    <option value="Bhutan">Bhutan</option>
+                    <option value="Bolivia">Bolivia</option>
+                    <option value="Brazil">Brazil</option>
+                    <option value="Brunei">Brunei</option>
+                    <option value="Bulgaria">Bulgaria</option>
+                    <option value="Burkina Faso">Burkina Faso</option>
+                    <option value="Cambodia">Cambodia</option>
+                    <option value="Canada">Canada</option>
+                    <option value="Cayman Islands">Cayman Islands</option>
+                    <option value="Chile">Chile</option>
+                    <option value="Colombia">Colombia</option>
+                    <option value="Costa Rica">Costa Rica</option>
+                    <option value="Croatia">Croatia</option>
+                    <option value="Czech Republic">Czech Republic</option>
+                    <option value="Denmark">Denmark</option>
+                    <option value="Djibouti">Djibouti</option>
+                    <option value="Dominica">Dominica</option>
+                    <option value="Dominican Republic">Dominican Republic</option>
+                    <option value="Ecuador">Ecuador</option>
+                    <option value="Egypt">Egypt</option>
+                    <option value="El Salvador">El Salvador</option>
+                    <option value="Eritrea">Eritrea</option>
+                    <option value="Estonia">Estonia</option>
+                    <option value="Finland">Finland</option>
+                    <option value="France">France</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Germany">Germany</option>
+                    <option value="Gibraltar">Gibraltar</option>
+                    <option value="Greece">Greece</option>
+                    <option value="Guam">Guam</option>
+                    <option value="Guatemala">Guatemala</option>
+                    <option value="Haiti">Haiti</option>
+                    <option value="Holy See, Vatican City State">Holy See, Vatican City State</option>
+                    <option value="Honduras">Honduras</option>
+                    <option value="Hong Kong">Hong Kong</option>
+                    <option value="Hungary">Hungary</option>
+                    <option value="Iceland">Iceland</option>
+                    <option value="India">India</option>
+                    <option value="Indonesia">Indonesia</option>
+                    <option value="Ireland">Ireland</option>
+                    <option value="Israel">Israel</option>
+                    <option value="Italy">Italy</option>
+                    <option value="Ivory Coast">Ivory Coast</option>
+                    <option value="Jamaica">Jamaica</option>
+                    <option value="Japan">Japan</option>
+                    <option value="Jordan">Jordan</option>
+                    <option value="Kazakhstan">Kazakhstan</option>
+                    <option value="Kenya">Kenya</option>
+                    <option value="Kuwait">Kuwait</option>
+                    <option value="Kyrgyzstan">Kyrgyzstan</option>
+                    <option value="Laos">Laos</option>
+                    <option value="Latvia">Latvia</option>
+                    <option value="Liechtenstein">Liechtenstein</option>
+                    <option value="Lithuania">Lithuania</option>
+                    <option value="Luxembourg">Luxembourg</option>
+                    <option value="Macao, China">Macao, China</option>
+                    <option value="Malaysia">Malaysia</option>
+                    <option value="Maldives">Maldives</option>
+                    <option value="Malta">Malta</option>
+                    <option value="Mexico">Mexico</option>
+                    <option value="Moldova">Moldova</option>
+                    <option value="Monaco">Monaco</option>
+                    <option value="Mongolia">Mongolia</option>
+                    <option value="Montenegro">Montenegro</option>
+                    <option value="Morocco">Morocco</option>
+                    <option value="Nepal">Nepal</option>
+                    <option value="Netherlands">Netherlands</option>
+                    <option value="New Zealand">New Zealand</option>
+                    <option value="Nigeria">Nigeria</option>
+                    <option value="North Macedonia">North Macedonia</option>
+                    <option value="Norway">Norway</option>
+                    <option value="Oman">Oman</option>
+                    <option value="Pakistan">Pakistan</option>
+                    <option value="Palau">Palau</option>
+                    <option value="Panama">Panama</option>
+                    <option value="Paraguay">Paraguay</option>
+                    <option value="Peru">Peru</option>
+                    <option value="Philippines">Philippines</option>
+                    <option value="Poland">Poland</option>
+                    <option value="Portugal">Portugal</option>
+                    <option value="Puerto Rico">Puerto Rico</option>
+                    <option value="Qatar">Qatar</option>
+                    <option value="Romania">Romania</option>
+                    <option value="Rwanda">Rwanda</option>
+                    <option value="Saudi Arabia">Saudi Arabia</option>
+                    <option value="Senegal">Senegal</option>
+                    <option value="Serbia">Serbia</option>
+                    <option value="Seychelles">Seychelles</option>
+                    <option value="Singapore">Singapore</option>
+                    <option value="Slovakia">Slovakia</option>
+                    <option value="Slovenia">Slovenia</option>
+                    <option value="South Africa">South Africa</option>
+                    <option value="South Korea">South Korea</option>
+                    <option value="Spain">Spain</option>
+                    <option value="Sri Lanka">Sri Lanka</option>
+                    <option value="State of Palestine">State of Palestine</option>
+                    <option value="Sweden">Sweden</option>
+                    <option value="Switzerland">Switzerland</option>
+                    <option value="Taiwan">Taiwan</option>
+                    <option value="Tajikistan">Tajikistan</option>
+                    <option value="Thailand">Thailand</option>
+                    <option value="Timor-Leste">Timor-Leste</option>
+                    <option value="Uganda">Uganda</option>
+                    <option value="United Arab Emirates">United Arab Emirates</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="United States">United States</option>
+                    <option value="Uruguay">Uruguay</option>
+                    <option value="Uzbekistan">Uzbekistan</option>
+                    <option value="Vietnam">Vietnam</option>
+                    <option value="Virgin Islands, British">Virgin Islands, British</option>
+                  </select>
+                </div>
+                <div class="form__field">
+                  <label for="addressState">State / Province (Optional)</label>
+                  <input id="addressState" name="addressState" type="text" placeholder="State / County / Province / Region" />
+                </div>
+              </div>
+              <div class="form__row">
+                <div class="form__field">
+                  <label for="addressCity">City <span class="required">*</span></label>
+                  <input id="addressCity" name="addressCity" type="text" placeholder="City of address" />
+                </div>
+              </div>
+              <div class="form__row form__row--selects">
+                <div class="form__field">
+                  <label for="addressLine1">Address line 1 <span class="required">*</span></label>
+                  <input id="addressLine1" name="addressLine1" type="text" placeholder="Line one of the street address" />
+                </div>
+                <div class="form__field">
+                  <label for="addressLine2">Address line 2 (Optional)</label>
+                  <input id="addressLine2" name="addressLine2" type="text" placeholder="Apartment, suite, unit, building, floor, etc." />
+                </div>
+              </div>
+              <div class="form__row">
+                <div class="form__field">
+                  <label for="addressPostal">Postal / ZIP code <span class="required">*</span></label>
+                  <input id="addressPostal" name="addressPostal" type="text" placeholder="Postal / ZIP code of the address" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn--secondary btn--md" data-modal-close>Cancel</button>
+            <button type="button" class="btn btn--primary btn--md" id="saveBusinessAddress">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script defer src="js/main.js?v=20251108"></script>
+    
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="modal modal-loading" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="modal-wrapper">
+        <div class="modal-content">
+          <div class="loading-spinner" aria-live="polite" aria-label="Loading">
+            <img src="assets/loader.svg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="build-badge" role="note">
+      <a id="ab-fill" href="#" style="color:#fff; text-decoration:underline; margin-left:8px;">Fill</a>
+      <span style="opacity:.7">&nbsp;/&nbsp;</span>
+      <a id="ab-clear" href="#" style="color:#fff; text-decoration:underline;">Clear</a>
+    </div>
+  </body>
+  </html>
+
+

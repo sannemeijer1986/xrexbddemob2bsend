@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>XREX Pay - Payment advice</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/main.css?v=20251108" />
+    <link rel="icon" href="assets/favicons/xrex-favicon-16x16.png" sizes="16x16" type="image/png" />
+    <style>
+      @page {
+        size: A4;
+        margin: 24mm 20mm 24mm 20mm;
+      }
+      @media print {
+        body {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .no-print {
+          display: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="page--receipt-pdf">
+    <div class="receipt-pdf">
+      <header class="receipt-pdf__header">
+        <div class="receipt-pdf__brand">
+          <img src="assets/logo_xrexpay.svg" alt="XREX Pay" class="receipt-pdf__logo" />
+        </div>
+        <div class="receipt-pdf__company">
+          <div>XREX PTE. LTD.</div>
+          <div>12 Marina View, #10-23, Asia Square Tower 2, Singapore 018961</div>
+          <div>+65 6918 9851</div>
+          <div>https://xrex.io/sg/</div>
+        </div>
+      </header>
+
+      <main class="receipt-pdf__main">
+        <section class="receipt-pdf__title-row">
+          <div class="receipt-pdf__title-block">
+            <h1 id="rpReceiptTitle" class="receipt-pdf__title">Payment advice</h1>
+          </div>
+          <div class="receipt-pdf__meta-row">
+            <div class="receipt-pdf__meta-group">
+              <div class="receipt-pdf__meta-label">Payment submission</div>
+              <div id="rpSubmissionDate" class="receipt-pdf__meta-value">-</div>
+            </div>
+            <div class="receipt-pdf__meta-group">
+              <div class="receipt-pdf__meta-label">Submitted to bank</div>
+              <div id="rpStatus" class="receipt-pdf__meta-value">Payment being processed</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="receipt-pdf__section receipt-pdf__section--parties">
+          <div class="receipt-pdf__columns">
+            <div class="receipt-pdf__col">
+              <h2 class="receipt-pdf__section-title">Sender</h2>
+              <dl class="receipt-pdf__table receipt-pdf__table-sender">
+                <div class="receipt-pdf__row">
+                  <dt>Company legal name</dt>
+                  <dd>AGP Technology</dd>
+                </div>
+                <div class="receipt-pdf__row">
+                  <dt>Registration number</dt>
+                  <dd>20202643Z1F</dd>
+                </div>
+                <div class="receipt-pdf__row">
+                  <dt>Country of registration</dt>
+                  <dd>Singapore</dd>
+                </div>
+                <div class="receipt-pdf__row">
+                  <dt>Registered address</dt>
+                  <dd>9 Temasek Boulevard, Singapore 038989</dd>
+                </div>
+                <div class="receipt-pdf__row">
+                  <dt>Email address</dt>
+                  <dd>info@agptechnology.com</dd>
+                </div>
+              </dl>
+            </div>
+            <div class="receipt-pdf__col">
+              <h2 class="receipt-pdf__section-title">Receiver</h2>
+              <dl class="receipt-pdf__table receipt-pdf__table-receiver">
+                <div class="receipt-pdf__row">
+                  <dt>Company legal name</dt>
+                  <dd id="rpReceiverName">-</dd>
+                </div>
+                <div class="receipt-pdf__row">
+                  <dt>Registration number</dt>
+                  <dd>20240123N</dd>
+                </div>
+                <div class="receipt-pdf__row">
+                  <dt>Country of registration</dt>
+                  <dd>Singapore</dd>
+                </div>
+                <div class="receipt-pdf__row">
+                  <dt>Registered address</dt>
+                  <dd>5 Battery Road, Singapore 049901</dd>
+                </div>
+                <div class="receipt-pdf__row">
+                  <dt>Email address</dt>
+                  <dd>accounts@novaquill.com</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </section>
+
+        <section class="receipt-pdf__section receipt-pdf__section--settlement">
+          <h2 class="receipt-pdf__section-title">Settlement</h2>
+          <!-- Group 1: Payment meta / nature / purpose / doc number -->
+          <dl class="receipt-pdf__table receipt-pdf__table-settlementintro">
+            <div class="receipt-pdf__row">
+              <dt>Payment ID</dt>
+              <dd id="rpPaymentIdIntro">-</dd>
+            </div>
+            <div class="receipt-pdf__divider"></div>
+            <div class="receipt-pdf__row">
+              <dt>Nature of payment</dt>
+              <dd id="rpNature">-</dd>
+            </div>
+            <div class="receipt-pdf__row">
+              <dt>Payment purpose</dt>
+              <dd id="rpPurpose">-</dd>
+            </div>
+            <div class="receipt-pdf__row">
+              <dt id="rpDocNumLabel">Proforma invoice (PI) number</dt>
+              <dd id="rpDocNumber">-</dd>
+            </div>
+            <div class="receipt-pdf__divider"></div>
+          </dl>
+
+          <!-- Group 2: Amounts / conversion / fee -->
+          <dl class="receipt-pdf__table receipt-pdf__table-subtotal">
+            <div class="receipt-pdf__row">
+              <dt>Payment amount</dt>
+              <dd id="rpAmountPayable">-</dd>
+            </div>
+            <div id="rpDividerAfterAmount" class="receipt-pdf__divider"></div>
+            <div class="receipt-pdf__row">
+              <dt>Converted from</dt>
+              <dd id="rpConvertedFrom">-</dd>
+            </div>
+            <div class="receipt-pdf__row">
+              <dt>Converted to</dt>
+              <dd id="rpConvertedTo">-</dd>
+            </div>
+            <div class="receipt-pdf__row">
+              <dt>Conversion rate</dt>
+              <dd id="rpConversionRate">-</dd>
+            </div>
+            <div id="rpDividerAfterConversion" class="receipt-pdf__divider"></div>
+            <div class="receipt-pdf__row">
+              <dt>Service fee</dt>
+              <dd id="rpServiceFee">-</dd>
+            </div>
+            <div class="receipt-pdf__divider"></div>
+          </dl>
+
+          <!-- Group 3: total amount paid -->
+          <dl class="receipt-pdf__table receipt-pdf__table-total">
+            <div class="receipt-pdf__row">
+              <dt>Total amount deducted</dt>
+              <dd id="rpTotalPaid">-</dd>
+            </div>
+          </dl>
+          <p class="receipt-pdf__note" id="rpFeeNote">
+            Note : According to the agreement between both parties, the platform service fee for this transaction is shared equally
+            between [XYZ Gaming] and [ABC Gaming]. The fee has been added to the sender's payable amount and deducted from the
+            receiver's settlement amount.
+          </p>
+          <div class="receipt-pdf__divider"></div>
+        </section>
+
+        <section class="receipt-pdf__section receipt-pdf__section--declaration">
+          <h2 class="receipt-pdf__section-title">Official Declaration</h2>
+          <p class="receipt-pdf__paragraph">
+            XREX Pte. Ltd. (“XREX SG”) is licensed by the Monetary Authority of Singapore (“MAS”) as a Payment Service Provider
+            in Singapore. We are currently licensed to provide merchant acquisition, account issuance, e-money issuance and
+            cross border money transfer services for customers. Evidence of our license status may be found in the MAS Financial
+            Institution Directory: https://eservices.mas.gov.sg/fid/institution/detail/420528-XREX-PTE-LTD.
+          </p>
+          <p class="receipt-pdf__paragraph">
+            Our platform, XREX Pay, hereby certifies that all information stated above is true and correct according to our
+            system records. This transaction has been completed as per the terms described.
+          </p>
+          <p class="receipt-pdf__paragraph">Hereby Certified</p>
+        </section>
+
+        <div class="receipt-pdf__bottom">
+          <div class="receipt-pdf__footer">
+            <span>Page 1 of 1</span>
+          </div>
+          <div class="receipt-pdf__stamp">
+            <img src="assets/illu_company_stamp.svg" alt="Company stamp" />
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      (function () {
+        function getData() {
+          try {
+            var raw = window.sessionStorage ? window.sessionStorage.getItem('receiptData') : null;
+            return raw ? JSON.parse(raw) : null;
+          } catch (e) {
+            return null;
+          }
+        }
+
+        function setText(id, value) {
+          var el = document.getElementById(id);
+          if (!el) return;
+          el.textContent = value && String(value).trim() ? value : '-';
+        }
+
+        function populate() {
+          var d = getData() || {};
+
+          // Also support data passed via query string (for new tabs where sessionStorage is empty)
+          try {
+            var search = window.location.search || '';
+            if (search && search.indexOf('?') !== -1) {
+              var params = new URLSearchParams(search);
+              var pick = function (key) {
+                var v = params.get(key);
+                return v && String(v).trim() ? v : null;
+              };
+              var qReceiverName  = pick('receiverName');
+              var qAmount        = pick('amount');
+              var qPayerShare    = pick('payerShare');
+              var qReceiverShare = pick('receiverShare');
+              var qTotalPaid     = pick('totalPaid');
+              var qNature        = pick('nature');
+              var qPurpose       = pick('purpose');
+              var qDocNumLabel   = pick('docNumLabel');
+              var qDocNumber     = pick('docNumber');
+              var qDeductedFrom  = pick('deductedFrom');
+              var qConversion    = pick('conversion');
+
+              if (qReceiverName)  d.receiverName     = d.receiverName     || qReceiverName;
+              if (qAmount)        d.amountPayableFmt = d.amountPayableFmt || qAmount;
+              if (qPayerShare)    d.payerShareAmt    = d.payerShareAmt    || qPayerShare;
+              if (qReceiverShare) d.receiverShareAmt = d.receiverShareAmt || qReceiverShare;
+              if (qTotalPaid)     d.toBeDeducted     = d.toBeDeducted     || qTotalPaid;
+              if (qNature)        d.nature           = d.nature           || qNature;
+              if (qPurpose)       d.purpose          = d.purpose          || qPurpose;
+              if (qDocNumLabel)   d.docNumLabel      = d.docNumLabel      || qDocNumLabel;
+              if (qDocNumber)     d.docNumber        = d.docNumber        || qDocNumber;
+              if (qDeductedFrom)  d.deductedFrom     = d.deductedFrom     || qDeductedFrom;
+              if (qConversion)    d.conversion       = d.conversion       || qConversion;
+            }
+          } catch (_) {}
+
+          // Payment ID from data or fallback to static demo ID from the design
+          var paymentIdVal = d.paymentId || 'PYT-20251118-f2d3fa4e';
+          setText('rpPaymentId', paymentIdVal);
+          setText('rpPaymentIdIntro', paymentIdVal);
+          setText('rpReceiverName', d.receiverName || 'NovaQuill Ltd');
+          setText('rpNature', d.nature || '-');
+          setText('rpPurpose', d.purpose || '-');
+          setText('rpDocNumLabel', d.docNumLabel || 'Proforma Invoice (PI) number');
+          setText('rpDocNumber', d.docNumber || '-');
+          setText('rpAmountPayable', d.amountPayableFmt || '-');
+          
+          // Converted from / to / conversion rate (only meaningful when payer currency is USDT)
+          (function () {
+            var deducted = d.deductedFrom || '';
+            var payerCur = (deducted.split(' ')[0] || '').toUpperCase();
+            var amountStr = d.amountPayableFmt || '';
+            var num = (amountStr || '').replace(/[^\d.]/g, '');
+            var n = Number(num || 0);
+            var isUSDT = /USDT/.test(deducted.toUpperCase());
+
+            var fromEl = document.getElementById('rpConvertedFrom');
+            var toEl = document.getElementById('rpConvertedTo');
+            var rateEl = document.getElementById('rpConversionRate');
+            var fromRow = fromEl ? fromEl.parentElement : null;
+            var toRow = toEl ? toEl.parentElement : null;
+            var rateRow = rateEl ? rateEl.parentElement : null;
+            var dividerAfterConv = document.getElementById('rpDividerAfterConversion');
+
+            if (isUSDT && n > 0) {
+              var fromTxt = n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + (payerCur || 'USDT');
+              var toTxt = n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' USD';
+              setText('rpConvertedFrom', fromTxt);
+              setText('rpConvertedTo', toTxt);
+              setText('rpConversionRate', d.conversion || '1 USDT = 1 USD');
+              if (fromRow) fromRow.style.display = '';
+              if (toRow) toRow.style.display = '';
+              if (rateRow) rateRow.style.display = '';
+              if (dividerAfterConv) dividerAfterConv.style.display = '';
+            } else {
+              // Hide conversion rows and their divider entirely when there is no USDT conversion
+              if (fromRow) fromRow.style.display = 'none';
+              if (toRow) toRow.style.display = 'none';
+              if (rateRow) rateRow.style.display = 'none';
+              if (dividerAfterConv) dividerAfterConv.style.display = 'none';
+            }
+          })();
+
+          // Service fee: show only sender's share if available; otherwise fall back to total
+          (function () {
+            var senderFee = (d.payerShareAmt || '').toString().trim();
+            if (senderFee) {
+              setText('rpServiceFee', senderFee);
+              return;
+            }
+            var payerCur = (d.deductedFrom || '').split(' ')[0] || 'USD';
+            var feeNum = Number(d.serviceMinAmount || 0);
+            if (Number.isFinite(feeNum) && feeNum > 0) {
+              var feeTxt = feeNum.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }) + ' ' + payerCur;
+              setText('rpServiceFee', feeTxt);
+            } else {
+              setText('rpServiceFee', '-');
+            }
+          })();
+
+          // Total amount paid (what sender pays)
+          setText('rpTotalPaid', d.toBeDeducted || '-');
+
+          // Submission date (from receipt data)
+          var sub = d.dateTime ? String(d.dateTime) + ' (UTC+8)' : null;
+          if (!sub) {
+            sub = new Date().toLocaleString('en-GB', { hour12: false }) + ' (UTC+8)';
+          }
+          setText('rpSubmissionDate', sub);
+
+          // Status text/color based on prototype state
+          (function () {
+            var state = 0;
+            try {
+              if (window.localStorage) {
+                var rawState = window.localStorage.getItem('xrexb2b.state.v1');
+                state = parseInt(rawState, 10) || 0;
+              }
+            } catch (e) {}
+
+            var statusText = 'Payment being processed';
+            var statusColor = '#797A7B';
+
+            if (state === 4) {
+              statusText = 'Processing';
+              statusColor = '#73A2F5';
+            } else if (state >= 5) {
+              statusText = '2025/9/3, 09:00:00 (UTC+8)';
+              statusColor = '#2D2F2F';
+            }
+
+            var statusEl = document.getElementById('rpStatus');
+            if (statusEl) {
+              statusEl.textContent = statusText;
+              statusEl.style.color = statusColor;
+            }
+
+            var receiptTitleText = 'Payment advice';
+            if (state === 4) {
+              receiptTitleText = 'Payment Order – Submission Receipt';
+            } else if (state >= 5) {
+              receiptTitleText = 'Payment Executed – Transaction Receipt';
+            }
+
+            var receiptTitleEl = document.getElementById('rpReceiptTitle');
+            if (receiptTitleEl) {
+              receiptTitleEl.textContent = receiptTitleText;
+            }
+            try {
+              document.title = 'XREX Pay - ' + receiptTitleText;
+            } catch (_) {}
+          })();
+        }
+
+        window.addEventListener('load', function () {
+          populate();
+        });
+      })();
+    </script>
+  </body>
+</html>
+
+

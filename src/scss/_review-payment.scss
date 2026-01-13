@@ -1,0 +1,168 @@
+// Review Payment page layout and overrides
+
+// Constrain review page content regardless of breakpoint
+.container--review { max-width: 700px; }
+
+#convRow {
+  align-items: flex-start;
+}
+
+.page--review {
+  .receipt__note {
+    text-align: right;
+    color: #73A2F5;
+    margin: 8px 0px 8px 0px;
+  }
+  .page__header {
+    margin-bottom: 0px;
+  }
+
+  .container--review {
+    margin-top: 0px;
+    padding-top: 16px;
+  }
+  // Right column alignment in summary rows
+  .receipt__row strong,
+  .receipt__subrow strong {
+    margin-left: auto;
+    text-align: right;
+    display: inline-block;
+  }
+  
+  .receipt__subrow strong {
+    font-weight: 400;
+  }
+
+  .summary-recipient {
+    margin-bottom: 0px;
+  }
+  // Group (title + card) vertical rhythm
+  .review-block { margin-bottom: 40px; }
+  // CTA layout: stacked on mobile, right-aligned fixed width on desktop
+  .receipt__actions {
+    display: flex;
+    flex-direction: column-reverse; // primary on top
+    gap: 12px;
+    .btn { 
+      width: 100%;
+      @media (max-width: ($bp-desktop - 1px)) {
+        // Use large button size on mobile
+        height: 52px;
+        font-size: 16px;
+      }
+    }
+    @media (min-width: $bp-desktop) {
+      flex-direction: row;
+      justify-content: flex-end;
+      .btn { width: 180px; }
+    }
+  }
+  .convertrate-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+  // Info notice + error alert styling
+  .review-declare {
+    margin-top: 24px;
+    border: 0;
+    border-radius: $radius-md;
+    padding: 8px;
+    background: #EAF2FF;
+    color: #4D88FF;
+    .review-declare__box { border: 0; padding: 0; background: transparent; }
+    .review-declare__head { display: flex; align-items: center; gap: 8px; }
+    .review-declare__icon { width: 16px; height: 16px; }
+    .review-declare__title { font-size: 14px; font-weight: 600; color: #4D88FF; }
+    .review-declare__text { margin: 0; font-size: 14px; font-weight: 600; color: #4D88FF; line-height: 1.5; }
+    .review-declare__title a { color: #4D88FF; text-decoration: underline; font-weight: 700; }
+    &__copy { display: flex; flex-direction: column; gap: 4px; }
+
+    &--error {
+      margin-top: 28px;
+      padding: 8px;
+      background: #FAE4E2;
+      border-radius: 8px;
+      color: #EB5347;
+      .review-declare__copy { flex-direction: row; gap: 4px; }
+      .review-declare__head { align-items: flex-start; gap: 0px; flex-direction: column; }
+      .review-declare__icon { width: 20px; height: 20px; margin-top: 2px; }
+      .review-declare__title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #EB5347;
+        margin: 0 0 2px 0;
+      }
+      .review-declare__message {
+        font-size: 14px;
+        line-height: 1.6;
+        font-weight: 500;
+        color: #EB5347;
+      }
+      .review-declare__message a {
+        color: #EB5347;
+        text-decoration: underline;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+// Stack receipt rows vertically on mobile for space optimization
+@media (max-width: ($bp-desktop - 1px)) {
+  .page--review {
+    .receipt__row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      
+      strong {
+        margin-left: 0;
+        text-align: left;
+        width: 100%;
+        font-size: 16px;
+      }
+      
+      .muted {
+        width: 100%;
+        font-size: 14px;
+        font-weight: 600;
+      }
+    }
+
+    .receipt__subrow {
+      padding: 4px 0px;
+      font-size: 14px;
+
+      .muted {
+        font-weight: 600;
+      }
+    }
+    
+    .receipt_subrow:first-child {
+      margin-top: 8px;
+    }
+
+    .receipt__note {
+      text-align: left;
+    }
+
+    #receiverGets {
+      font-size: 18px;
+    }
+    
+    // Special handling for convertrate-wrapper
+    .receipt__row .convertrate-wrapper {
+      align-items: flex-start;
+      width: 100%;
+      
+      strong {
+        margin-left: 0;
+        text-align: left;
+      }
+    }
+  }
+}
+
+
