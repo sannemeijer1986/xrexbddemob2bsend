@@ -1,0 +1,35 @@
+/* Small prototype overrides layered on top of the built/minified main.css */
+
+/* Header account chip: initial avatar */
+.account-chip .chip-avatar--initial{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  background:#85A84D;
+  color:#fff;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-family:"Manrope",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol",sans-serif;
+  font-weight:700;
+  font-size:14px;
+  line-height:1;
+}
+
+/* Settings page profile card: reuse the same initial avatar at a larger size */
+.page--settings .name-card .avatar .chip-avatar--initial{
+  width:60px;
+  height:60px;
+  font-size:28px;
+}
+
+/* Add bank: masked registration date calendar icon */
+#regDate{
+  background-image:url("../assets/icon_calendar.svg");
+  background-repeat:no-repeat;
+  background-position:right 16px center;
+  background-size:20px 20px;
+  padding-right:48px;
+}
+
+

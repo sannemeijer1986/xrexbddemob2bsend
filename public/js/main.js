@@ -2790,7 +2790,6 @@ if (document.readyState === 'loading') {
     stepData.step1 = {
       companyName: document.getElementById('companyName')?.value || '',
       regDate: document.getElementById('regDate')?.value || '',
-      country: document.getElementById('country')?.value || '',
       regNum: document.getElementById('regNum')?.value || '',
       businessAddress: document.getElementById('businessAddress')?.value || '',
       operationCountry: document.getElementById('operationCountry')?.value || '',
@@ -2884,6 +2883,10 @@ if (document.readyState === 'loading') {
         const parts = s.split('/');
         return `${parts[2]}/${parts[1]}/${parts[0]}`;
       }
+      // DD/MM/YYYY (already desired)
+      if (/^\d{2}\/\d{2}\/\d{4}$/.test(s)) {
+        return s;
+      }
       // Already in DD/MM/YYYY or partial input; return as-is
       return s;
     };
@@ -2903,7 +2906,6 @@ if (document.readyState === 'loading') {
     // Step 1 fields
     setText('ab-summary-companyName', s1.companyName);
     setText('ab-summary-regDate', formatDate(s1.regDate));
-    setText('ab-summary-country', s1.country);
     setText('ab-summary-regNum', s1.regNum);
     setText('ab-summary-businessAddress', s1.businessAddress);
     setText('ab-summary-operationCountry', s1.operationCountry);
@@ -3264,7 +3266,6 @@ if (document.readyState === 'loading') {
     form.querySelector('#companyName'),
     form.querySelector('#regDate'),
     form.querySelector('#regNum'),
-    form.querySelector('#country'),
     form.querySelector('#businessAddress'),
     form.querySelector('#operationCountry'),
     form.querySelector('#email'),
@@ -3290,11 +3291,7 @@ if (document.readyState === 'loading') {
     const fields = getFields();
     const allOk = fields.every(isFilled);
     setDisabled(nextBtn, !allOk);
-    // toggle filled style for registration and operation country selects
-    const regCountrySel = form.querySelector('#country');
-    if (regCountrySel) {
-      regCountrySel.classList.toggle('is-filled', !!regCountrySel.value);
-    }
+    // toggle filled style for operation country select
     const opCountrySel = form.querySelector('#operationCountry');
     if (opCountrySel) {
       opCountrySel.classList.toggle('is-filled', !!opCountrySel.value);
@@ -3311,7 +3308,7 @@ if (document.readyState === 'loading') {
   update();
 })();
 
-// Add Bank: registration date mask (YYYY/MM/DD) to keep 0000/00/00 structure while typing
+// Add Bank: registration date mask (DD/MM/YYYY) to keep 00/00/0000 structure while typing
 (function initAddBankRegDateMask() {
   const root = document.querySelector('main.page--addbank');
   if (!root) return;
@@ -3320,12 +3317,12 @@ if (document.readyState === 'loading') {
 
   const format = (raw) => {
     const digits = (raw || '').toString().replace(/\D/g, '').slice(0, 8);
-    const y = digits.slice(0, 4);
-    const m = digits.slice(4, 6);
-    const d = digits.slice(6, 8);
-    let out = y;
-    if (digits.length > 4) out += '/' + m;
-    if (digits.length > 6) out += '/' + d;
+    const d = digits.slice(0, 2);
+    const m = digits.slice(2, 4);
+    const y = digits.slice(4, 8);
+    let out = d;
+    if (digits.length > 2) out += '/' + m;
+    if (digits.length > 4) out += '/' + y;
     return out;
   };
 
@@ -3470,10 +3467,9 @@ if (document.readyState === 'loading') {
 
   const DEMO = {
     companyName: 'Delta Electronics, Inc.',
-    // Input type="date" expects YYYY-MM-DD; this renders as 10/09/2000 in most dd/mm locales.
-    regDate: '2000/09/10',
+    // Masked input (DD/MM/YYYY)
+    regDate: '10/09/2000',
     regNum: '0606976',
-    country: 'Taiwan',
     operationCountry: 'Taiwan',
     email: 'selinachange@delta.io',
     businessAddress: 'No. 16-8, Dehui Street, Zhongshan District, Taipei City 10461',
@@ -3600,7 +3596,6 @@ if (document.readyState === 'loading') {
   const companyName = document.getElementById('companyName');
   const regDate = document.getElementById('regDate');
   const regNum = document.getElementById('regNum');
-  const country = document.getElementById('country');
   const operationCountry = document.getElementById('operationCountry');
   const email = document.getElementById('email');
 
@@ -3616,7 +3611,6 @@ if (document.readyState === 'loading') {
   bind(regDate, () => typeIfEmpty(regDate, DEMO.regDate));
   bind(regNum, () => typeIfEmpty(regNum, DEMO.regNum));
   // For selects: don't prefill; just promote the demo value to the top for easy selection in videos.
-  bind(country, () => promoteSelectOption(country, DEMO.country));
   bind(operationCountry, () => promoteSelectOption(operationCountry, DEMO.operationCountry));
   bind(email, () => typeIfEmpty(email, DEMO.email));
 
@@ -3662,7 +3656,6 @@ if (document.readyState === 'loading') {
   const getStep1Fields = () => ({
     companyName: document.getElementById('companyName'),
     regDate: document.getElementById('regDate'),
-    country: document.getElementById('country'),
     regNum: document.getElementById('regNum'),
     businessAddress: document.getElementById('businessAddress'),
     operationCountry: document.getElementById('operationCountry'),
@@ -3690,8 +3683,7 @@ if (document.readyState === 'loading') {
       // Fill step 1 fields
       const f = getStep1Fields();
       if (f.companyName) f.companyName.value = 'NovaQuill Ltd';
-        if (f.regDate) f.regDate.value = '2024/01/15';
-      if (f.country) f.country.value = 'Singapore';
+        if (f.regDate) f.regDate.value = '15/01/2024';
       if (f.regNum) f.regNum.value = '202401234N';
       if (f.businessAddress) {
         f.businessAddress.value = '5 Battery Road, Singapore 049901';
