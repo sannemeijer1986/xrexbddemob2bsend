@@ -2870,14 +2870,22 @@ if (document.readyState === 'loading') {
       }
     };
 
-    // Format date from YYYY-MM-DD to DD/MM/YYYY
+    // Format date to DD/MM/YYYY
     const formatDate = (dateStr) => {
       if (!dateStr) return '';
-      const parts = dateStr.split('-');
-      if (parts.length === 3) {
+      const s = String(dateStr).trim();
+      // YYYY-MM-DD
+      if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+        const parts = s.split('-');
         return `${parts[2]}/${parts[1]}/${parts[0]}`;
       }
-      return dateStr;
+      // YYYY/MM/DD
+      if (/^\d{4}\/\d{2}\/\d{2}$/.test(s)) {
+        const parts = s.split('/');
+        return `${parts[2]}/${parts[1]}/${parts[0]}`;
+      }
+      // Already in DD/MM/YYYY or partial input; return as-is
+      return s;
     };
 
     // Format number with thousand separators for summary display
@@ -3303,6 +3311,332 @@ if (document.readyState === 'loading') {
   update();
 })();
 
+// Add Bank: registration date mask (YYYY/MM/DD) to keep 0000/00/00 structure while typing
+(function initAddBankRegDateMask() {
+  const root = document.querySelector('main.page--addbank');
+  if (!root) return;
+  const el = document.getElementById('regDate');
+  if (!el) return;
+
+  const format = (raw) => {
+    const digits = (raw || '').toString().replace(/\D/g, '').slice(0, 8);
+    const y = digits.slice(0, 4);
+    const m = digits.slice(4, 6);
+    const d = digits.slice(6, 8);
+    let out = y;
+    if (digits.length > 4) out += '/' + m;
+    if (digits.length > 6) out += '/' + d;
+    return out;
+  };
+
+  const apply = () => {
+    const next = format(el.value);
+    if (el.value !== next) {
+      el.value = next;
+    }
+  };
+
+  // Keep caret simple: always jump to end (fine for demo + typewriter)
+  el.addEventListener('input', apply);
+  el.addEventListener('change', apply);
+})();
+
+// Reusable helper: animate an input's value as if a user is typing
+// - Cancels automatically if user types/changes focus
+// - Dispatches input/change events so existing validation reacts live
+(function initTypewriterHelper() {
+  if (window.__xrexTypeIntoInput) return;
+
+  window.__xrexTypeIntoInput = function (el, fullValue, opts) {
+    try {
+      if (!el) return { cancel: function () {} };
+      const options = opts || {};
+      const target = (fullValue == null) ? '' : String(fullValue);
+
+      const onlyIfEmpty = options.onlyIfEmpty !== false; // default true
+      const resumeFromExisting = options.resumeFromExisting !== false; // default true
+      const current = (el.value || '').toString();
+      if (onlyIfEmpty && current.trim().length > 0) return { cancel: function () {} };
+
+      // Cancel any in-flight animation on this element
+      try {
+        if (el.__xrexTypewriter && typeof el.__xrexTypewriter.cancel === 'function') {
+          el.__xrexTypewriter.cancel();
+        }
+      } catch (_) {}
+
+      let timer = null;
+      let cancelled = false;
+      let i = 0;
+      let docPointerHandler = null;
+
+      const charDelay = typeof options.charDelay === 'number' ? options.charDelay : 32;
+      const jitter = typeof options.jitter === 'number' ? options.jitter : 18;
+      const initialDelay = typeof options.initialDelay === 'number' ? options.initialDelay : 0;
+
+      const triggerInput = () => {
+        try { el.dispatchEvent(new Event('input', { bubbles: true })); } catch (_) {}
+      };
+      const triggerChange = () => {
+        try { el.dispatchEvent(new Event('change', { bubbles: true })); } catch (_) {}
+      };
+
+      const cleanup = () => {
+        try { if (timer) clearTimeout(timer); } catch (_) {}
+        timer = null;
+        try {
+          el.removeEventListener('keydown', cancelIfTrusted, true);
+          el.removeEventListener('paste', cancelIfTrusted, true);
+          el.removeEventListener('beforeinput', cancelIfTrusted, true);
+          el.removeEventListener('blur', cancelIfTrusted, true);
+          if (docPointerHandler) document.removeEventListener('pointerdown', docPointerHandler, true);
+        } catch (_) {}
+        try { el.__xrexTypewriter = null; } catch (_) {}
+      };
+
+      function cancel() {
+        cancelled = true;
+        cleanup();
+      }
+
+      function cancelIfTrusted(e) {
+        // Only cancel for *real* user actions; we emit synthetic events while typing.
+        try {
+          if (e && e.isTrusted === false) return;
+        } catch (_) {}
+        cancel();
+      }
+
+      const nextDelay = () => {
+        const rand = (Math.random() * 2 - 1) * jitter;
+        return Math.max(0, Math.round(charDelay + rand));
+      };
+
+      const step = () => {
+        if (cancelled) return;
+        if (i >= target.length) {
+          triggerChange();
+          cleanup();
+          return;
+        }
+        el.value = target.slice(0, i + 1);
+        triggerInput();
+        i += 1;
+        timer = setTimeout(step, nextDelay());
+      };
+
+      // Start either from empty, or resume from an existing prefix (useful if the user clicked once and it partially filled)
+      const existing = (el.value || '').toString();
+      if (resumeFromExisting && existing && target.indexOf(existing) === 0 && existing.length < target.length) {
+        i = existing.length;
+      } else {
+        el.value = '';
+        triggerInput();
+      }
+
+      // Cancel animation if user takes control
+      el.addEventListener('keydown', cancelIfTrusted, true);
+      el.addEventListener('paste', cancelIfTrusted, true);
+      el.addEventListener('beforeinput', cancelIfTrusted, true);
+      el.addEventListener('blur', cancelIfTrusted, true);
+      // Click/tap elsewhere cancels (clicking inside the same input should not)
+      docPointerHandler = function (e) {
+        try {
+          if (!e || e.isTrusted === false) return;
+          const t = e.target;
+          if (t === el) return;
+          if (t && typeof el.contains === 'function' && el.contains(t)) return;
+        } catch (_) {}
+        cancel();
+      };
+      document.addEventListener('pointerdown', docPointerHandler, true);
+
+      el.__xrexTypewriter = { cancel: cancel };
+      timer = setTimeout(step, initialDelay);
+
+      return { cancel: cancel };
+    } catch (_) {
+      return { cancel: function () {} };
+    }
+  };
+})();
+
+// Add Bank: field-by-field demo autofill on focus/click (Step 1)
+(function initAddBankAutofillOnFieldPress() {
+  const root = document.querySelector('main.page--addbank');
+  if (!root) return;
+  const step1Form = document.getElementById('step1-form');
+  if (!step1Form) return;
+
+  const DEMO = {
+    companyName: 'Delta Electronics, Inc.',
+    // Input type="date" expects YYYY-MM-DD; this renders as 10/09/2000 in most dd/mm locales.
+    regDate: '2000/09/10',
+    regNum: '0606976',
+    country: 'Taiwan',
+    operationCountry: 'Taiwan',
+    email: 'selinachange@delta.io',
+    businessAddress: 'No. 16-8, Dehui Street, Zhongshan District, Taipei City 10461',
+    // Best-effort split for the "Add registered address" modal (optional, but keeps UI consistent)
+    businessAddressModal: {
+      addressCountry: 'Taiwan',
+      addressState: '',
+      addressCity: 'Taipei City',
+      addressLine1: 'Dehui Street, Zhongshan District',
+      addressLine2: '',
+      addressPostal: '10461',
+    },
+  };
+
+  const trigger = (el) => {
+    if (!el) return;
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+  };
+
+  const isEmpty = (el) => {
+    if (!el) return true;
+    const v = (el.value || '').toString().trim();
+    return v.length === 0;
+  };
+
+  const setIfEmpty = (el, value) => {
+    if (!el) return;
+    if (!isEmpty(el)) return;
+    el.value = value;
+    trigger(el);
+  };
+
+  const typeIfEmpty = (el, value) => {
+    if (!el) return;
+    const target = (value == null) ? '' : String(value);
+    const existing = (el.value || '').toString();
+    const existingTrimmed = existing.trim();
+
+    // If there's already a partial prefix (e.g. "De"), resume typing the remainder.
+    if (existingTrimmed && target && target.indexOf(existing) === 0 && existing.length < target.length) {
+      if (typeof window.__xrexTypeIntoInput === 'function') {
+        window.__xrexTypeIntoInput(el, target, { onlyIfEmpty: false, resumeFromExisting: true });
+      } else {
+        // Fallback: just set full value
+        el.value = target;
+        trigger(el);
+      }
+      return;
+    }
+
+    if (!isEmpty(el)) return;
+
+    if (typeof window.__xrexTypeIntoInput === 'function') {
+      window.__xrexTypeIntoInput(el, target, { onlyIfEmpty: true, resumeFromExisting: true });
+      return;
+    }
+    // Fallback (no animation)
+    setIfEmpty(el, target);
+  };
+
+  const promoteSelectOption = (el, value) => {
+    if (!el) return;
+    if (!value) return;
+    try {
+      const opts = Array.prototype.slice.call(el.options || []);
+      if (!opts.length) return;
+      const idx = opts.findIndex((opt) => opt && opt.value === value);
+      if (idx < 0) return;
+
+      // Keep placeholder (index 0) first. Move desired option to index 1.
+      const desiredPos = 1;
+      if (idx === desiredPos) return;
+      const opt = opts[idx];
+      const ref = el.options[desiredPos] || null;
+      // If the option is currently selected, preserve selection after moving
+      const wasSelected = opt.selected;
+      el.removeChild(opt);
+      el.insertBefore(opt, ref);
+      if (wasSelected) {
+        opt.selected = true;
+      }
+    } catch (_) {}
+  };
+
+  const fillBusinessAddress = () => {
+    const businessAddress = document.getElementById('businessAddress');
+    if (businessAddress && isEmpty(businessAddress)) {
+      businessAddress.value = DEMO.businessAddress;
+      // Update icon after setting value (matches existing devtools behavior)
+      const businessAddressIcon = document.getElementById('businessAddressIcon');
+      if (businessAddressIcon) businessAddressIcon.src = 'assets/icon_edit.svg';
+      trigger(businessAddress);
+    }
+  };
+
+  // Add registered address modal: apply same demo autofill behavior
+  // - Text inputs: typewriter animation (only if empty)
+  // - Country select: promote demo country to the first real option (no auto-select)
+  const initBusinessAddressModalDemo = () => {
+    const modal = document.getElementById('businessAddressModal');
+    if (!modal) return;
+    const map = DEMO.businessAddressModal || {};
+
+    const addressCountry = modal.querySelector('#addressCountry');
+    const addressState = modal.querySelector('#addressState');
+    const addressCity = modal.querySelector('#addressCity');
+    const addressLine1 = modal.querySelector('#addressLine1');
+    const addressLine2 = modal.querySelector('#addressLine2');
+    const addressPostal = modal.querySelector('#addressPostal');
+
+    // Bind select: promote option to top for easy picking
+    bind(addressCountry, () => promoteSelectOption(addressCountry, map.addressCountry || ''));
+
+    // Bind inputs: type on focus/click
+    bind(addressState, () => typeIfEmpty(addressState, map.addressState || ''));
+    bind(addressCity, () => typeIfEmpty(addressCity, map.addressCity || ''));
+    bind(addressLine1, () => typeIfEmpty(addressLine1, map.addressLine1 || ''));
+    bind(addressLine2, () => typeIfEmpty(addressLine2, map.addressLine2 || ''));
+    bind(addressPostal, () => typeIfEmpty(addressPostal, map.addressPostal || ''));
+  };
+
+  // Wire individual fields: on "press" (focus/click), fill with fixed demo values
+  const companyName = document.getElementById('companyName');
+  const regDate = document.getElementById('regDate');
+  const regNum = document.getElementById('regNum');
+  const country = document.getElementById('country');
+  const operationCountry = document.getElementById('operationCountry');
+  const email = document.getElementById('email');
+
+  const bind = (el, fn) => {
+    if (!el) return;
+    if (el.dataset.autofillBound === '1') return;
+    el.dataset.autofillBound = '1';
+    el.addEventListener('focus', fn, { passive: true });
+    el.addEventListener('click', fn, { passive: true });
+  };
+
+  bind(companyName, () => typeIfEmpty(companyName, DEMO.companyName));
+  bind(regDate, () => typeIfEmpty(regDate, DEMO.regDate));
+  bind(regNum, () => typeIfEmpty(regNum, DEMO.regNum));
+  // For selects: don't prefill; just promote the demo value to the top for easy selection in videos.
+  bind(country, () => promoteSelectOption(country, DEMO.country));
+  bind(operationCountry, () => promoteSelectOption(operationCountry, DEMO.operationCountry));
+  bind(email, () => typeIfEmpty(email, DEMO.email));
+
+  // Prepare modal bindings (safe even if modal never opens)
+  initBusinessAddressModalDemo();
+
+  // Registered address is readonly; bind the wrapper/button so a tap fills it.
+  const businessAddressWrapper = document.getElementById('businessAddressWrapper');
+  const businessAddressBtn = document.getElementById('businessAddressBtn');
+  [businessAddressWrapper, businessAddressBtn].forEach((el) => {
+    if (!el) return;
+    if (el.dataset.autofillBound === '1') return;
+    el.dataset.autofillBound = '1';
+    el.addEventListener('click', (e) => {
+      // Don’t block existing modal behavior; just prefill before it opens.
+      fillBusinessAddress();
+    });
+  });
+})();
+
 // Add Bank: dev tools (Fill / Clear) in build-badge
 (function initAddBankDevTools() {
   const root = document.querySelector('main.page--addbank');
@@ -3356,7 +3690,7 @@ if (document.readyState === 'loading') {
       // Fill step 1 fields
       const f = getStep1Fields();
       if (f.companyName) f.companyName.value = 'NovaQuill Ltd';
-      if (f.regDate) f.regDate.value = '2024-01-15';
+        if (f.regDate) f.regDate.value = '2024/01/15';
       if (f.country) f.country.value = 'Singapore';
       if (f.regNum) f.regNum.value = '202401234N';
       if (f.businessAddress) {
