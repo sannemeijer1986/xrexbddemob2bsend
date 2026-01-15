@@ -308,7 +308,7 @@
             { title: 'AGP account SG', bank: 'DBS Bank', account: '012-345678-9', status: 'verified' }
           ],
           counterparties: [
-            { title: 'NovaQuill Ltd', bank: 'DBS Bank', account: '012-345678-9', status: 'review' }
+            { title: 'Delta Electronics, Inc.', bank: 'CIMB', account: '03543546458', status: 'review' }
           ]
         },
         3: {
@@ -316,7 +316,7 @@
             { title: 'AGP account SG', bank: 'DBS Bank', account: '012-345678-9', status: 'verified' }
           ],
           counterparties: [
-            { title: 'NovaQuill Ltd', bank: 'DBS Bank', account: '012-345678-9', status: 'verified' },
+            { title: 'Delta Electronics, Inc.', bank: 'CIMB', account: '03543546458', status: 'verified' },
             { title: 'Counterparty X', bank: 'CIMB', account: '012-345678-9', status: 'review' },
             { title: 'Counterparty Y', bank: 'CIMB', account: '012-345678-9', status: 'review' },
             { title: 'Counterparty Z', bank: 'CIMB', account: '012-345678-9', status: 'danger' }
@@ -356,8 +356,11 @@
         var state = getPrototypeState();
         var data = getBanksStateData(state);
 
-        // If there are no accounts at all, show the empty state
-        if ((!data.company || !data.company.length) && (!data.counterparties || !data.counterparties.length)) {
+        // Prototype: hide "Your company accounts" section entirely on this page
+        data.company = [];
+
+        // If there are no counterparty accounts at all, show the empty state
+        if ((!data.counterparties || !data.counterparties.length)) {
           renderBanksEmpty();
           return;
         }
@@ -380,7 +383,7 @@
         var html = '';
         html += ''
           + '<div class=\"banks-header\">'
-          + '  <h2 class=\"banks-subtitle\">Manage and view company and counterparty accounts</h2>'
+          + '  <h2 class=\"banks-subtitle\">Manage and view counterparty accounts</h2>'
           + '  <button type=\"button\" class=\"btn btn--primary btn--md js-open-usd-modal\">Add new bank account</button>'
           + '</div>';
 
@@ -451,7 +454,7 @@
 
           cpItems.forEach(function (item) {
             var meta = mapStatus(item.status || 'review');
-            var isNova = item.title === 'NovaQuill Ltd';
+            var isNova = item.title === 'Delta Electronics, Inc.';
             var isProtoError = !isNova;
             html += ''
               + '<div class=\"bank-card\"'
@@ -508,7 +511,7 @@
           });
         } catch (_) {}
 
-        // Bind NovaQuill card to navigate to details page
+        // Bind demo counterparty card to navigate to details page
         try {
           var novaCard = banksPanel.querySelector('.bank-card[data-novaquill=\"1\"]');
           if (novaCard && !novaCard.dataset.novaBound) {

@@ -439,7 +439,7 @@ function initSendPayment() {
     } catch (_) {}
 
     if (data) {
-      if (titleEl) titleEl.textContent = data.receiverName || 'NovaQuill Ltd';
+      if (titleEl) titleEl.textContent = data.receiverName || 'Delta Electronics, Inc.';
       if (amountEl) amountEl.textContent = data.amountPayableFmt || '50,000.00 USD';
       if (purposeEl) purposeEl.textContent = data.nature || 'Goods purchase';
       if (purposeSubEl) purposeSubEl.textContent = data.docNumber || 'PI-001234';
@@ -2236,10 +2236,10 @@ if (document.readyState === 'loading') {
 
   const STATE_ITEMS = {
     2: [
-      { title: 'NovaQuill Ltd', bank: 'DBS Bank', account: '012-345678-9', status: 'review', href: '#' },
+      { title: 'Delta Electronics, Inc.', bank: 'CIMB', account: '03543546458', status: 'review', href: '#' },
     ],
     3: [
-      { title: 'NovaQuill Ltd', bank: 'DBS Bank', account: '012-345678-9', status: 'verified', href: 'send-payment.html' },
+      { title: 'Delta Electronics, Inc.', bank: 'CIMB', account: '03543546458', status: 'verified', href: 'send-payment.html' },
       { title: 'Counterparty X', bank: 'CIMB', account: '012-345678-9', status: 'review', href: '#' },
       { title: 'Counterparty Y', bank: 'CIMB', account: '012-345678-9', status: 'review', href: '#' },
       { title: 'Counterparty Z', bank: 'CIMB', account: '012-345678-9', status: 'danger', href: '#' },
