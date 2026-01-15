@@ -3470,19 +3470,43 @@ if (document.readyState === 'loading') {
     // Masked input (DD/MM/YYYY)
     regDate: '10/09/2000',
     regNum: '0606976',
-    operationCountry: 'Taiwan',
-    email: 'selinachange@delta.io',
-    businessAddress: 'No. 16-8, Dehui Street, Zhongshan District, Taipei City 10461',
+    operationCountry: 'Singapore',
+    email: 'thebest@abc.com',
+    // Match the Business Address modal formatter output: line1 + city + postal + country
+    businessAddress: 'Asia Square Tower 2, 12 Marina View, #10-23, Singapore, 018961, Singapore',
     // Best-effort split for the "Add registered address" modal (optional, but keeps UI consistent)
     businessAddressModal: {
-      addressCountry: 'Taiwan',
+      addressCountry: 'Singapore',
       addressState: '',
-      addressCity: 'Taipei City',
-      addressLine1: 'Dehui Street, Zhongshan District',
+      addressCity: 'Singapore',
+      addressLine1: 'Asia Square Tower 2, 12 Marina View, #10-23',
       addressLine2: '',
-      addressPostal: '10461',
+      addressPostal: '018961',
     },
+    // Step 2
+    accountHolderName: 'Delta Electronics, Inc.',
+    bankDetailsModal: {
+      accountNicknameSwift: 'Delta electronics - CIMB',
+      bankName: 'CIMB',
+      bankCountry: 'Singapore',
+      bankCity: 'Singapore',
+      swiftCode: 'CIBBSGSG',
+      accountNumber: '03543546458',
+    },
+    accountDeclarationModal: {
+      accountUsedFor: 'incoming', // "Send payments to this account"
+      declarationPurpose: 'Payments',
+      avgTransactionsDigits: '2',
+      avgVolumeDigits: '100000',
+    },
+    bankProofFileName: 'bank-statement.pdf',
   };
+
+  // Single source of truth for dev tools + click-to-fill.
+  // (Using window so other IIFEs can reuse it without duplicating constants.)
+  try {
+    window.__ADD_BANK_DEMO = DEMO;
+  } catch (_) {}
 
   const trigger = (el) => {
     if (!el) return;
@@ -3555,6 +3579,62 @@ if (document.readyState === 'loading') {
     } catch (_) {}
   };
 
+  const setSelectValue = (el, value) => {
+    if (!el) return;
+    if (!value) return;
+    try {
+      const hasOption = Array.prototype.slice.call(el.options || []).some((opt) => opt && opt.value === value);
+      if (!hasOption) return;
+      el.value = value;
+      trigger(el);
+    } catch (_) {}
+  };
+
+  const typeDigitsIntoEnhancedField = (el, digits, opts) => {
+    if (!el) return;
+    const s = (digits == null) ? '' : String(digits);
+    const onlyIfEmpty = !(opts && opts.onlyIfEmpty === false);
+    if (onlyIfEmpty && (el.value || '').toString().trim().length > 0) return;
+
+    // Cancel any previous digit-typing on this element
+    try {
+      if (el.__xrexDigitsTyper && typeof el.__xrexDigitsTyper.cancel === 'function') {
+        el.__xrexDigitsTyper.cancel();
+      }
+    } catch (_) {}
+
+    let cancelled = false;
+    let idx = 0;
+    const delay = (opts && typeof opts.charDelay === 'number') ? opts.charDelay : 40;
+
+    const cancel = () => { cancelled = true; };
+    el.__xrexDigitsTyper = { cancel };
+
+    const tick = () => {
+      if (cancelled) return;
+      if (idx >= s.length) {
+        try { el.dispatchEvent(new Event('change', { bubbles: true })); } catch (_) {}
+        return;
+      }
+      const ch = s[idx++];
+      if (!/^\d$/.test(ch)) {
+        setTimeout(tick, delay);
+        return;
+      }
+      try {
+        const ev = new KeyboardEvent('keydown', { key: ch, bubbles: true });
+        el.dispatchEvent(ev);
+      } catch (_) {
+        // Fallback: set value (may be reformatted by existing listeners)
+        el.value = ((el.value || '') + ch);
+        trigger(el);
+      }
+      setTimeout(tick, delay);
+    };
+
+    setTimeout(tick, delay);
+  };
+
   const fillBusinessAddress = () => {
     const businessAddress = document.getElementById('businessAddress');
     if (businessAddress && isEmpty(businessAddress)) {
@@ -3592,12 +3672,58 @@ if (document.readyState === 'loading') {
     bind(addressPostal, () => typeIfEmpty(addressPostal, map.addressPostal || ''));
   };
 
+  const initBankDetailsModalDemo = () => {
+    const modal = document.getElementById('bankDetailsModal');
+    if (!modal) return;
+    const map = DEMO.bankDetailsModal || {};
+
+    const bankCountry = modal.querySelector('#bankCountry');
+    const bankName = modal.querySelector('#bankName');
+    const bankCity = modal.querySelector('#bankCity');
+    const swiftCode = modal.querySelector('#swiftCode');
+    const accountNumber = modal.querySelector('#accountNumber');
+    const accountNicknameSwift = modal.querySelector('#accountNicknameSwift');
+
+    const ensureCountry = () => {
+      // For step 2 we select the value so SWIFT fields appear.
+      if (bankCountry && !(bankCountry.value || '').trim()) {
+        setSelectValue(bankCountry, map.bankCountry || '');
+      }
+    };
+
+    bind(bankCountry, () => setSelectValue(bankCountry, map.bankCountry || ''));
+    bind(bankName, () => { ensureCountry(); typeIfEmpty(bankName, map.bankName || ''); });
+    bind(bankCity, () => { ensureCountry(); typeIfEmpty(bankCity, map.bankCity || ''); });
+    bind(swiftCode, () => { ensureCountry(); typeIfEmpty(swiftCode, map.swiftCode || ''); });
+    bind(accountNumber, () => { ensureCountry(); typeIfEmpty(accountNumber, map.accountNumber || ''); });
+    bind(accountNicknameSwift, () => { ensureCountry(); typeIfEmpty(accountNicknameSwift, map.accountNicknameSwift || ''); });
+  };
+
+  const initAccountDeclarationModalDemo = () => {
+    const modal = document.getElementById('accountDeclarationModal');
+    if (!modal) return;
+    const map = DEMO.accountDeclarationModal || {};
+
+    const accountUsedFor = modal.querySelector('#accountUsedFor');
+    const declarationPurpose = modal.querySelector('#declarationPurpose');
+    const avgTransactions = modal.querySelector('#avgTransactions');
+    const avgVolume = modal.querySelector('#avgVolume');
+
+    bind(accountUsedFor, () => setSelectValue(accountUsedFor, map.accountUsedFor || ''));
+    bind(declarationPurpose, () => setSelectValue(declarationPurpose, map.declarationPurpose || ''));
+
+    // These fields are enhanced by keydown handlers; type digits via key events for best effect.
+    bind(avgTransactions, () => typeDigitsIntoEnhancedField(avgTransactions, map.avgTransactionsDigits || ''));
+    bind(avgVolume, () => typeDigitsIntoEnhancedField(avgVolume, map.avgVolumeDigits || ''));
+  };
+
   // Wire individual fields: on "press" (focus/click), fill with fixed demo values
   const companyName = document.getElementById('companyName');
   const regDate = document.getElementById('regDate');
   const regNum = document.getElementById('regNum');
   const operationCountry = document.getElementById('operationCountry');
   const email = document.getElementById('email');
+  const accountHolderName = document.getElementById('accountHolderName');
 
   const bind = (el, fn) => {
     if (!el) return;
@@ -3616,6 +3742,11 @@ if (document.readyState === 'loading') {
 
   // Prepare modal bindings (safe even if modal never opens)
   initBusinessAddressModalDemo();
+  initBankDetailsModalDemo();
+  initAccountDeclarationModalDemo();
+
+  // Step 2: Account holder name
+  bind(accountHolderName, () => typeIfEmpty(accountHolderName, DEMO.accountHolderName));
 
   // Registered address is readonly; bind the wrapper/button so a tap fills it.
   const businessAddressWrapper = document.getElementById('businessAddressWrapper');
@@ -3678,26 +3809,28 @@ if (document.readyState === 'loading') {
   fillBtn.addEventListener('click', (e) => {
     e.preventDefault();
     const currentStep = getCurrentStep();
+    const demo = (typeof window !== 'undefined' && window.__ADD_BANK_DEMO) ? window.__ADD_BANK_DEMO : null;
     
     if (currentStep === 1) {
       // Fill step 1 fields
       const f = getStep1Fields();
-      if (f.companyName) f.companyName.value = 'NovaQuill Ltd';
-        if (f.regDate) f.regDate.value = '15/01/2024';
-      if (f.regNum) f.regNum.value = '202401234N';
+      if (f.companyName) f.companyName.value = (demo && demo.companyName) || 'Delta Electronics, Inc.';
+      if (f.regDate) f.regDate.value = (demo && demo.regDate) || '10/09/2000';
+      if (f.regNum) f.regNum.value = (demo && demo.regNum) || '0606976';
       if (f.businessAddress) {
-        f.businessAddress.value = '5 Battery Road, Singapore 049901';
+        f.businessAddress.value = (demo && demo.businessAddress) || 'Asia Square Tower 2, 12 Marina View, #10-23, Singapore, 018961, Singapore';
         // Update icon after setting value
         const businessAddressIcon = document.getElementById('businessAddressIcon');
         if (businessAddressIcon) businessAddressIcon.src = 'assets/icon_edit.svg';
       }
-      if (f.operationCountry) f.operationCountry.value = 'Singapore';
-      if (f.email) f.email.value = 'accounts@novaquill.com';
+      if (f.operationCountry) f.operationCountry.value = (demo && demo.operationCountry) || 'Singapore';
+      if (f.email) f.email.value = (demo && demo.email) || 'thebest@abc.com';
       Object.values(f).forEach(trigger);
       
       // Also fill modal fields
       const modal = document.getElementById('businessAddressModal');
       if (modal) {
+        const map = (demo && demo.businessAddressModal) ? demo.businessAddressModal : {};
         const addressCountry = modal.querySelector('#addressCountry');
         const addressState = modal.querySelector('#addressState');
         const addressCity = modal.querySelector('#addressCity');
@@ -3705,12 +3838,12 @@ if (document.readyState === 'loading') {
         const addressLine2 = modal.querySelector('#addressLine2');
         const addressPostal = modal.querySelector('#addressPostal');
         
-        if (addressCountry) addressCountry.value = 'Singapore';
-        if (addressState) addressState.value = 'Central Region';
-        if (addressCity) addressCity.value = 'Singapore';
-        if (addressLine1) addressLine1.value = '5 Battery Road';
-        if (addressLine2) addressLine2.value = 'Suite 1001';
-        if (addressPostal) addressPostal.value = '049901';
+        if (addressCountry) addressCountry.value = map.addressCountry || 'Singapore';
+        if (addressState) addressState.value = map.addressState || '';
+        if (addressCity) addressCity.value = map.addressCity || 'Singapore';
+        if (addressLine1) addressLine1.value = map.addressLine1 || 'Asia Square Tower 2, 12 Marina View, #10-23';
+        if (addressLine2) addressLine2.value = map.addressLine2 || '';
+        if (addressPostal) addressPostal.value = map.addressPostal || '018961';
         
         // Trigger change events to update is-filled classes and validate
         [addressCountry, addressState, addressCity, addressLine1, addressLine2, addressPostal].forEach((el) => {
@@ -3730,12 +3863,13 @@ if (document.readyState === 'loading') {
     } else if (currentStep === 2) {
       // Fill step 2 fields
       const f = getStep2Fields();
-      if (f.accountHolderName) f.accountHolderName.value = 'NovaQuill Ltd';
+      if (f.accountHolderName) f.accountHolderName.value = (demo && demo.accountHolderName) || 'Delta Electronics, Inc.';
       Object.values(f).forEach(trigger);
       
       // Fill bank details modal fields and trigger save
       const bankDetailsModal = document.getElementById('bankDetailsModal');
       if (bankDetailsModal) {
+        const map = (demo && demo.bankDetailsModal) ? demo.bankDetailsModal : {};
         const bankCountry = bankDetailsModal.querySelector('#bankCountry');
         const bankName = bankDetailsModal.querySelector('#bankName');
         const bankCity = bankDetailsModal.querySelector('#bankCity');
@@ -3745,20 +3879,20 @@ if (document.readyState === 'loading') {
         const ibanNumber = bankDetailsModal.querySelector('#ibanNumber');
         const accountNickname = bankDetailsModal.querySelector('#accountNickname');
         
-        // Fill with SWIFT/BIC example (Singapore)
+        // Fill with SWIFT/BIC example (demo map)
         if (bankCountry) {
-          bankCountry.value = 'Singapore';
+          bankCountry.value = map.bankCountry || 'Singapore';
           // Trigger change first to update field visibility
           bankCountry.dispatchEvent(new Event('change', { bubbles: true }));
         }
         
         // Wait a bit for field visibility to update, then fill other fields
         setTimeout(() => {
-          if (bankName) bankName.value = 'DBS Bank';
-          if (bankCity) bankCity.value = 'Singapore';
-          if (swiftCode) swiftCode.value = 'DBSSSGSG';
-          if (accountNumber) accountNumber.value = '012-345678-9';
-          if (accountNicknameSwift) accountNicknameSwift.value = 'NovaQuill Ltd';
+          if (bankName) bankName.value = map.bankName || 'CIMB';
+          if (bankCity) bankCity.value = map.bankCity || 'Singapore';
+          if (swiftCode) swiftCode.value = map.swiftCode || 'CIBBSGSG';
+          if (accountNumber) accountNumber.value = map.accountNumber || '03543546458';
+          if (accountNicknameSwift) accountNicknameSwift.value = map.accountNicknameSwift || 'Delta electronics - CIMB';
           
           // Trigger change events for all fields
           [bankName, bankCity, swiftCode, accountNumber, accountNicknameSwift, ibanNumber, accountNickname].forEach((el) => {
@@ -3781,15 +3915,16 @@ if (document.readyState === 'loading') {
       // Fill account declaration modal fields and trigger save
       const accountDeclarationModal = document.getElementById('accountDeclarationModal');
       if (accountDeclarationModal) {
+        const map = (demo && demo.accountDeclarationModal) ? demo.accountDeclarationModal : {};
         const accountUsedFor = accountDeclarationModal.querySelector('#accountUsedFor');
         const declarationPurpose = accountDeclarationModal.querySelector('#declarationPurpose');
         const avgTransactions = accountDeclarationModal.querySelector('#avgTransactions');
         const avgVolume = accountDeclarationModal.querySelector('#avgVolume');
         
-        if (accountUsedFor) accountUsedFor.value = 'both';
-        if (declarationPurpose) declarationPurpose.value = 'Payments';
-        if (avgTransactions) avgTransactions.value = '50';
-        if (avgVolume) avgVolume.value = '100000';
+        if (accountUsedFor) accountUsedFor.value = map.accountUsedFor || 'incoming';
+        if (declarationPurpose) declarationPurpose.value = map.declarationPurpose || 'Payments';
+        if (avgTransactions) avgTransactions.value = map.avgTransactionsDigits || '2';
+        if (avgVolume) avgVolume.value = map.avgVolumeDigits || '100000';
         
         // Trigger change events so validation and filled-state update
         [accountUsedFor, declarationPurpose, avgTransactions, avgVolume].forEach((el) => {
@@ -3811,7 +3946,7 @@ if (document.readyState === 'loading') {
       // Fill upload
       setTimeout(() => {
         if (typeof window.setBankProofUploaded === 'function') {
-          window.setBankProofUploaded('Proof1.jpg');
+          window.setBankProofUploaded((demo && demo.bankProofFileName) || 'bank-statement.pdf');
         }
       }, 150);
     }
@@ -3892,9 +4027,9 @@ if (document.readyState === 'loading') {
         const ibanNumber = bankDetailsModal.querySelector('#ibanNumber');
         const accountNickname = bankDetailsModal.querySelector('#accountNickname');
         
-        // Clear country first to trigger field visibility update
+        // Reset country to default (Singapore) to match the modal default selection
         if (bankCountry) {
-          bankCountry.value = '';
+          bankCountry.value = 'Singapore';
           bankCountry.dispatchEvent(new Event('change', { bubbles: true }));
         }
         
@@ -4014,10 +4149,11 @@ if (document.readyState === 'loading') {
     if (!swiftFields || !ibanFields || !swiftNicknameRow) return;
     
     if (!bankCountry || bankCountry === '') {
-      // Hide all fields if no country selected
-      swiftFields.style.display = 'none';
+      // Default to SWIFT fields (e.g. Taiwan-style) even when country is not selected
+      // This makes the modal feel less "empty" while keeping the dropdown unselected.
+      swiftFields.style.display = 'grid';
       ibanFields.style.display = 'none';
-      swiftNicknameRow.style.display = 'none';
+      swiftNicknameRow.style.display = 'grid';
     } else if (countryType === 'IBAN') {
       // Show IBAN fields
       swiftFields.style.display = 'none';
@@ -4502,8 +4638,10 @@ if (document.readyState === 'loading') {
       e.preventDefault();
     });
   
-    // Prevent default text changes from other input events; we control value
+    // Keep formatting stable if any non-keyboard change happens
     field.addEventListener('input', () => {
+      // Re-derive digits from current value for safety
+      rawDigits = parseNumber(field.value);
       render();
     });
   
@@ -4837,7 +4975,7 @@ if (document.readyState === 'loading') {
   let uploadedFileName = null;
   
   // Set uploaded state
-  const setUploaded = (fileName = 'Proof1.jpg') => {
+  const setUploaded = (fileName = 'bank-statement.pdf') => {
     uploadedFileName = fileName;
     fileNameEl.textContent = fileName;
     uploadEmpty.style.display = 'none';
@@ -4878,12 +5016,25 @@ if (document.readyState === 'loading') {
     }
   };
   
+  // Hidden file input used to open the system picker
+  const fileInput = document.createElement('input');
+  fileInput.type = 'file';
+  fileInput.accept = '.jpg,.jpeg,.png,.pdf';
+  fileInput.style.display = 'none';
+  fileInput.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(fileInput);
+
+  fileInput.addEventListener('change', () => {
+    // No matter what the user selected, always show a fixed filename for video/demo
+    setUploaded('bank-statement.pdf');
+    // Reset so selecting the same file again still triggers change
+    try { fileInput.value = ''; } catch (_) {}
+  });
+
   // Upload button handler
   uploadBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    // In a real app, this would open a file picker
-    // For prototype, just set uploaded state
-    setUploaded('Proof1.jpg');
+    try { fileInput.click(); } catch (_) { setUploaded('bank-statement.pdf'); }
   });
   
   // Remove button handler
