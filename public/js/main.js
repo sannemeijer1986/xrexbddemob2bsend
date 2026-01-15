@@ -2240,9 +2240,6 @@ if (document.readyState === 'loading') {
     ],
     3: [
       { title: 'Delta Electronics, Inc.', bank: 'CIMB', account: '03543546458', status: 'verified', href: 'send-payment.html' },
-      { title: 'Counterparty X', bank: 'CIMB', account: '012-345678-9', status: 'review', href: '#' },
-      { title: 'Counterparty Y', bank: 'CIMB', account: '012-345678-9', status: 'review', href: '#' },
-      { title: 'Counterparty Z', bank: 'CIMB', account: '012-345678-9', status: 'danger', href: '#' },
     ],
   };
 

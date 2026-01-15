@@ -317,9 +317,6 @@
           ],
           counterparties: [
             { title: 'Delta Electronics, Inc.', bank: 'CIMB', account: '03543546458', status: 'verified' },
-            { title: 'Counterparty X', bank: 'CIMB', account: '012-345678-9', status: 'review' },
-            { title: 'Counterparty Y', bank: 'CIMB', account: '012-345678-9', status: 'review' },
-            { title: 'Counterparty Z', bank: 'CIMB', account: '012-345678-9', status: 'danger' }
           ]
         }
       };
