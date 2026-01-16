@@ -1567,7 +1567,7 @@ function initSendPayment() {
     });
     // Wire main buttons: toggle state on click
     document.querySelectorAll('.upload-item .upload-item__actions .btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
         const item = btn.closest('.upload-item');
         if (!item) return;
         if (item.classList.contains('is-uploaded')) {
@@ -1593,7 +1593,9 @@ function initSendPayment() {
           const docType = docTypeSel ? (docTypeSel.value || '') : '';
 
           // Pre-shipment Proforma invoice: open native picker, then mark uploaded with fixed filename
-          if (inPre && docType === 'PI') {
+          // But: if triggered programmatically (e.g. by "Fill"), bypass the picker and upload directly.
+          const isUserAction = !!(e && e.isTrusted === true);
+          if (inPre && docType === 'PI' && isUserAction) {
             const input = ensureNativePicker();
             const onChange = () => {
               input.removeEventListener('change', onChange);
@@ -2196,6 +2198,7 @@ if (document.readyState === 'loading') {
   const input = document.getElementById('unlinkCodeInput');
   const clearBtn = document.getElementById('unlinkClearBtn');
   const err = document.getElementById('unlinkCodeError');
+  const DEMO_2FA = '123456';
   function syncAuthState() {
     const v = (input && input.value || '').trim();
     const ok = /^\d{6}$/.test(v);
@@ -2206,6 +2209,23 @@ if (document.readyState === 'loading') {
   if (input) {
     input.addEventListener('input', syncAuthState, { passive: true });
     input.addEventListener('change', syncAuthState);
+    // Demo: auto-type a static 2FA code on focus/click (only if empty)
+    const maybeAutofill = (e) => {
+      try {
+        // Exception: only trigger when the user actually clicks/taps (not on autofocus)
+        if (!e || e.isTrusted !== true) return;
+        const v = (input.value || '').trim();
+        if (v) return;
+        if (typeof window.__xrexTypeIntoInput === 'function') {
+          window.__xrexTypeIntoInput(input, DEMO_2FA, { onlyIfEmpty: true, resumeFromExisting: true });
+        } else {
+          input.value = DEMO_2FA;
+          syncAuthState();
+        }
+      } catch (_) {}
+    };
+    input.addEventListener('pointerdown', maybeAutofill, { passive: true });
+    input.addEventListener('click', maybeAutofill, { passive: true });
   }
   if (clearBtn && input) {
     clearBtn.addEventListener('click', () => { input.value = ''; syncAuthState(); input.focus(); });
@@ -2449,6 +2469,41 @@ if (document.readyState === 'loading') {
   link.addEventListener('mouseenter', handler, { passive: true });
 })();
 
+// Payment details: when in state 4, hovering the status badge advances state to 5 and shows a snackbar
+(function initPaymentDetailsHoverAdvance() {
+  const page = document.querySelector('main.page--payment-detail');
+  if (!page) return;
+  const badge = document.getElementById('pdStatusBadge');
+  if (!badge) return;
+
+  // Re-arm whenever we return to state 4 (e.g. via build-badge controls)
+  let armed = true;
+  try {
+    if (typeof window.onPrototypeStateChange === 'function') {
+      window.onPrototypeStateChange((state) => {
+        armed = state === 4;
+      });
+    }
+  } catch (_) {}
+
+  const handler = () => {
+    if (!armed) return;
+    try {
+      const state = typeof window.getPrototypeState === 'function' ? window.getPrototypeState() : null;
+      if (state !== 4) return;
+      armed = false;
+      if (typeof window.setPrototypeState === 'function') {
+        window.setPrototypeState(5);
+      }
+      if (typeof window.showSnackbar === 'function') {
+        window.showSnackbar('Payment sent succesfully', 2000, 'success');
+      }
+    } catch (_) {}
+  };
+
+  badge.addEventListener('mouseenter', handler, { passive: true });
+})();
+
 // Modal helpers (reused lightweight pattern)
 (function initModalLogic() {
   const open = (el) => {
@@ -2512,7 +2567,10 @@ if (document.readyState === 'loading') {
       }
       const text = el.querySelector('.snackbar__text');
       if (text) text.textContent = message || '';
-      // show
+      // Show (always restart animation)
+      el.classList.remove('is-visible');
+      // Force reflow so transitions retrigger reliably
+      void el.offsetWidth;
       requestAnimationFrame(() => el.classList.add('is-visible'));
       // hide after duration
       clearTimeout(el._hideTimer);
