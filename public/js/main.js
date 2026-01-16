@@ -5472,6 +5472,28 @@ if (document.readyState === 'loading') {
   if (typeof onPrototypeStateChange === 'function') onPrototypeStateChange(update);
 })();
 
+// Global invisible hotspot (bottom-left) to reset prototype state back to 1 for video demos
+(function initPrototypeStateResetHotspot() {
+  try {
+    const ID = 'xrex-state-reset-hotspot';
+    if (!document.body || document.getElementById(ID)) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = ID;
+    btn.className = 'xrex-state-reset-hotspot';
+    btn.tabIndex = -1;
+    btn.setAttribute('aria-label', 'Reset prototype state to 1');
+    btn.addEventListener('click', () => {
+      try {
+        if (typeof window.setPrototypeState === 'function') {
+          window.setPrototypeState(1, { force: true });
+        }
+      } catch (_) {}
+    });
+    document.body.appendChild(btn);
+  } catch (_) {}
+})();
+
 (function initSendPaymentEntryGate() {
   const modal = document.getElementById('needCounterpartyModal');
   const openModal = () => {

@@ -1985,6 +1985,23 @@ input[type=number] {
   font-weight: 700;
 }
 
+.xrex-state-reset-hotspot {
+  position: fixed;
+  left: 8px;
+  bottom: 8px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  opacity: 0;
+  z-index: 9999;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
 @media (max-width: 1279px) {
   .page--receipt .receipt__icon img {
     width: 88px;
