@@ -8020,5 +8020,9 @@ main.container {
   }
 }
 /* Auto-mirrored from src/css/overrides.css when running `npm run dev:with-css-edit` */
+/* Prototype video: hide the build-badge everywhere */
+.build-badge {
+  display: none !important;
+}
 
 /*# sourceMappingURL=main.css.map */
