@@ -1506,6 +1506,21 @@ function initSendPayment() {
       updateDocMissRowState(item);
       if (typeof validateSendForm === 'function') validateSendForm();
     };
+    // Open a native file picker and then mark as uploaded (prototype)
+    const ensureNativePicker = () => {
+      // One shared hidden input for the whole page
+      let input = document.getElementById('sp-native-upload-input');
+      if (input) return input;
+      input = document.createElement('input');
+      input.id = 'sp-native-upload-input';
+      input.type = 'file';
+      input.accept = '.pdf,.png,.jpg,.jpeg';
+      input.style.display = 'none';
+      input.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(input);
+      return input;
+    };
+
     const setUploaded = (item) => {
       item.classList.add('is-uploaded');
       const actions = ensureActions(item);
@@ -1516,7 +1531,10 @@ function initSendPayment() {
       if (subEl) {
         let filename = '';
         if (inPre) {
-          filename = 'Invoice123.pdf';
+          // For pre-shipment "Proforma invoice (PI)" upload, always use a fixed filename
+          const docTypeSel = document.getElementById('docType');
+          const docType = docTypeSel ? (docTypeSel.value || '') : '';
+          filename = docType === 'PI' ? 'ProformaInvoice21022026.pdf' : 'Invoice123.pdf';
         } else if (inPost) {
           const list = Array.from(item.parentElement?.querySelectorAll('.upload-item') || []);
           const idx = Math.max(0, list.indexOf(item));
@@ -1570,6 +1588,29 @@ function initSendPayment() {
             }, 2000);
           }
         } else {
+          const inPre = !!item.closest('#docs-pre');
+          const docTypeSel = document.getElementById('docType');
+          const docType = docTypeSel ? (docTypeSel.value || '') : '';
+
+          // Pre-shipment Proforma invoice: open native picker, then mark uploaded with fixed filename
+          if (inPre && docType === 'PI') {
+            const input = ensureNativePicker();
+            const onChange = () => {
+              input.removeEventListener('change', onChange);
+              setUploaded(item);
+              // allow re-selecting same file
+              try { input.value = ''; } catch (_) {}
+            };
+            input.addEventListener('change', onChange);
+            try {
+              input.click();
+            } catch (_) {
+              // Fallback: still mark uploaded even if picker is blocked
+              setUploaded(item);
+            }
+            return;
+          }
+
           setUploaded(item);
         }
       }, { passive: true });
@@ -2113,6 +2154,40 @@ if (document.readyState === 'loading') {
   initSendPayment();
 }
 
+// Send payment: demo autofill on focus (PI number + message to beneficiary)
+(function initSendPaymentDocAutofillOnPress() {
+  const root = document.querySelector('main.page--send');
+  if (!root) return;
+
+  const piNumber = document.getElementById('piNumber');
+  const docNotes = document.getElementById('docNotes');
+
+  const typeIfEmpty = (el, value) => {
+    if (!el) return;
+    const current = (el.value || '').toString().trim();
+    if (current) return;
+    const v = (value == null) ? '' : String(value);
+    if (typeof window.__xrexTypeIntoInput === 'function') {
+      window.__xrexTypeIntoInput(el, v, { onlyIfEmpty: true, resumeFromExisting: true });
+    } else {
+      el.value = v;
+      try { el.dispatchEvent(new Event('input', { bubbles: true })); } catch (_) {}
+      try { el.dispatchEvent(new Event('change', { bubbles: true })); } catch (_) {}
+    }
+  };
+
+  const bind = (el, fn) => {
+    if (!el) return;
+    if (el.dataset.autofillBound === '1') return;
+    el.dataset.autofillBound = '1';
+    el.addEventListener('focus', fn, { passive: true });
+    el.addEventListener('click', fn, { passive: true });
+  };
+
+  bind(piNumber, () => typeIfEmpty(piNumber, 'PI-21022026-001'));
+  bind(docNotes, () => typeIfEmpty(docNotes, 'Payment for goods'));
+})();
+
 // Confirm modal actions
 (function initConfirmModalActions() {
   const modal = document.getElementById('confirmPaymentModal');
@@ -2336,6 +2411,42 @@ if (document.readyState === 'loading') {
 
   document.addEventListener('prototypeStateChange', renderList);
   renderList();
+})();
+
+// Home: when in state 2, hovering the "Send payment" quick action advances state to 3 and shows a snackbar
+(function initHomeSendPaymentHoverAdvance() {
+  const page = document.querySelector('main.page--home');
+  if (!page) return;
+  const link = page.querySelector('.qa__item[data-send-payment-entry]');
+  if (!link) return;
+
+  // Re-arm whenever we return to state 2 (e.g. via build-badge controls)
+  let armed = true;
+  try {
+    if (typeof window.onPrototypeStateChange === 'function') {
+      window.onPrototypeStateChange((state) => {
+        armed = state === 2;
+      });
+    }
+  } catch (_) {}
+
+  const handler = () => {
+    if (!armed) return;
+    try {
+      const state = typeof window.getPrototypeState === 'function' ? window.getPrototypeState() : null;
+      if (state !== 2) return;
+      armed = false;
+      if (typeof window.setPrototypeState === 'function') {
+        window.setPrototypeState(3);
+      }
+      if (typeof window.showSnackbar === 'function') {
+        window.showSnackbar('Counterparty account verified', 2000, 'success');
+      }
+    } catch (_) {}
+  };
+
+  // Mouse hover (desktop)
+  link.addEventListener('mouseenter', handler, { passive: true });
 })();
 
 // Modal helpers (reused lightweight pattern)

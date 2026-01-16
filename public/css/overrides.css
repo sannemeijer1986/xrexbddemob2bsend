@@ -32,5 +32,43 @@
   padding-right:48px;
 }
 
+/* Snackbar animation (main.css doesn't include snackbar styles in this prototype build) */
+.snackbar{
+  position:fixed;
+  /* Defuse any existing full-screen snackbar rules in main.css */
+  inset:auto !important;
+  top:calc(24px + env(safe-area-inset-top)) !important;
+  right:auto !important;
+  bottom:auto !important;
+  left:50% !important;
+  width:auto !important;
+  height:auto !important;
+  max-width:calc(100vw - 32px);
+  box-sizing:border-box;
+
+  /* Start slightly above, then slide down into place */
+  transform:translate(-50%, -10px);
+  opacity:0;
+  pointer-events:none;
+  z-index:9999;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 14px;
+  border-radius:10px;
+  background:#2D2F2F;
+  color:#fff;
+  font-family:"Manrope",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol",sans-serif;
+  font-weight:600;
+  font-size:14px;
+  line-height:1.2;
+  box-shadow:0 10px 25px rgba(0,0,0,.18);
+  transition:opacity 180ms ease, transform 180ms ease;
+}
+.snackbar .snackbar__icon{width:16px;height:16px}
+.snackbar.is-visible{
+  opacity:1;
+  transform:translate(-50%, 0);
+}
 
 
