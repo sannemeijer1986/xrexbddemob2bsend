@@ -192,8 +192,8 @@
               <div class="form__row">
                 <div class="form__field form__field--fees">
                   <label class="fees-label">
-                    <span>Service fee (1.00%) paid by</span>
-                    <span class="fees-label__min">min. 60 USD</span>
+                    <span>Service fee (0.50%) paid by</span>
+                    <span class="fees-label__min">min. 25 USD</span>
                   </label>
                   <div class="fee-options">
                     <label class="fee-option">
@@ -266,6 +266,7 @@
                             <option value="PI">Proforma invoice (PI)</option>
                             <option value="PO">Purchase order (PO)</option>
                             <option value="CC">Commercial contract (CC)</option>
+                            <option value="OTHER">Other document</option>
                           </select>
                         </div>
                         <div id="doc-type-error" class="form-error" hidden>This field is required</div>
@@ -480,19 +481,19 @@
                 <div class="summary-pair" data-summary="service-title">
                   <span class="muted">
                     Service fee
-                    <span class="service-fee__min-label">min. 60 USD</span>
+                    <span class="service-fee__min-label">min. 25 USD</span>
                   </span>
                   <strong>
-                    <span class="service-fee__percentage">1.00%</span>
-                    <span class="service-fee__minimum">60.00 USD</span>
+                    <span class="service-fee__percentage">0.50%</span>
+                    <span class="service-fee__minimum">25.00 USD</span>
                   </strong>
                 </div>
                 <div class="summary-pair summary-pair--sub" data-summary="service-payer">
-                  <span class="muted">0% paid by you</span>
+                  <span class="muted">• Paid by you</span>
                   <strong>0.00 USDT</strong>
                 </div>
                 <div class="summary-pair summary-pair--sub" data-summary="service-payee">
-                  <span class="muted">0% paid by receiver</span>
+                  <span class="muted">• Paid by receiver</span>
                   <strong>0.00 USD</strong>
                 </div>
                 <div class="summary-separator"></div>
@@ -544,11 +545,11 @@
                 <strong id="fd-subtotal">-</strong>
               </div>
               <div class="summary-pair">
-                <span class="muted" id="fd-payer-label">Fee paid by you</span>
+                <span class="muted" id="fd-payer-label">• Paid by you</span>
                 <strong id="fd-payer">-</strong>
               </div>
               <div class="summary-pair">
-                <span class="muted" id="fd-receiver-label">Fee paid by receiver</span>
+                <span class="muted" id="fd-receiver-label">• Paid by receiver</span>
                 <strong id="fd-receiver">-</strong>
               </div>
               <div class="summary-separator"></div>

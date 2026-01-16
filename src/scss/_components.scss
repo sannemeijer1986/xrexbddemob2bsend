@@ -668,7 +668,7 @@
 .receipt__row, .receipt__subrow { display: flex; align-items: flex-start; justify-content: space-between; padding: 10px 0; border-bottom: none; }
 .receipt__row strong { font-weight: 400; }
 .receipt__row--first strong { font-weight: 700; }
-.receipt__subrow { padding: 10px 0 10px 24px; font-size: 16px; }
+.receipt__subrow { padding: 10px 0 10px 16px; font-size: 16px; }
 .receipt__subrow strong { font-weight: 500; font-size: 16px; }
 .receipt__divider { height: 1px; background: $border-color; margin: 16px 0; }
 .receipt__row--em .muted { color: $text-primary; font-weight: 700; font-size: 18px; }

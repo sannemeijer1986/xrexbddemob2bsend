@@ -119,11 +119,11 @@
           <div class="receipt__row">
             <span class="muted">
               Service fee
-              <span class="service-fee__min-label" id="rvServiceMinLabel">min. 60 USD</span>
+              <span class="service-fee__min-label" id="rvServiceMinLabel">min. 25 USD</span>
             </span>
             <strong>
-              <span class="service-fee__percentage" id="feePct">1.00%</span>
-              <span class="service-fee__minimum" id="rvServiceMinValue">60.00 USD</span>
+              <span class="service-fee__percentage" id="feePct">0.50%</span>
+              <span class="service-fee__minimum" id="rvServiceMinValue">25.00 USD</span>
             </strong>
           </div>
           <div class="receipt__subrow">
@@ -281,15 +281,15 @@
           docNotes: '- -',
           nature: 'Pre-shipment advance',
           purpose: 'Goods purchase',
-          feePct: '1.00%',
-          payerShareLabel: '1.00% paid by you',
-          payerShareAmt: '500.00 USD',
-          receiverShareLabel: '0.00% paid by receiver',
+          feePct: '0.50%',
+          payerShareLabel: '• Paid by you',
+          payerShareAmt: '250.00 USD',
+          receiverShareLabel: '• Paid by receiver',
           receiverShareAmt: '0.00 USD',
-          toBeDeducted: '50,500.00 USD',
+          toBeDeducted: '50,250.00 USD',
           receiverGets: '50,000.00 USD',
           serviceMinApplied: false,
-          serviceMinAmount: 60,
+          serviceMinAmount: 25,
           conversion: ''
         };
       };
@@ -375,7 +375,7 @@
           set('amtPayable', d.amountPayableFmt || '');
           set('deductedFrom', d.deductedFrom || '');
           // Service fee display (supports 60 USD minimum state)
-          set('feePct', d.feePct || '1.00%');
+          set('feePct', d.feePct || '0.50%');
           (function () {
             var pctEl = document.getElementById('feePct');
             var minValEl = document.getElementById('rvServiceMinValue');
@@ -389,7 +389,7 @@
 
             if (minApplied) {
               row.classList.add('service-fee--min');
-              pctEl.textContent = d.feePct || '1.00%';
+              pctEl.textContent = d.feePct || '0.50%';
               minValEl.textContent = (minAmount || 60).toLocaleString('en-US', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
