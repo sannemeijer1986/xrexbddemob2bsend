@@ -2957,9 +2957,7 @@ if (document.readyState === 'loading') {
     const bankCityEl = document.getElementById('bankCity');
     const swiftCodeEl = document.getElementById('swiftCode');
     const accountNumberEl = document.getElementById('accountNumber');
-    const ibanNumberEl = document.getElementById('ibanNumber');
-    const nickIbanEl = document.getElementById('accountNickname');
-    const nickSwiftEl = document.getElementById('accountNicknameSwift');
+    const nickEl = document.getElementById('accountNickname');
     const accountHolderNameEl = document.getElementById('accountHolderName');
 
     const accountUsedForEl = document.getElementById('accountUsedFor');
@@ -2980,8 +2978,7 @@ if (document.readyState === 'loading') {
       bankCity: bankCityEl?.value || '',
       swiftCode: swiftCodeEl?.value || '',
       accountNumber: accountNumberEl?.value || '',
-      ibanNumber: ibanNumberEl?.value || '',
-      accountNickname: nickIbanEl?.value || nickSwiftEl?.value || '',
+      accountNickname: nickEl?.value || '',
       accountHolderName: accountHolderNameEl?.value || '',
       accountUsedFor: accountUsedForEl?.value || '',
       declarationPurpose: declarationPurposeEl?.value || '',
@@ -3065,35 +3062,17 @@ if (document.readyState === 'loading') {
     setText('ab-summary-email', s1.email);
 
     // Step 2 - bank details
-    setText('ab-summary-accountNickname', s2.accountNickname || s2.accountNicknameSwift);
+    setText('ab-summary-accountNickname', s2.accountNickname);
     setText('ab-summary-bankName', s2.bankName);
     setText('ab-summary-bankCountry', s2.bankCountry);
     setText('ab-summary-bankCity', s2.bankCity);
     setText('ab-summary-accountHolderName', s2.accountHolderName);
-
-    // Determine country type and show/hide IBAN vs SWIFT fields
-    const IBAN_COUNTRIES = [
-      'Albania', 'Austria', 'Belgium', 'Bulgaria', 'Croatia', 'Czech Republic',
-      'Denmark', 'Estonia', 'Finland', 'France', 'Germany', 'Greece', 'Hungary',
-      'Iceland', 'Ireland', 'Italy', 'Latvia', 'Liechtenstein', 'Lithuania',
-      'Luxembourg', 'Malta', 'Netherlands', 'Norway', 'Poland', 'Portugal',
-      'Romania', 'Slovakia', 'Slovenia', 'Spain', 'Sweden', 'Switzerland',
-      'United Kingdom'
-    ];
-    const isIBAN = s2.bankCountry && IBAN_COUNTRIES.includes(s2.bankCountry);
-    
-    if (isIBAN) {
-      setText('ab-summary-ibanNumber', s2.ibanNumber);
-      setVisibility('ab-summary-ibanNumber', true);
-      setVisibility('ab-summary-swiftCode', false);
-      setVisibility('ab-summary-accountNumber', false);
-    } else {
-      setText('ab-summary-swiftCode', s2.swiftCode);
-      setText('ab-summary-accountNumber', s2.accountNumber);
-      setVisibility('ab-summary-ibanNumber', false);
-      setVisibility('ab-summary-swiftCode', true);
-      setVisibility('ab-summary-accountNumber', true);
-    }
+    // Always show SWIFT + account number (bank modal is now SWIFT-only)
+    setText('ab-summary-swiftCode', s2.swiftCode);
+    setText('ab-summary-accountNumber', s2.accountNumber);
+    setVisibility('ab-summary-ibanNumber', false);
+    setVisibility('ab-summary-swiftCode', true);
+    setVisibility('ab-summary-accountNumber', true);
 
     // Document proof
     const docProofEl = document.getElementById('ab-summary-docProof');
@@ -3373,14 +3352,16 @@ if (document.readyState === 'loading') {
   
   // Step 2 form validation
   const accountHolderName = document.getElementById('accountHolderName');
+  const accountNumber = document.getElementById('accountNumber');
   if (nextBtnStep2 && accountHolderName) {
     const validateStep2 = () => {
       const hasName = accountHolderName.value && accountHolderName.value.trim() !== '';
+      const hasAccountNumber = !!(accountNumber && accountNumber.value && accountNumber.value.trim() !== '');
       const bankDetailsFilled = document.getElementById('bankDetailsDisplay')?.style.display !== 'none';
       const accountDeclarationFilled = document.getElementById('accountDeclarationDisplay')?.style.display !== 'none';
       const uploadFilled = typeof window.getBankProofUploaded === 'function' && window.getBankProofUploaded() !== null;
       
-      const isValid = hasName && bankDetailsFilled && accountDeclarationFilled && uploadFilled;
+      const isValid = hasName && hasAccountNumber && bankDetailsFilled && accountDeclarationFilled && uploadFilled;
       nextBtnStep2.disabled = !isValid;
       nextBtnStep2.setAttribute('aria-disabled', String(!isValid));
     };
@@ -3390,6 +3371,10 @@ if (document.readyState === 'loading') {
     
     accountHolderName.addEventListener('input', validateStep2);
     accountHolderName.addEventListener('change', validateStep2);
+    if (accountNumber) {
+      accountNumber.addEventListener('input', validateStep2);
+      accountNumber.addEventListener('change', validateStep2);
+    }
     
     // Watch for bank details and account declaration changes
     const bankDetailsInput = document.getElementById('bankDetails');
@@ -3638,13 +3623,13 @@ if (document.readyState === 'loading') {
     },
     // Step 2
     accountHolderName: 'Delta Electronics, Inc.',
+    accountNumber: '03543546458',
+    accountNickname: 'Delta electronics - CIMB',
     bankDetailsModal: {
-      accountNicknameSwift: 'Delta electronics - CIMB',
       bankName: 'CIMB',
       bankCountry: 'Singapore',
       bankCity: 'Singapore',
       swiftCode: 'CIBBSGSG',
-      accountNumber: '03543546458',
     },
     accountDeclarationModal: {
       accountUsedFor: 'incoming', // "Send payments to this account"
@@ -3834,22 +3819,11 @@ if (document.readyState === 'loading') {
     const bankName = modal.querySelector('#bankName');
     const bankCity = modal.querySelector('#bankCity');
     const swiftCode = modal.querySelector('#swiftCode');
-    const accountNumber = modal.querySelector('#accountNumber');
-    const accountNicknameSwift = modal.querySelector('#accountNicknameSwift');
-
-    const ensureCountry = () => {
-      // For step 2 we select the value so SWIFT fields appear.
-      if (bankCountry && !(bankCountry.value || '').trim()) {
-        setSelectValue(bankCountry, map.bankCountry || '');
-      }
-    };
 
     bind(bankCountry, () => setSelectValue(bankCountry, map.bankCountry || ''));
-    bind(bankName, () => { ensureCountry(); typeIfEmpty(bankName, map.bankName || ''); });
-    bind(bankCity, () => { ensureCountry(); typeIfEmpty(bankCity, map.bankCity || ''); });
-    bind(swiftCode, () => { ensureCountry(); typeIfEmpty(swiftCode, map.swiftCode || ''); });
-    bind(accountNumber, () => { ensureCountry(); typeIfEmpty(accountNumber, map.accountNumber || ''); });
-    bind(accountNicknameSwift, () => { ensureCountry(); typeIfEmpty(accountNicknameSwift, map.accountNicknameSwift || ''); });
+    bind(bankName, () => typeIfEmpty(bankName, map.bankName || ''));
+    bind(bankCity, () => typeIfEmpty(bankCity, map.bankCity || ''));
+    bind(swiftCode, () => typeIfEmpty(swiftCode, map.swiftCode || ''));
   };
 
   const initAccountDeclarationModalDemo = () => {
@@ -3877,6 +3851,8 @@ if (document.readyState === 'loading') {
   const operationCountry = document.getElementById('operationCountry');
   const email = document.getElementById('email');
   const accountHolderName = document.getElementById('accountHolderName');
+  const accountNumber = document.getElementById('accountNumber');
+  const accountNickname = document.getElementById('accountNickname');
 
   const bind = (el, fn) => {
     if (!el) return;
@@ -3900,6 +3876,9 @@ if (document.readyState === 'loading') {
 
   // Step 2: Account holder name
   bind(accountHolderName, () => typeIfEmpty(accountHolderName, DEMO.accountHolderName));
+  // Step 2: Beneficiary account number + custom name
+  bind(accountNumber, () => typeIfEmpty(accountNumber, DEMO.accountNumber));
+  bind(accountNickname, () => typeIfEmpty(accountNickname, DEMO.accountNickname));
 
   // Registered address is readonly; bind the wrapper/button so a tap fills it.
   const businessAddressWrapper = document.getElementById('businessAddressWrapper');
@@ -3949,6 +3928,8 @@ if (document.readyState === 'loading') {
   // Get step 2 fields
   const getStep2Fields = () => ({
     accountHolderName: document.getElementById('accountHolderName'),
+    accountNumber: document.getElementById('accountNumber'),
+    accountNickname: document.getElementById('accountNickname'),
     bankDetails: document.getElementById('bankDetails'),
     accountDeclaration: document.getElementById('accountDeclaration'),
   });
@@ -4017,6 +3998,8 @@ if (document.readyState === 'loading') {
       // Fill step 2 fields
       const f = getStep2Fields();
       if (f.accountHolderName) f.accountHolderName.value = (demo && demo.accountHolderName) || 'Delta Electronics, Inc.';
+      if (f.accountNumber) f.accountNumber.value = (demo && demo.accountNumber) || '03543546458';
+      if (f.accountNickname) f.accountNickname.value = (demo && demo.accountNickname) || 'Delta electronics - CIMB';
       Object.values(f).forEach(trigger);
       
       // Fill bank details modal fields and trigger save
@@ -4027,41 +4010,31 @@ if (document.readyState === 'loading') {
         const bankName = bankDetailsModal.querySelector('#bankName');
         const bankCity = bankDetailsModal.querySelector('#bankCity');
         const swiftCode = bankDetailsModal.querySelector('#swiftCode');
-        const accountNumber = bankDetailsModal.querySelector('#accountNumber');
-        const accountNicknameSwift = bankDetailsModal.querySelector('#accountNicknameSwift');
-        const ibanNumber = bankDetailsModal.querySelector('#ibanNumber');
-        const accountNickname = bankDetailsModal.querySelector('#accountNickname');
         
-        // Fill with SWIFT/BIC example (demo map)
+        // Fill modal (now SWIFT-only and only 4 fields)
         if (bankCountry) {
           bankCountry.value = map.bankCountry || 'Singapore';
-          // Trigger change first to update field visibility
           bankCountry.dispatchEvent(new Event('change', { bubbles: true }));
         }
         
-        // Wait a bit for field visibility to update, then fill other fields
+        if (bankName) bankName.value = map.bankName || 'CIMB';
+        if (bankCity) bankCity.value = map.bankCity || 'Singapore';
+        if (swiftCode) swiftCode.value = map.swiftCode || 'CIBBSGSG';
+
+        // Trigger change events for all modal fields
+        [bankCountry, bankName, bankCity, swiftCode].forEach((el) => {
+          if (el) {
+            el.dispatchEvent(new Event('input', { bubbles: true }));
+            el.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+        
+        // Trigger save to update filled state UI
         setTimeout(() => {
-          if (bankName) bankName.value = map.bankName || 'CIMB';
-          if (bankCity) bankCity.value = map.bankCity || 'Singapore';
-          if (swiftCode) swiftCode.value = map.swiftCode || 'CIBBSGSG';
-          if (accountNumber) accountNumber.value = map.accountNumber || '03543546458';
-          if (accountNicknameSwift) accountNicknameSwift.value = map.accountNicknameSwift || 'Delta electronics - CIMB';
-          
-          // Trigger change events for all fields
-          [bankName, bankCity, swiftCode, accountNumber, accountNicknameSwift, ibanNumber, accountNickname].forEach((el) => {
-            if (el) {
-              el.dispatchEvent(new Event('input', { bubbles: true }));
-              el.dispatchEvent(new Event('change', { bubbles: true }));
-            }
-          });
-          
-          // Trigger save to update filled state UI
-          setTimeout(() => {
-            const saveBtn = document.getElementById('saveBankDetails');
-            if (saveBtn && !saveBtn.disabled) {
-              saveBtn.click();
-            }
-          }, 50);
+          const saveBtn = document.getElementById('saveBankDetails');
+          if (saveBtn && !saveBtn.disabled) {
+            saveBtn.click();
+          }
         }, 50);
       }
       
@@ -4175,10 +4148,6 @@ if (document.readyState === 'loading') {
         const bankName = bankDetailsModal.querySelector('#bankName');
         const bankCity = bankDetailsModal.querySelector('#bankCity');
         const swiftCode = bankDetailsModal.querySelector('#swiftCode');
-        const accountNumber = bankDetailsModal.querySelector('#accountNumber');
-        const accountNicknameSwift = bankDetailsModal.querySelector('#accountNicknameSwift');
-        const ibanNumber = bankDetailsModal.querySelector('#ibanNumber');
-        const accountNickname = bankDetailsModal.querySelector('#accountNickname');
         
         // Reset country to default (Singapore) to match the modal default selection
         if (bankCountry) {
@@ -4190,13 +4159,9 @@ if (document.readyState === 'loading') {
         if (bankName) bankName.value = '';
         if (bankCity) bankCity.value = '';
         if (swiftCode) swiftCode.value = '';
-        if (accountNumber) accountNumber.value = '';
-        if (accountNicknameSwift) accountNicknameSwift.value = '';
-        if (ibanNumber) ibanNumber.value = '';
-        if (accountNickname) accountNickname.value = '';
         
         // Trigger change events for all fields
-        [bankName, bankCity, swiftCode, accountNumber, accountNicknameSwift, ibanNumber, accountNickname].forEach((el) => {
+        [bankCountry, bankName, bankCity, swiftCode].forEach((el) => {
           if (el) {
             el.dispatchEvent(new Event('input', { bubbles: true }));
             el.dispatchEvent(new Event('change', { bubbles: true }));
@@ -4274,65 +4239,13 @@ if (document.readyState === 'loading') {
   
   // Store bank details data
   let bankDetailsData = null;
-  
-  // Countries that use IBAN (European countries and some others)
-  const IBAN_COUNTRIES = [
-    'Albania', 'Austria', 'Belgium', 'Bulgaria', 'Croatia', 'Czech Republic',
-    'Denmark', 'Estonia', 'Finland', 'France', 'Germany', 'Greece', 'Hungary',
-    'Iceland', 'Ireland', 'Italy', 'Latvia', 'Liechtenstein', 'Lithuania',
-    'Luxembourg', 'Malta', 'Netherlands', 'Norway', 'Poland', 'Portugal',
-    'Romania', 'Slovakia', 'Slovenia', 'Spain', 'Sweden', 'Switzerland',
-    'United Kingdom'
-  ];
-  
-  // Get country type (IBAN or SWIFT)
-  const getCountryType = (country) => {
-    if (!country) return null;
-    return IBAN_COUNTRIES.includes(country) ? 'IBAN' : 'SWIFT';
-  };
-  
-  // Show/hide fields based on country selection
-  const updateFieldsVisibility = () => {
-    const bankCountry = document.getElementById('bankCountry')?.value || '';
-    const countryType = getCountryType(bankCountry);
-    const swiftFields = document.getElementById('swiftFields');
-    const ibanFields = document.getElementById('ibanFields');
-    const swiftNicknameRow = document.getElementById('swiftNicknameRow');
-    
-    if (!swiftFields || !ibanFields || !swiftNicknameRow) return;
-    
-    if (!bankCountry || bankCountry === '') {
-      // Default to SWIFT fields (e.g. Taiwan-style) even when country is not selected
-      // This makes the modal feel less "empty" while keeping the dropdown unselected.
-      swiftFields.style.display = 'grid';
-      ibanFields.style.display = 'none';
-      swiftNicknameRow.style.display = 'grid';
-    } else if (countryType === 'IBAN') {
-      // Show IBAN fields
-      swiftFields.style.display = 'none';
-      ibanFields.style.display = 'grid';
-      swiftNicknameRow.style.display = 'none';
-    } else {
-      // Show SWIFT/BIC fields
-      swiftFields.style.display = 'grid';
-      ibanFields.style.display = 'none';
-      swiftNicknameRow.style.display = 'grid';
-    }
-  };
-  
+
   // Format bank details from modal fields
   const formatBankDetails = (data) => {
     bankDetailsData = data;
     const parts = [];
     if (data.bankName) parts.push(data.bankName);
-    
-    const countryType = getCountryType(data.bankCountry);
-    if (countryType === 'IBAN') {
-      if (data.ibanNumber) parts.push(`IBAN: ${data.ibanNumber}`);
-    } else {
-      if (data.accountNumber) parts.push(`Account: ${data.accountNumber}`);
-      if (data.swiftCode) parts.push(`SWIFT: ${data.swiftCode}`);
-    }
+    if (data.swiftCode) parts.push(`SWIFT: ${data.swiftCode}`);
     
     if (data.bankCity && data.bankCountry) {
       parts.push(`${data.bankCity}, ${data.bankCountry}`);
@@ -4343,24 +4256,13 @@ if (document.readyState === 'loading') {
   // Render filled state UI
   const renderFilledState = () => {
     if (!bankDetailsData) return;
-    
-    const countryType = getCountryType(bankDetailsData.bankCountry);
-    const nickname = countryType === 'IBAN' 
-      ? (bankDetailsData.accountNickname || bankDetailsData.bankName || 'Bank Account')
-      : (bankDetailsData.accountNicknameSwift || bankDetailsData.bankName || 'Bank Account');
-    
-    const title = nickname;
+
+    const title = bankDetailsData.bankName || 'Bank details';
     const details = [];
     if (bankDetailsData.bankName) details.push(`Bank: ${bankDetailsData.bankName}`);
     if (bankDetailsData.bankCountry) details.push(`Country : ${bankDetailsData.bankCountry}`);
     if (bankDetailsData.bankCity) details.push(`City: ${bankDetailsData.bankCity}`);
-    
-    if (countryType === 'IBAN') {
-      if (bankDetailsData.ibanNumber) details.push(`IBAN : ${bankDetailsData.ibanNumber}`);
-    } else {
-      if (bankDetailsData.swiftCode) details.push(`SWIFT : ${bankDetailsData.swiftCode}`);
-      if (bankDetailsData.accountNumber) details.push(`Account number : ${bankDetailsData.accountNumber}`);
-    }
+    if (bankDetailsData.swiftCode) details.push(`SWIFT : ${bankDetailsData.swiftCode}`);
     
     if (bankDetailsTitle) bankDetailsTitle.textContent = title;
     if (bankDetailsDetails) {
@@ -4391,8 +4293,6 @@ if (document.readyState === 'loading') {
       document.body.style.top = `-${y}px`;
       document.body.classList.add('modal-locked');
     } catch (_) {}
-    // Ensure field visibility is updated when modal opens (e.g., if Singapore is default)
-    updateFieldsVisibility();
     updateSaveButton();
   };
   
@@ -4415,35 +4315,12 @@ if (document.readyState === 'loading') {
     const bankCountry = document.getElementById('bankCountry')?.value || '';
     const bankName = document.getElementById('bankName')?.value || '';
     const bankCity = document.getElementById('bankCity')?.value || '';
-    const countryType = getCountryType(bankCountry);
-    
-    let data = { bankCountry, bankName, bankCity };
-    
-    if (countryType === 'IBAN') {
-      const ibanNumber = document.getElementById('ibanNumber')?.value || '';
-      const accountNickname = document.getElementById('accountNickname')?.value || '';
-      
-      // Validate required fields for IBAN
-      if (!bankCountry || !bankName || !ibanNumber) {
-        return;
-      }
-      
-      data.ibanNumber = ibanNumber;
-      data.accountNickname = accountNickname;
-    } else {
-      const swiftCode = document.getElementById('swiftCode')?.value || '';
-      const accountNumber = document.getElementById('accountNumber')?.value || '';
-      const accountNicknameSwift = document.getElementById('accountNicknameSwift')?.value || '';
-      
-      // Validate required fields for SWIFT/BIC
-      if (!bankCountry || !bankName || !accountNumber) {
-        return;
-      }
-      
-      data.swiftCode = swiftCode;
-      data.accountNumber = accountNumber;
-      data.accountNicknameSwift = accountNicknameSwift;
-    }
+    const swiftCode = document.getElementById('swiftCode')?.value || '';
+
+    // Validate required fields (modal is SWIFT-only now)
+    if (!bankCountry || !bankName || !bankCity || !swiftCode) return;
+
+    let data = { bankCountry, bankName, bankCity, swiftCode };
     
     // Format and set bank details
     formatBankDetails(data);
@@ -4508,20 +4385,14 @@ if (document.readyState === 'loading') {
   const validateBankDetailsForm = () => {
     const bankCountry = document.getElementById('bankCountry')?.value || '';
     const bankName = document.getElementById('bankName')?.value || '';
-    
-    if (!bankCountry || bankCountry.trim() === '' || !bankName || bankName.trim() === '') {
-      return false;
-    }
-    
-    const countryType = getCountryType(bankCountry);
-    
-    if (countryType === 'IBAN') {
-      const ibanNumber = document.getElementById('ibanNumber')?.value || '';
-      return ibanNumber && ibanNumber.trim() !== '';
-    } else {
-      const accountNumber = document.getElementById('accountNumber')?.value || '';
-      return accountNumber && accountNumber.trim() !== '';
-    }
+    const bankCity = document.getElementById('bankCity')?.value || '';
+    const swiftCode = document.getElementById('swiftCode')?.value || '';
+
+    if (!bankCountry || bankCountry.trim() === '') return false;
+    if (!bankName || bankName.trim() === '') return false;
+    if (!bankCity || bankCity.trim() === '') return false;
+    if (!swiftCode || swiftCode.trim() === '') return false;
+    return true;
   };
   
   // Update save button state
@@ -4547,39 +4418,20 @@ if (document.readyState === 'loading') {
     });
     
     // Add validation listeners to all relevant fields
-    const allFields = ['bankCountry', 'bankName', 'bankCity', 'swiftCode', 'accountNumber', 'ibanNumber', 'accountNickname', 'accountNicknameSwift'];
+    const allFields = ['bankCountry', 'bankName', 'bankCity', 'swiftCode'];
     allFields.forEach((fieldId) => {
       const field = document.getElementById(fieldId);
       if (field) {
         field.addEventListener('input', () => {
-          updateFieldsVisibility();
           updateSaveButton();
         });
         field.addEventListener('change', () => {
-          updateFieldsVisibility();
           updateSaveButton();
         });
       }
     });
-    
-    // Watch for country changes specifically
-    const bankCountryField = document.getElementById('bankCountry');
-    if (bankCountryField) {
-      bankCountryField.addEventListener('change', () => {
-        updateFieldsVisibility();
-        updateSaveButton();
-        // Clear fields when country changes
-        const swiftCode = document.getElementById('swiftCode');
-        const accountNumber = document.getElementById('accountNumber');
-        const ibanNumber = document.getElementById('ibanNumber');
-        if (swiftCode) swiftCode.value = '';
-        if (accountNumber) accountNumber.value = '';
-        if (ibanNumber) ibanNumber.value = '';
-      });
-    }
-    
-    // Initial validation and field visibility
-    updateFieldsVisibility();
+
+    // Initial validation
     updateSaveButton();
   }
   
@@ -4609,7 +4461,6 @@ if (document.readyState === 'loading') {
     toggleFilled(input);
     const updateField = () => {
       toggleFilled(input);
-      updateFieldsVisibility();
       updateSaveButton();
     };
     input.addEventListener('input', updateField);
