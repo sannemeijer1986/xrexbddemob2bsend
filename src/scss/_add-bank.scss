@@ -91,10 +91,10 @@
 .step3-kv {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
 
   @media (max-width: ($bp-desktop - 1px)) {
-    gap: 24px;
+    gap: 32px;
   }
 }
 

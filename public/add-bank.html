@@ -420,14 +420,17 @@
                       <span class="step3-kv__label">Registration number</span>
                       <span class="step3-kv__value" id="ab-summary-regNum">-</span>
                     </div>
-                    <!-- Country of registration removed for prototype -->
+                    <div class="step3-kv__row">
+                      <span class="step3-kv__label">Country of registration</span>
+                      <span class="step3-kv__value" id="">-</span>
+                    </div>
                     <div class="step3-kv__row">
                       <span class="step3-kv__label">Registered address</span>
                       <span class="step3-kv__value" id="ab-summary-businessAddress">-</span>
                     </div>
                     <div class="step3-kv__row">
                       <span class="step3-kv__label">Country of operation</span>
-                      <span class="step3-kv__value" id="ab-summary-operationCountry">-</span>
+                      <span class="step3-kv__value" id="ab-summary-operationCountry">Singapore</span>
                     </div>
                     <div class="step3-kv__row">
                       <span class="step3-kv__label">Contact email address</span>
@@ -446,8 +449,12 @@
                 <div class="step3-card__body">
                   <div class="step3-kv">
                     <div class="step3-kv__row">
-                      <span class="step3-kv__label">Account nickname</span>
+                      <span class="step3-kv__label">Custom name</span>
                       <span class="step3-kv__value step3-kv__value--nickname" id="ab-summary-accountNickname">-</span>
+                    </div>
+                    <div class="step3-kv__row">
+                      <span class="step3-kv__label">Account holder name</span>
+                      <span class="step3-kv__value" id="ab-summary-accountHolderName">-</span>
                     </div>
                     <div class="step3-kv__row">
                       <span class="step3-kv__label">Bank name</span>
@@ -461,24 +468,20 @@
                       <span class="step3-kv__label">Bank city</span>
                       <span class="step3-kv__value" id="ab-summary-bankCity">-</span>
                     </div>
-                    <div class="step3-kv__row">
-                      <span class="step3-kv__label">Account holder name</span>
-                      <span class="step3-kv__value" id="ab-summary-accountHolderName">-</span>
-                    </div>
-                    <div class="step3-kv__row" id="ab-summary-accountNumber-row" style="display: none;">
-                      <span class="step3-kv__label">Account number</span>
-                      <span class="step3-kv__value" id="ab-summary-accountNumber">-</span>
-                    </div>
                     <div class="step3-kv__row" id="ab-summary-ibanNumber-row" style="display: none;">
                       <span class="step3-kv__label">IBAN number</span>
                       <span class="step3-kv__value" id="ab-summary-ibanNumber">-</span>
                     </div>
                     <div class="step3-kv__row" id="ab-summary-swiftCode-row" style="display: none;">
-                      <span class="step3-kv__label">SWIFT code</span>
+                      <span class="step3-kv__label">SWIFT / BIC code</span>
                       <span class="step3-kv__value" id="ab-summary-swiftCode">-</span>
                     </div>
+                    <div class="step3-kv__row" id="ab-summary-accountNumber-row" style="display: none;">
+                      <span class="step3-kv__label">Account number</span>
+                      <span class="step3-kv__value" id="ab-summary-accountNumber">-</span>
+                    </div>
                     <div class="step3-kv__row">
-                      <span class="step3-kv__label">Bank account document proof</span>
+                      <span class="step3-kv__label">Document proof</span>
                       <span class="step3-kv__value step3-kv__value--uploaded" id="ab-summary-docProof">Not
                         uploaded</span>
                     </div>
@@ -518,7 +521,7 @@
 
             <!-- Action buttons -->
             <div class="step3-actions">
-              <button id="ab-cancel-step3" class="btn btn--secondary btn--lg" type="button">Cancel</button>
+              <button id="ab-cancel-step3" class="btn btn--secondary btn--lg" type="button">Back</button>
               <button id="ab-submit-step3" class="btn btn--primary btn--lg" type="button">Submit</button>
             </div>
           </section>

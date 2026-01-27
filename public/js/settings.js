@@ -1,5 +1,5 @@
 // Mobile state switching via URL param `view` = 'menu' | 'content'
-(function() {
+(function () {
   'use strict';
 
   var updateMenuIcons = function () {
@@ -16,16 +16,16 @@
         var useActive = isDesk && page === currentPage && !!img.getAttribute('data-icon-active');
         img.setAttribute('src', useActive ? activeSrc : neutral);
       });
-    } catch (_) {}
+    } catch (_) { }
   };
 
   try {
     var mqDesktop = window.matchMedia('(min-width: 1280px)');
-    var isDesktop = function(){ return mqDesktop.matches; };
-    var getView = function(){ return new URLSearchParams(window.location.search).get('view'); };
-    var getPage = function(){ return new URLSearchParams(window.location.search).get('page') || 'account'; };
-    
-    var applyMobileState = function(){
+    var isDesktop = function () { return mqDesktop.matches; };
+    var getView = function () { return new URLSearchParams(window.location.search).get('view'); };
+    var getPage = function () { return new URLSearchParams(window.location.search).get('page') || 'account'; };
+
+    var applyMobileState = function () {
       if (isDesktop()) {
         document.body.classList.remove('state-menu');
         document.body.classList.remove('state-content');
@@ -51,7 +51,7 @@
 
     // Dynamic account chip link target based on viewport
     var chip = document.getElementById('accountChipLink');
-    var setChipHref = function(){
+    var setChipHref = function () {
       if (!chip) return;
       chip.setAttribute('href', isDesktop() ? 'settings.html?view=content&page=account' : 'settings.html?view=menu');
     };
@@ -61,7 +61,7 @@
     // Back link should go to menu state on mobile
     var backLinkEl = document.getElementById('backLink');
     if (backLinkEl) {
-      backLinkEl.addEventListener('click', function(e){
+      backLinkEl.addEventListener('click', function (e) {
         if (!isDesktop()) {
           e.preventDefault();
           // Only keep view=menu; drop other params like page
@@ -74,7 +74,7 @@
     // Close menu link – on mobile, return to the page where Settings was opened
     var closeMenuLink = document.getElementById('closeMenuLink');
     if (closeMenuLink) {
-      closeMenuLink.addEventListener('click', function(e){
+      closeMenuLink.addEventListener('click', function (e) {
         if (!isDesktop()) {
           e.preventDefault();
           var target = null;
@@ -82,7 +82,7 @@
             if (window.sessionStorage) {
               target = window.sessionStorage.getItem('xrexb2b.settingsReturnUrl');
             }
-          } catch (_) {}
+          } catch (_) { }
 
           // Fallback to home if nothing stored or it points back to settings
           if (!target || /settings\.html/i.test(target)) {
@@ -93,35 +93,35 @@
         }
       });
     }
-  } catch (_) {}
+  } catch (_) { }
 
   // Menu item navigation
   try {
     var menuItems = document.querySelectorAll('.menu-item[data-link]');
     var submenuItems = document.querySelectorAll('.submenu-item[data-link]');
-    
-    var navigateToPage = function(pageName) {
+
+    var navigateToPage = function (pageName) {
       var base = window.location.origin + window.location.pathname;
-      var newUrl = isDesktop() 
+      var newUrl = isDesktop()
         ? base + '?view=content&page=' + pageName
         : base + '?view=content&page=' + pageName;
       window.location.href = newUrl;
     };
 
-    var handleMenuItemClick = function(e) {
+    var handleMenuItemClick = function (e) {
       var item = e.currentTarget;
       var link = item.getAttribute('data-link');
       var page = item.getAttribute('data-page');
-      
+
       if (link && page) {
         e.preventDefault();
         navigateToPage(page);
       }
     };
 
-    menuItems.forEach(function(item) {
+    menuItems.forEach(function (item) {
       item.addEventListener('click', handleMenuItemClick);
-      item.addEventListener('keydown', function(e) {
+      item.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           handleMenuItemClick(e);
@@ -129,16 +129,16 @@
       });
     });
 
-    submenuItems.forEach(function(item) {
+    submenuItems.forEach(function (item) {
       item.addEventListener('click', handleMenuItemClick);
-      item.addEventListener('keydown', function(e) {
+      item.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           handleMenuItemClick(e);
         }
       });
     });
-  } catch (_) {}
+  } catch (_) { }
 
   // Submenu toggle
   try {
@@ -165,18 +165,18 @@
     };
 
     // Chevron click (all breakpoints)
-    chevrons.forEach(function(chevron) {
-      chevron.addEventListener('click', function(e) {
+    chevrons.forEach(function (chevron) {
+      chevron.addEventListener('click', function (e) {
         e.stopPropagation();
         toggleSubmenuForItem(chevron.closest('.menu-item'));
       });
     });
 
     // Row click to expand/collapse on all breakpoints
-    chevrons.forEach(function(chevron) {
+    chevrons.forEach(function (chevron) {
       var parentItem = chevron.closest('.menu-item');
       if (!parentItem) return;
-      parentItem.addEventListener('click', function(e) {
+      parentItem.addEventListener('click', function (e) {
         // Ignore clicks coming from chevron button or inside submenu links
         if (e.target.closest('.menu-chevron') || e.target.closest('.submenu')) return;
         e.preventDefault();
@@ -187,7 +187,7 @@
     // On mobile/tablet, keep submenus expanded by default (can be collapsed by user)
     var expandAllSubmenusMobile = function () {
       if (isDesktop()) return;
-      document.querySelectorAll('.submenu').forEach(function(submenu) {
+      document.querySelectorAll('.submenu').forEach(function (submenu) {
         var targetId = '#' + submenu.id;
         var chevron = document.querySelector('.menu-chevron[data-target="' + targetId + '"]');
         var item = chevron ? chevron.closest('.menu-item') : null;
@@ -200,7 +200,7 @@
 
     expandAllSubmenusMobile();
     mqDesktop.addEventListener('change', expandAllSubmenusMobile);
-  } catch (_) {}
+  } catch (_) { }
 
   // Helper: toggle mobile sticky CTA for banks page (state >= 2)
   var updateBanksSticky = function () {
@@ -215,18 +215,18 @@
         if (addUsdModalEl && addUsdModalEl.getAttribute('aria-hidden') === 'false') {
           canShow = false;
         }
-      } catch (_) {}
+      } catch (_) { }
       try {
         if (typeof getPrototypeState === 'function') {
           canShow = canShow && getPrototypeState() >= 2;
         }
-      } catch (_) {}
+      } catch (_) { }
       if (canShow) {
         banksStickyEl.removeAttribute('hidden');
       } else {
         banksStickyEl.setAttribute('hidden', '');
       }
-    } catch (_) {}
+    } catch (_) { }
   };
 
   // Show/hide panels based on page param
@@ -239,7 +239,7 @@
 
     // Update active menu + submenu items
     var allMenuItems = document.querySelectorAll('.menu-item[data-page]');
-    allMenuItems.forEach(function(item) {
+    allMenuItems.forEach(function (item) {
       var page = item.getAttribute('data-page');
       var isActiveItem = page === currentPage;
       item.classList.toggle('active', isActiveItem);
@@ -270,7 +270,7 @@
     });
 
     // Show/hide panels
-    Object.keys(panels).forEach(function(page) {
+    Object.keys(panels).forEach(function (page) {
       var panel = panels[page];
       if (panel) {
         if (page === currentPage) {
@@ -296,7 +296,7 @@
     updateBanksSticky();
 
     updateMenuIcons();
-  } catch (_) {}
+  } catch (_) { }
 
   // Banks panel content driven by prototype state (mirror select-counterparty)
   try {
@@ -346,7 +346,7 @@
         try {
           var sticky = document.getElementById('banksSticky');
           if (sticky) sticky.setAttribute('hidden', '');
-        } catch (_) {}
+        } catch (_) { }
       };
 
       var renderBanksPanel = function () {
@@ -380,7 +380,7 @@
         var html = '';
         html += ''
           + '<div class=\"banks-header\">'
-          + '  <h2 class=\"banks-subtitle\">Manage and view counterparty accounts</h2>'
+          + '  <h2 class=\"banks-subtitle\">Manage and view company and counterparty accounts</h2>'
           + '  <button type=\"button\" class=\"btn btn--primary btn--md js-open-usd-modal\">Add new bank account</button>'
           + '</div>';
 
@@ -506,7 +506,7 @@
               }
             });
           });
-        } catch (_) {}
+        } catch (_) { }
 
         // Bind demo counterparty card to navigate to details page
         try {
@@ -518,7 +518,7 @@
               window.location.href = 'counterparty-bank-details.html';
             });
           }
-        } catch (_) {}
+        } catch (_) { }
       };
 
       document.addEventListener('prototypeStateChange', function () {
@@ -527,7 +527,7 @@
       });
       renderBanksPanel();
     }
-  } catch (_) {}
+  } catch (_) { }
 
   // Add USD bank account modal wiring
   var bindUsdModalOpeners;
@@ -558,7 +558,7 @@
             openUsdModal();
           });
         });
-      } catch (_) {}
+      } catch (_) { }
     };
 
     // Initial bind (for sticky + any static triggers)
@@ -597,5 +597,5 @@
         });
       }
     }
-  } catch (_) {}
+  } catch (_) { }
 })();
